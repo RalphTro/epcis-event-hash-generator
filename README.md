@@ -51,8 +51,11 @@ For any given EPCIS event, extract and concatenate the values of the following a
 * sensorElement – sensorReport – time
 * sensorElement – sensorReport – microorganism
 * sensorElement – sensorReport – chemicalSubstance
-* sensorElement – sensorReport –  value
-* sensorElement – sensorReport – valueType
+* sensorElement – sensorReport – value
+* sensorElement – sensorReport – stringValue
+* sensorElement – sensorReport – booleanValue
+* sensorElement – sensorReport – hexBinaryValue
+* sensorElement – sensorReport – uriValue
 * sensorElement – sensorReport – minValue
 * sensorElement – sensorReport – maxValue
 * sensorElement – sensorReport – averageValue
