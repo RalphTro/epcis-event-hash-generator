@@ -16,7 +16,7 @@ This is why industry needs to have a consistent, reliable approach to create a h
 For any given EPCIS event, extract and concatenate the values of the following attributes according to the following sequence. Note that all values MUST be added in the identical order as specified below. Data MUST NOT be added if any field is omitted in a given event or does not apply.  
 
 Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent | AssociationEvent
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
+--- | --- | --- | --- |--- |--- 
 1 | eventTime | eventTime | eventTime | eventTime | eventTime 
 
 * eventTime
