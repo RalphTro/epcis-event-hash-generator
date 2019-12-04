@@ -18,9 +18,10 @@ For any given EPCIS event, extract and concatenate the values of the following a
 Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent | AssociationEvent
 --- | --- | --- | --- |--- |--- 
 1 | eventTime | eventTime | eventTime | eventTime | eventTime 
---- | --- | --- | --- |--- |--- 
 2 | eventTimeZoneOffset
---- | --- | --- | --- |--- |--- 
+3 | ErrorDeclaration – declarationTime
+4 | ErrorDeclaration – reason
+
 
 * eventTime
 * eventTimeZoneOffset
