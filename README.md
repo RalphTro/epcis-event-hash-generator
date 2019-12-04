@@ -13,7 +13,7 @@ EPCIS events have a couple of differences to other electronic documents:
 This is why industry needs to have a consistent, reliable approach to create a hash value that is viable to uniquely identify a specific EPCIS event. 
 
 ## Functionality/procedure 
-For any given EPCIS event, extract and concatenate the values of the following attributes according to the following sequence. Note that all values MUST be added in the identical order as specified below. Data MUST NOT be added if any field is omitted in a given event or does not apply.  
+For any given EPCIS event, extract and concatenate the values of the following attributes according to the following sequence. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply.  
 
 Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent | AssociationEvent
 --- | --- | --- | --- |--- |--- 
