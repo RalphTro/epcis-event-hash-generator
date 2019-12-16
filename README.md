@@ -68,7 +68,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
       </tr>
       <tr>
         <td/>
-        <td>Note: each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList</td>
+        <td colspan=5>Note: each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList</td>
       </tr>
       <tr>
             <td>6</td>
@@ -108,7 +108,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td>12</td>
-            <td colspan=5>readPointtd>
+            <td colspan=5>readPoint</td>
         </tr>
         <tr>
             <td>13</td>
