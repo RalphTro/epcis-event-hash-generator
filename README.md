@@ -53,10 +53,12 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td>5</td>
-            <td colspan=5>ErrorDeclaration – correctiveEventIDs (i.e. each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element)</td>
+            <td colspan=5>ErrorDeclaration – correctiveEventIDs</td>
+        </tr>
+        <tr>
+            <td/>
             <td colspan=5>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element</td>
         </tr>
-       <tr>
        <tr>
           <td>6</td>
           <td/>
@@ -71,7 +73,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         <td colspan=5>Note: each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList</td>
       </tr>
       <tr>
-            <td>6</td>
+            <td>7</td>
             <td>epcList – epc</td>
             <td>parentID</td>
             <td>parentID</td>
@@ -80,55 +82,61 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td/>
-            <td colspan=5>Note: each individual EPC in exactly the same sequence as it appears in the respective lists</td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>quantityList - epcClass</td>
-            <td>childEPCs – epc</td>
-            <td>epcList – epc</td>
-            <td>outputEpcList – epc</td>
-            <td>childEPCs – epc</td>
+            <td colspan=5>Note: each individual EPC/EPC Class in exactly the same sequence as it appears in the respective lists</td>
         </tr>
         <tr>
             <td>8</td>
-            <td>...</td>
+            <td>quantityList - epcClass</td>
+            <td>childEPCs – epc</td>
+            <td>epcList – epc</td>
+            <td>inputQuantityList – epcClass</td>
+            <td>childEPCs – epc</td>
         </tr>
         <tr>
             <td>9</td>
-            <td colspan=5>action</td>
+            <td/>
+            <td>childQuantityList – epcClass</td>
+            <td>quantityList - epcClass</td>
+            <td>outputEpcList – epc</td>
+            <td>childQuantityList – epcClassc</td>
         </tr>
         <tr>
             <td>10</td>
-            <td colspan=5>bizStep</td>
+            <td/>
+            <td/>
+            <td>outputQuantityList – epcClass</td>
+            <td/>
         </tr>
         <tr>
             <td>11</td>
-            <td colspan=5>disposition</td>
+            <td/>
+            <td/>
+            <td>transformationID</td>
+            <td/>
         </tr>
         <tr>
             <td>12</td>
-            <td colspan=5>readPoint</td>
+            <td>...</td>
         </tr>
         <tr>
             <td>13</td>
-            <td colspan=5>bizLocation</td>
+            <td colspan=5>action</td>
         </tr>
         <tr>
             <td>14</td>
-            <td>...</td>
+            <td colspan=5>bizStep</td>
         </tr>
         <tr>
             <td>15</td>
-            <td>...</td>
+            <td colspan=5>disposition</td>
         </tr>
         <tr>
             <td>16</td>
-            <td>...</td>
+            <td colspan=5>readPoint</td>
         </tr>
         <tr>
             <td>17</td>
-            <td>...</td>
+            <td colspan=5>bizLocation</td>
         </tr>
         <tr>
             <td>18</td>
@@ -154,19 +162,26 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
             <td>23</td>
             <td>...</td>
         </tr>
+        <tr>
+            <td>24</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>26</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td>...</td>
+        </tr>
     </tbody>
 </table>
 
 
-*   
-* inputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the inputEpcList)
-* outputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the outputEpcList)
-* quantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the quantityList)
-* inputQuantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the inputQuantityList)
-* outputQuantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the outputQuantityList)
-* 
-* 
-* 
 * 
 * 
 * bizTransactionList – bizTransaction (i.e. each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList)
