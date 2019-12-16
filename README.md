@@ -20,7 +20,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
 1 | eventTime | eventTime | eventTime | eventTime | eventTime 
 2 | eventTimeZoneOffset ||
 3 | ErrorDeclaration – declarationTime
-4 | ErrorDeclaration – reason
+4 | ErrorDeclaration <td colspan=5> Test 
 
 
 * eventTime
