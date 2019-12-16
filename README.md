@@ -47,6 +47,10 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
             <td>3</td>
             <td columnspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
+        <tr>
+            <td>3</td>
+            <td columnspan=5>ErrorDeclaration – correctiveEventIDs (i.e. each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element)</td>
+        </tr>
     </tbody>
 </table>
 
