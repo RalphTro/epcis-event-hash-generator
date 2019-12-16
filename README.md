@@ -62,6 +62,9 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
             <td>parentID</td>
             <td>inputEpcList – epc</td>
             <td>parentID</td>
+        </tr>
+        <tr>
+            <td/>
             <td colspan=5>Note: each individual EPC in exactly the same sequence as it appears in the respective lists</td>
         </tr>
         <tr>
