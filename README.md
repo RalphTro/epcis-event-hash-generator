@@ -57,7 +57,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td/>
-            <td colspan=5>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element</td>
+            <td colspan=5>*Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element*</td>
         </tr>
        <tr>
           <td>6</td>
@@ -66,7 +66,6 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
           <td>bizTransactionList – bizTransaction</td>
           <td/>
           <td/>
-          <td colspan=5>
       </tr>
       <tr>
         <td/>
@@ -106,21 +105,15 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
             <td/>
             <td>outputQuantityList – epcClass</td>
             <td/>
+            <td/>
         </tr>
         <tr>
             <td>11</td>
-            <td/>
-            <td/>
+            <td>action</td>
+            <td>action</td>
             <td>transformationID</td>
-            <td/>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td>...</td>
-        </tr>
-        <tr>
-            <td>13</td>
-            <td colspan=5>action</td>
+            <td>action</td>
+            <td>action</td>
         </tr>
         <tr>
             <td>14</td>
