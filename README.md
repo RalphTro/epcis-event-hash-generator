@@ -62,13 +62,20 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
             <td>parentID</td>
             <td>inputEpcList – epc</td>
             <td>parentID</td>
+            <td colspan=5>Note: each individual EPC in exactly the same sequence as it appears in the respective lists</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td/>
+            <td>childEPCs – epc</td>
+            <td>epcList – epc</td>
+            <td>outputEpcList – epc</td>
+            <td>childEPCs – epc</td>
         </tr>
     </tbody>
 </table>
 
 
-
-* epcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the epcList)
 * parentID  
 * inputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the inputEpcList)
 * outputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the outputEpcList)
