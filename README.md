@@ -13,15 +13,7 @@ EPCIS events have a couple of differences to other electronic documents:
 This is why industry needs to have a consistent, reliable approach to create a hash value that is viable to uniquely identify a specific EPCIS event. 
 
 ## Functionality/procedure 
-For any given EPCIS event, extract and concatenate the values of the following attributes according to the following sequence. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply.  
-
-Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent | AssociationEvent
---- | --- | --- | --- |--- |--- 
-1 | eventTime | eventTime | eventTime | eventTime | eventTime 
-2 | eventTimeZoneOffset ||
-3 | ErrorDeclaration – declarationTime
-4 | ErrorDeclaration <td colspan=5> Test 
-  
+For any given EPCIS event, extract and concatenate the values of the following attributes according to the following sequence. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply.    
   
 <table>
     <thead>
@@ -133,81 +125,134 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td>18</td>
-            <td>...</td>
+            <td colspan=5>bizTransactionList – bizTransaction</td>
         </tr>
         <tr>
             <td>19</td>
-            <td>...</td>
+            <td colspan=5>sourceList – source</td>
         </tr>
         <tr>
             <td>20</td>
-            <td>...</td>
+            <td colspan=5>destinationList – destination</td>
+        </tr>
+        <tr>
+            <td/>
+            <td colspan=5>Note: each individual source/destination ID in exactly the same sequence as it appears in the respective lists</td>
         </tr>
         <tr>
             <td>21</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – time</td>
         </tr>
         <tr>
             <td>22</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – startTime</td>
         </tr>
         <tr>
             <td>23</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – endTime</td>
         </tr>
         <tr>
             <td>24</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – deviceID</td>
         </tr>
         <tr>
             <td>25</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – deviceMetaData</td>
         </tr>
         <tr>
             <td>26</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – rawData</td>
         </tr>
         <tr>
             <td>27</td>
-            <td>...</td>
+            <td colspan=5>sensorElement – sensorMetaData – dataProcessingMethod</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorMetaData – bizRules</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – type</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – deviceID</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – deviceMetaData</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – rawData</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – dataProcessingMethod</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – time</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – microorganism</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – chemicalSubstance</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – value</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – stringValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – booleanValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – hexBinaryValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – uriValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – minValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – maxValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – meanValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – sDev</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – percRank</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5>sensorElement – sensorReport – percValue</td>
+        </tr>
+        <tr>
+            <td>27</td>
+            <td colspan=5sensorElement – sensorReport – uom</td>
         </tr>
     </tbody>
 </table>
-
-
-* 
-* 
-* bizTransactionList – bizTransaction (i.e. each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList)
-* sourceList – source (i.e. each individual source ID in exactly the same sequence as it appears in the sourceList)
-* destinationList – destination (i.e. each individual destination ID in exactly the same sequence as it appears in the destinationList)
-* sensorElement – sensorMetaData – time
-* sensorElement – sensorMetaData – startTime
-* sensorElement – sensorMetaData – endTime
-* sensorElement – sensorMetaData – deviceID
-* sensorElement – sensorMetaData – deviceMetaData
-* sensorElement – sensorMetaData – rawData
-* sensorElement – sensorMetaData – dataProcessingMethod
-* sensorElement – sensorMetaData – bizRules
-* sensorElement – sensorReport – type
-* sensorElement – sensorReport – deviceID
-* sensorElement – sensorReport – deviceMetaData
-* sensorElement – sensorReport – rawData
-* sensorElement – sensorReport – dataProcessingMethod
-* sensorElement – sensorReport – time
-* sensorElement – sensorReport – microorganism
-* sensorElement – sensorReport – chemicalSubstance
-* sensorElement – sensorReport – value
-* sensorElement – sensorReport – stringValue
-* sensorElement – sensorReport – booleanValue
-* sensorElement – sensorReport – hexBinaryValue
-* sensorElement – sensorReport – uriValue
-* sensorElement – sensorReport – minValue
-* sensorElement – sensorReport – maxValue
-* sensorElement – sensorReport – averageValue
-* sensorElement – sensorReport – sDev
-* sensorElement – sensorReport – percRank
-* sensorElement – sensorReport – percValue
-* sensorElement – sensorReport – uom
 
 ## Installation
 tbd
