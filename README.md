@@ -54,8 +54,23 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         <tr>
             <td>5</td>
             <td colspan=5>ErrorDeclaration – correctiveEventIDs (i.e. each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element)</td>
+            <td colspan=5>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element</td>
         </tr>
        <tr>
+       <tr>
+          <td>6</td>
+          <td/>
+          <td/> 
+          <td>bizTransactionList – bizTransaction</td>
+          <td/>
+          <td/>
+          <td colspan=5>
+      </tr>
+      <tr>
+        <td/>
+        <td>Note: each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList</td>
+      </tr>
+      <tr>
             <td>6</td>
             <td>epcList – epc</td>
             <td>parentID</td>
@@ -69,27 +84,91 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
         </tr>
         <tr>
             <td>7</td>
-            <td/>
+            <td>quantityList - epcClass</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
             <td>outputEpcList – epc</td>
             <td>childEPCs – epc</td>
         </tr>
+        <tr>
+            <td>8</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td colspan=5>action</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td colspan=5>bizStep</td>
+        </tr>
+        <tr>
+            <td>11</td>
+            <td colspan=5>disposition</td>
+        </tr>
+        <tr>
+            <td>12</td>
+            <td colspan=5>readPointtd>
+        </tr>
+        <tr>
+            <td>13</td>
+            <td colspan=5>bizLocation</td>
+        </tr>
+        <tr>
+            <td>14</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>15</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>16</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>17</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>18</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>19</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>21</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>...</td>
+        </tr>
+        <tr>
+            <td>23</td>
+            <td>...</td>
+        </tr>
     </tbody>
 </table>
 
 
-* parentID  
+*   
 * inputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the inputEpcList)
 * outputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the outputEpcList)
 * quantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the quantityList)
 * inputQuantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the inputQuantityList)
 * outputQuantityList – epcClass (i.e. each individual epcClass in exactly the same sequence as it appears in the outputQuantityList)
-* action
-* bizStep
-* disposition
-* readPoint
-* bizLocation
+* 
+* 
+* 
+* 
+* 
 * bizTransactionList – bizTransaction (i.e. each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList)
 * sourceList – source (i.e. each individual source ID in exactly the same sequence as it appears in the sourceList)
 * destinationList – destination (i.e. each individual destination ID in exactly the same sequence as it appears in the destinationList)
