@@ -49,7 +49,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td/>
-            <td colspan=5>*Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element*</td>
+            <td colspan=5><i>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element<i/></td>
         </tr>
        <tr>
           <td>6</td>
@@ -127,7 +127,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>18</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
             <td>n./a.</td>
-            <td colspan=2/>
+            <td colspan=2>bizTransactionList – bizTransaction</td>
         </tr>
         <tr>
             <td>19</td>
