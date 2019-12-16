@@ -37,29 +37,37 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
     <tbody>
         <tr>
             <td>1</td>
-            <td colspan=4>eventTime</td>
+            <td colspan=5>eventTime</td>
         </tr>
         <tr>
             <td>2</td>
-            <td>eventTimeZoneOffset</td>
+            <td colspan=5>eventTimeZoneOffset</td>
         </tr>
         <tr>
             <td>3</td>
             <td colspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
         <tr>
-            <td>3</td>
+            <td>4</td>
+            <td colspan=5>ErrorDeclaration – reason</td>
+        </tr>
+        <tr>
+            <td>5</td>
             <td colspan=5>ErrorDeclaration – correctiveEventIDs (i.e. each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element)</td>
+        </tr>
+       <tr>
+            <td>6</td>
+            <td>epcList – epc</td>
+            <td>parentID</td>
+            <td>parentID</td>
+            <td>inputEpcList – epc</td>
+            <td>parentID</td>
         </tr>
     </tbody>
 </table>
 
 
-* eventTime
-* eventTimeZoneOffset
-* ErrorDeclaration – declarationTime
-* ErrorDeclaration – reason
-* ErrorDeclaration – correctiveEventIDs (i.e. each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element)
+
 * epcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the epcList)
 * parentID  
 * inputEpcList – epc (i.e. each individual EPC in exactly the same sequence as it appears in the inputEpcList)
