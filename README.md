@@ -26,7 +26,7 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
 <table>
     <thead>
         <tr>
-            <th>Sequence</th>
+            <th>Seq.</th>
             <th>ObjectEvent</th>
             <th>AggregationEvent</th>
             <th>TransactionEvent</th>
@@ -36,18 +36,16 @@ Seq. | ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent |
     </thead>
     <tbody>
         <tr>
-            <td rowspan=4>eventTime</td>
-            <td>L3 Name A</td>
+            <td>1</td>
+            <td columnspan=4>eventTime</td>
         </tr>
         <tr>
+            <td>2</td>
             <td>eventTimeZoneOffset</td>
         </tr>
         <tr>
-            <td rowspan=2>L2 Name B</td>
-            <td>L3 Name C</td>
-        </tr>
-        <tr>
-            <td>L3 Name D</td>
+            <td>3</td>
+            <td columnspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
     </tbody>
 </table>
