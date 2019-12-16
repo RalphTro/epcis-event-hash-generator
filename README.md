@@ -125,7 +125,9 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td>18</td>
-            <td colspan=5>bizTransactionList – bizTransaction</td>
+            <td colspan=2>bizTransactionList – bizTransaction</td>
+            <td>n./a.</td>
+            <td colspan=2/>
         </tr>
         <tr>
             <td>19</td>
