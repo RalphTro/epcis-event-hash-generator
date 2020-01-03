@@ -61,11 +61,9 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
        <tr>
           <td>7</td>
-          <td/>
-          <td/> 
+          <td colspan=2>-</td>
           <td>bizTransactionList – bizTransaction</td>
-          <td/>
-          <td/>
+          <td colspan=2>-</td>
       </tr>
       <tr>
         <td/>
