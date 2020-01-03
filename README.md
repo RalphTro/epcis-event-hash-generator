@@ -36,7 +36,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td colspan=5>eventTimeZoneOffset</td>
         </tr>
         <tr>
-            <td>...</td>
+            <td>3</td>
             <td colspan=5>eventID</td>
         </tr>
         <tr>
@@ -44,15 +44,15 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td colspan=5><i>Note: Even if an event ID value is already present (which is NOT required!), this method may still be beneficial, e.g. in situations where organisations require to store a unique fingerprint of EPCIS events on a distributed ledger.<i/></td>
         </tr>
         <tr>
-            <td>3</td>
+            <td>4</td>
             <td colspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
         <tr>
-            <td>4</td>
+            <td>5</td>
             <td colspan=5>ErrorDeclaration – reason</td>
         </tr>
         <tr>
-            <td>5</td>
+            <td>6</td>
             <td colspan=5>ErrorDeclaration – correctiveEventIDs</td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td colspan=5><i>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element<i/></td>
         </tr>
        <tr>
-          <td>6</td>
+          <td>7</td>
           <td/>
           <td/> 
           <td>bizTransactionList – bizTransaction</td>
@@ -72,7 +72,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
         <td colspan=5><i>Note: each individual bizTransaction ID in exactly the same sequence as it appears in the bizTransactionList</i></td>
       </tr>
       <tr>
-            <td>7</td>
+            <td>8</td>
             <td>epcList – epc</td>
             <td>parentID</td>
             <td>parentID</td>
@@ -84,7 +84,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td colspan=5><i>Note: each individual EPC/EPC Class in exactly the same sequence as it appears in the respective lists</i></td>
         </tr>
         <tr>
-            <td>8</td>
+            <td>9</td>
             <td>quantityList - epcClass</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
@@ -92,7 +92,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>childEPCs – epc</td>
         </tr>
         <tr>
-            <td>9</td>
+            <td>10</td>
             <td/>
             <td>childQuantityList – epcClass</td>
             <td>quantityList - epcClass</td>
@@ -100,7 +100,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>childQuantityList – epcClassc</td>
         </tr>
         <tr>
-            <td>10</td>
+            <td>11</td>
             <td/>
             <td/>
             <td>outputQuantityList – epcClass</td>
@@ -108,7 +108,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td/>
         </tr>
         <tr>
-            <td>11</td>
+            <td>12</td>
             <td>action</td>
             <td>action</td>
             <td>transformationID</td>
@@ -116,33 +116,33 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>action</td>
         </tr>
         <tr>
-            <td>12</td>
+            <td>13</td>
             <td colspan=5>bizStep</td>
         </tr>
         <tr>
-            <td>13</td>
+            <td>14</td>
             <td colspan=5>disposition</td>
         </tr>
         <tr>
-            <td>14</td>
+            <td>15</td>
             <td colspan=5>readPoint</td>
         </tr>
         <tr>
-            <td>15</td>
+            <td>16</td>
             <td colspan=5>bizLocation</td>
         </tr>
         <tr>
-            <td>16</td>
+            <td>17</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
             <td>n./a.</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
         </tr>
         <tr>
-            <td>17</td>
+            <td>18</td>
             <td colspan=5>sourceList – source</td>
         </tr>
         <tr>
-            <td>18</td>
+            <td>19</td>
             <td colspan=5>destinationList – destination</td>
         </tr>
         <tr>
@@ -150,115 +150,115 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td colspan=5><i>Note: each individual source/destination ID in exactly the same sequence as it appears in the respective lists</i></td>
         </tr>
         <tr>
-            <td>19</td>
+            <td>20</td>
             <td colspan=5>sensorElement – sensorMetaData – time</td>
         </tr>
         <tr>
-            <td>20</td>
+            <td>21</td>
             <td colspan=5>sensorElement – sensorMetaData – startTime</td>
         </tr>
         <tr>
-            <td>21</td>
+            <td>22</td>
             <td colspan=5>sensorElement – sensorMetaData – endTime</td>
         </tr>
         <tr>
-            <td>22</td>
+            <td>23</td>
             <td colspan=5>sensorElement – sensorMetaData – deviceID</td>
         </tr>
         <tr>
-            <td>23</td>
+            <td>24</td>
             <td colspan=5>sensorElement – sensorMetaData – deviceMetaData</td>
         </tr>
         <tr>
-            <td>24</td>
+            <td>25</td>
             <td colspan=5>sensorElement – sensorMetaData – rawData</td>
         </tr>
         <tr>
-            <td>25</td>
+            <td>26</td>
             <td colspan=5>sensorElement – sensorMetaData – dataProcessingMethod</td>
         </tr>
         <tr>
-            <td>26</td>
+            <td>27</td>
             <td colspan=5>sensorElement – sensorMetaData – bizRules</td>
         </tr>
         <tr>
-            <td>27</td>
+            <td>28</td>
             <td colspan=5>sensorElement – sensorReport – type</td>
         </tr>
         <tr>
-            <td>28</td>
+            <td>29</td>
             <td colspan=5>sensorElement – sensorReport – deviceID</td>
         </tr>
         <tr>
-            <td>29</td>
+            <td>30</td>
             <td colspan=5>sensorElement – sensorReport – deviceMetaData</td>
         </tr>
         <tr>
-            <td>30</td>
+            <td>31</td>
             <td colspan=5>sensorElement – sensorReport – rawData</td>
         </tr>
         <tr>
-            <td>31</td>
+            <td>32</td>
             <td colspan=5>sensorElement – sensorReport – dataProcessingMethod</td>
         </tr>
         <tr>
-            <td>32</td>
+            <td>33</td>
             <td colspan=5>sensorElement – sensorReport – time</td>
         </tr>
         <tr>
-            <td>33</td>
+            <td>34</td>
             <td colspan=5>sensorElement – sensorReport – microorganism</td>
         </tr>
         <tr>
-            <td>34</td>
+            <td>35</td>
             <td colspan=5>sensorElement – sensorReport – chemicalSubstance</td>
         </tr>
         <tr>
-            <td>35</td>
+            <td>36</td>
             <td colspan=5>sensorElement – sensorReport – value</td>
         </tr>
         <tr>
-            <td>36</td>
+            <td>37</td>
             <td colspan=5>sensorElement – sensorReport – stringValue</td>
         </tr>
         <tr>
-            <td>37</td>
+            <td>38</td>
             <td colspan=5>sensorElement – sensorReport – booleanValue</td>
         </tr>
         <tr>
-            <td>38</td>
+            <td>39</td>
             <td colspan=5>sensorElement – sensorReport – hexBinaryValue</td>
         </tr>
         <tr>
-            <td>39</td>
+            <td>40</td>
             <td colspan=5>sensorElement – sensorReport – uriValue</td>
         </tr>
         <tr>
-            <td>40</td>
+            <td>41</td>
             <td colspan=5>sensorElement – sensorReport – minValue</td>
         </tr>
         <tr>
-            <td>41</td>
+            <td>42</td>
             <td colspan=5>sensorElement – sensorReport – maxValue</td>
         </tr>
         <tr>
-            <td>42</td>
+            <td>43</td>
             <td colspan=5>sensorElement – sensorReport – meanValue</td>
         </tr>
         <tr>
-            <td>43</td>
+            <td>44</td>
             <td colspan=5>sensorElement – sensorReport – sDev</td>
         </tr>
         <tr>
-            <td>44</td>
+            <td>45</td>
             <td colspan=5>sensorElement – sensorReport – percRank</td>
         </tr>
         <tr>
-            <td>45</td>
+            <td>46</td>
             <td colspan=5>sensorElement – sensorReport – percValue</td>
         </tr>
         <tr>
-            <td>46</td>
+            <td>47</td>
             <td colspan=5>sensorElement – sensorReport – uom</td>
         </tr>
     </tbody>
