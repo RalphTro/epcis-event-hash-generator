@@ -99,9 +99,9 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td>11</td>
-            <td colspan=2>-</td>
+            <td colspan=3>-</td>
             <td>outputQuantityList – epcClass</td>
-            <td colspan=2>-</td>
+            <td colspan=1>-</td>
         </tr>
         <tr>
             <td>12</td>
