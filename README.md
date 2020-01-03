@@ -107,8 +107,8 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>12</td>
             <td>action</td>
             <td>action</td>
-            <td>transformationID</td>
             <td>action</td>
+            <td>transformationID</td>
             <td>action</td>
         </tr>
         <tr>
