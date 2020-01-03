@@ -74,7 +74,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>epcList – epc</td>
             <td>parentID</td>
             <td>parentID</td>
-            <td>inputEpcList – epc</td>
+            <td>inputEPCList – epc</td>
             <td>parentID</td>
         </tr>
         <tr>
@@ -94,7 +94,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
             <td>-</td>
             <td>childQuantityList – epcClass</td>
             <td>quantityList - epcClass</td>
-            <td>outputEpcList – epc</td>
+            <td>outputEPCList – epc</td>
             <td>childQuantityList – epcClassc</td>
         </tr>
         <tr>
