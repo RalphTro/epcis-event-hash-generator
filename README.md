@@ -91,7 +91,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td>10</td>
-            <td/>
+            <td>-</td>
             <td>childQuantityList – epcClass</td>
             <td>quantityList - epcClass</td>
             <td>outputEpcList – epc</td>
@@ -99,11 +99,9 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td>11</td>
-            <td/>
-            <td/>
+            <td colspan=2>-</td>
             <td>outputQuantityList – epcClass</td>
-            <td/>
-            <td/>
+            <td colspan=2>-</td>
         </tr>
         <tr>
             <td>12</td>
@@ -132,7 +130,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
         <tr>
             <td>17</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
-            <td>n./a.</td>
+            <td>-</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
         </tr>
         <tr>
