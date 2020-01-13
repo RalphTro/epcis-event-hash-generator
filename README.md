@@ -1,9 +1,9 @@
 # epcis-event-hash-generator
-Method to uniquely identify/validate the integrity of any EPCIS event through a common, syntax-agnostic approach based on hashing. 
-The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS event (either formatted in XML or JSON-LD) as it appears in the EventList of an EPCIS Document and returns a hash value representing a unique fingerprint of the latter. For instance, it may be useful to compare the values it returns with those of your own implementation.     
+Method to uniquely identify/validate the integrity of an EPCIS event through a common, syntax-agnostic approach based on hashing. 
+The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint of the latter. 
 
 ## Introduction  
-There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b>  - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a solution provider who needs to assign a unique ID, they can agree that the solution provider populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it via the eventID.
+There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b>  - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner provider who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it via the eventID.
 EPCIS events have a couple of differences to other electronic documents:
 + They are embedded in an EPCIS document that can contain multiple events 
 + As of EPCIS 2.0, it is permitted to capture and share EPCIS data through two different syntaxes (XML and JSON-LD)
@@ -41,7 +41,7 @@ For any given EPCIS event, extract and concatenate the values of the following a
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>Note: Even if an event ID value is already present (which is NOT required!), this method may still be beneficial, e.g. in situations where organisations require to store a unique fingerprint of EPCIS events on a distributed ledger.<i/></td>
+            <td colspan=5><i>Note: Even if an event ID value is already present (which is NOT required!), this method may still be beneficial, e.g. when organisations require to store a unique fingerprint of EPCIS events on a distributed shared ledger.<i/></td>
         </tr>
         <tr>
             <td>4</td>
