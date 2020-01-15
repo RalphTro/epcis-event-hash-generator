@@ -47,15 +47,9 @@ def computePreHashFromXmlFile(path):
     """Read EPCIS XML document and generate pre-hashe strings.
 
     """
-    (c, xml_str) = readXmlFile(path)
+    (count, xml_str) = readXmlFile(path)
 
-    # Variables storing number of EPCIS events per type + total:
-    oEvCount = c['ObjectEvent']
-    aEvCount = c['AggregationEvent']
-    tEvCount = c['TransactionEvent']
-    xEvCount = c['TransformationEvent']
-    pEvCount = c['AssociationEvent']
-    totalCount = oEvCount + aEvCount + tEvCount + xEvCount + pEvCount
+    totalCount = count['ObjectEvent'] + count['AggregationEvent'] + count['TransactionEvent'] + count['TransformationEvent'] + count['AssociationEvent']
 
     # Extract all events that are part of eventList
     eventListString = xml_str[(re.search('<EventList>', xml_str).start(
@@ -67,7 +61,7 @@ def computePreHashFromXmlFile(path):
 
     # Add extracted events to eventList/remove them from cleanedUpELS
     eventList = []
-    for e in range(oEvCount):
+    for e in range(count['ObjectEvent']):
         try:
             eventSegment = (cleanedUpELS[re.search('<ObjectEvent>', cleanedUpELS).start(
             ): re.search('</ObjectEvent>', cleanedUpELS).end()])
@@ -75,7 +69,7 @@ def computePreHashFromXmlFile(path):
             cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
         except AttributeError:
             pass
-    for e in range(aEvCount):
+    for e in range(count['AggregationEvent']):
         try:
             eventSegment = (cleanedUpELS[re.search('<AggregationEvent>', cleanedUpELS).start(
             ): re.search('</AggregationEvent>', cleanedUpELS).end()])
@@ -83,7 +77,7 @@ def computePreHashFromXmlFile(path):
             cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
         except AttributeError:
             pass
-    for e in range(tEvCount):
+    for e in range(count['TransactionEvent']):
         try:
             eventSegment = (cleanedUpELS[re.search('<TransactionEvent>', cleanedUpELS).start(
             ): re.search('</TransactionEvent>', cleanedUpELS).end()])
@@ -91,7 +85,7 @@ def computePreHashFromXmlFile(path):
             cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
         except AttributeError:
             pass
-    for e in range(xEvCount):
+    for e in range(count['TransformationEvent']):
         try:
             eventSegment = (cleanedUpELS[re.search('<TransformationEvent>', cleanedUpELS).start(
             ): re.search('</TransformationEvent>', cleanedUpELS).end()])
@@ -99,7 +93,7 @@ def computePreHashFromXmlFile(path):
             cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
         except AttributeError:
             pass
-    for e in range(pEvCount):
+    for e in range(count['AssociationEvent']):
         try:
             eventSegment = (cleanedUpELS[re.search('<AssociationEvent>', cleanedUpELS).start(
             ): re.search('</AssociationEvent>', cleanedUpELS).end()])
