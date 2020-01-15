@@ -1,3 +1,24 @@
+#!/usr/bin/python3
+"""This is a prove of concept implementation of an algorithm to calculate a hash of EPCIS events. A small command line utility to calculate the hashes is provided for convenience.
+
+.. module:: EpcisEventHashGenerator
+   :synopsis: EPCIS event hash calculator.
+
+.. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>
+
+Copyright 2019 Ralph Troeger
+
+This program is free software: you can redistribute it and/or modify
+it under the terms given in the LICENSE file.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LICENSE
+file for details.
+
+"""
+
+import logging
 import xml.etree.ElementTree as ET
 from collections import Counter
 import re
@@ -369,7 +390,7 @@ def xmlEpcisHash(path, hashalg):
         t = t + 1
 
     # To see/check concatenated value string before hash algorithm is performed:
-    print(prehashStringList)
+    logging.debug(prehashStringList)
     return (hashValueList)
 
 
@@ -396,21 +417,28 @@ def main():
         help="Hashing algorithm to use.",
         choices=["sha256", "sha3_256", "sha384", "sha512"],
         default="sha256")
+    parser.add_argument(
+        "-l",
+        "--log",
+        help="Set the log level. Default: INFO.",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        default="INFO")
+    
     args = parser.parse_args()
 
     logger_cfg["level"] = getattr(logging, args.log)
     logging.basicConfig(**logger_cfg)
 
-    print("Log messages above level: {}".format(logger_cfg["level"]))
+    #print("Log messages above level: {}".format(logger_cfg["level"]))
 
     if not args.file:
-        logging.critical("No gile given.")
+        logging.critical("File name required.")
         parser.print_help()
         sys.exit(1)
     else:
-        logging.info("reading from file: '{}'".format(args.file))
+        logging.debug("reading from file: '{}'".format(args.file))
 
-    print(xmlEpcisHash(args.file, args.algorithm))
+    print("Hashes of the events contained in '{}':\n{}".format(args.file, xmlEpcisHash(args.file, args.algorithm)))
 
 
 # goto main if script is run as entrypoint
