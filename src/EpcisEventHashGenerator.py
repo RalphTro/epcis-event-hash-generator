@@ -3,19 +3,15 @@ from collections import Counter
 import re
 import hashlib
 
-# read, decode and re-encode an xml file
-
-
-def readXml(file):
-    with open(path, 'rb') as xml_file:
-        tree = ET.parse(xml_file)
-    return ET.tostring(tree.getroot()).decode()
-
-
 def xmlEpcisHash(path, hashalg):
 
+    with open(path, 'rb') as xml_file:
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+    xml = root
+
     # Pass entire xml document as a string:
-    xml_str = readXml(path)
+    xml_str = ET.tostring(xml).decode()
     docElements = []
     docElements.extend(elem.tag for elem in root.iter())
     c = Counter(docElements)
