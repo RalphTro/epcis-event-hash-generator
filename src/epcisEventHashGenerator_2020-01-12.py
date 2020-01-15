@@ -3,14 +3,17 @@ from collections import Counter
 import re
 import hashlib
 
-def xmlEpcisHash(path, hashalg):  
+# read, decode and re-encode an xml file
+def readXml(file):
     with open(path, 'rb') as xml_file:
         tree = ET.parse(xml_file)
-        root = tree.getroot()
-    xml = root
+    return ET.tostring(tree.getroot()).decode()
+        
+
+def xmlEpcisHash(path, hashalg):  
 
     # Pass entire xml document as a string:
-    xml_str = ET.tostring(xml).decode()
+    xml_str = readXml(path)
     docElements = []
     docElements.extend(elem.tag for elem in root.iter())
     c = Counter(docElements)
@@ -310,17 +313,48 @@ def xmlEpcisHash(path, hashalg):
     print(prehashStringList)
     return (hashValueList)
 
-## Examples for Windows 
 
-print(xmlEpcisHash('C:\\Users\\troeger\\Desktop\\PythonStuff\\epcis-event-hash-generator\\futureAssemblyLineAggregationEvent_2019-12-20.xml', 'sha256'))
-#print(xmlEpcisHash('C:\\Users\\troeger\\Desktop\\PythonStuff\\epcis-event-hash-generator\\AssociationEventDRAFTMessages.xml', 'sha256'))
-#print(xmlEpcisHash('C:\\Users\\troeger\\Desktop\\PythonStuff\\epcis-event-hash-generator\\sensorObjectEvent.xml', 'sha512'))
-#print(xmlEpcisHash('C:\\Users\\troeger\\Desktop\\PythonStuff\\epcis-event-hash-generator\\IOF_ShippingAndTransportingEvent.xml', 'sha256'))
+def main():
+    """The main function reads the path to the xml file
+    and optionally the hash algorithm from the command
+    line arguments and calls the actual algorithm.
+    """
+    import argparse
 
-## Error (TBC ... <xml> e.g.)
-# print(xmlEpcisHash('C:\\Users\\troeger\\Desktop\\PythonStuff\\epcis-event-hash-generator\\TestFile_VisWorkBench.xml', 'sha256'))
+    logger_cfg = {
+        "level":
+        logging.INFO,
+        "format":
+        "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
+    }
 
+    parser = argparse.ArgumentParser(
+        description="Generate a canonical hash from an EPCIS Document.")
+    parser.add_argument("-f", "--file", help="EPCIS file")
+    parser.add_argument(
+        "-a",
+        "--algorithm",
+        help="Hashing algorithm to use.",
+        choices=["sha256", "sha3_256", "sha384", "sha512"],
+        default="sha256")
+    args = parser.parse_args()
 
-## Examples for Mac
-#print(xmlEpcisHash('/Users/Ralph/Desktop/PythonStuff/epcis-event-hash-generator/sampleEPCISMessages.xml', 'sha256'))
-#print(xmlEpcisHash('/Users/Ralph/Desktop/PythonStuff/epcis-event-hash-generator/sampleEPCISMessagesWithoutILMDandVendorExtensions.xml', 'sha512')
+    logger_cfg["level"] = getattr(logging, args.log)
+    logging.basicConfig(**logger_cfg)
+
+    print("Log messages above level: {}".format(logger_cfg["level"]))
+
+    if not args.file:
+        logging.critical("No gile given.")
+        parser.print_help()
+        sys.exit(1)
+    else:
+        logging.info("reading from file: '{}'".format(args.file))
+
+    print (xmlEpcisHash(args.file, args.algorithm))
+    
+
+    
+# goto main if script is run as entrypoint
+if __name__ == "__main__":
+    main()
