@@ -19,10 +19,12 @@ file for details.
 """
 
 import logging
+import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
 import re
 import hashlib
+
 
 def xmlEpcisHash(path, hashalg):
 
@@ -423,7 +425,7 @@ def main():
         help="Set the log level. Default: INFO.",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="INFO")
-    
+
     args = parser.parse_args()
 
     logger_cfg["level"] = getattr(logging, args.log)
@@ -438,7 +440,8 @@ def main():
     else:
         logging.debug("reading from file: '{}'".format(args.file))
 
-    print("Hashes of the events contained in '{}':\n{}".format(args.file, xmlEpcisHash(args.file, args.algorithm)))
+    print("Hashes of the events contained in '{}':\n{}".format(
+        args.file, xmlEpcisHash(args.file, args.algorithm)))
 
 
 # goto main if script is run as entrypoint
