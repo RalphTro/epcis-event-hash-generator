@@ -266,7 +266,11 @@ For any given EPCIS event, extract and concatenate the values of the following a
 tbd
 
 ## Usage/Short test script 
-tbd
+The script may be used as a command line utility like so:
+`
+python src/EpcisEventHashGenerator.py -f test/sensorObjectEvent.xml
+`
+
 
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
