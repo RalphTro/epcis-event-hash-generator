@@ -26,18 +26,28 @@ import re
 import hashlib
 
 
-def xmlEpcisHash(path, hashalg):
+def readXmlFile(path):
+    """Decode XML, count elements and re-encode.
 
+    """
     with open(path, 'rb') as xml_file:
         tree = ET.parse(xml_file)
         root = tree.getroot()
-    xml = root
 
     # Pass entire xml document as a string:
-    xml_str = ET.tostring(xml).decode()
+    xml_str = ET.tostring(root).decode()
     docElements = []
     docElements.extend(elem.tag for elem in root.iter())
     c = Counter(docElements)
+
+    return (c, xml_str)
+
+
+def computePreHashFromXmlFile(path):
+    """Read EPCIS XML document and generate pre-hashe strings.
+
+    """
+    (c, xml_str) = readXmlFile(path)
 
     # Variables storing number of EPCIS events per type + total:
     oEvCount = c['ObjectEvent']
@@ -99,9 +109,8 @@ def xmlEpcisHash(path, hashalg):
             pass
 
     # Fetch all standard attribute values of the contained events, concatenate them and write the result into prehashStringList
-    prehashStringList = []
-    t = 0
-    while t < totalCount:
+    preHashStringList = []
+    for event in eventList:
         def fetchRepeatableValues(position, fieldname):
             try:
                 a = 0
@@ -138,7 +147,7 @@ def xmlEpcisHash(path, hashalg):
             except AttributeError:
                 pass
         try:
-            tree2 = ET.ElementTree(ET.fromstring(eventList[t]))
+            tree2 = ET.ElementTree(ET.fromstring(event))
             root2 = tree2.getroot()
             docElements2 = []
             docElements2.extend(elem.tag for elem in root2.iter())
@@ -175,7 +184,7 @@ def xmlEpcisHash(path, hashalg):
         except TypeError:
             pass
         try:
-            if str(eventList[t]).startswith('<TransactionEvent>') == True:
+            if str(event).startswith('<TransactionEvent>') == True:
                 preHashString = preHashString + \
                     fetchRepeatableValues(
                         'bizTransactionList', 'bizTransaction')
@@ -269,7 +278,7 @@ def xmlEpcisHash(path, hashalg):
         except AttributeError:
             pass
         try:
-            if str(eventList[t]).startswith('<ObjectEvent>') or str(eventList[t]).startswith('<AggregationEvent>') or str(eventList[t]).startswith('<TransformationEvent>') or str(eventList[t]).startswith('<AssociationEvent>') == True:
+            if str(event).startswith('<ObjectEvent>') or str(event).startswith('<AggregationEvent>') or str(event).startswith('<TransformationEvent>') or str(event).startswith('<AssociationEvent>') == True:
                 preHashString = preHashString + \
                     fetchRepeatableValues(
                         'bizTransactionList', 'bizTransaction')
@@ -371,29 +380,39 @@ def xmlEpcisHash(path, hashalg):
                         sensorReportDict.get('percValue')
                 if 'uom' in sensorReportDict:
                     preHashString = preHashString + sensorReportDict.get('uom')
-        prehashStringList.append(preHashString)
-
-        # Calculate hash values and prefix them according to RFC 6920
-        hashValueList = []
-        for h in range(len(prehashStringList)):
-            if hashalg == 'sha256':
-                hashString = 'ni:///sha-256;' + \
-                    hashlib.sha256(preHashString.encode('utf-8')).hexdigest()
-            elif hashalg == 'sha3_256':
-                hashString = 'ni:///sha3_256;' + \
-                    hashlib.sha3_256(preHashString.encode('utf-8')).hexdigest()
-            elif hashalg == 'sha384':
-                hashString = 'ni:///sha-384;' + \
-                    hashlib.sha384(preHashString.encode('utf-8')).hexdigest()
-            elif hashalg == 'sha512':
-                hashString = 'ni:///sha-512;' + \
-                    hashlib.sha512(preHashString.encode('utf-8')).hexdigest()
-            hashValueList.append(hashString)
-        t = t + 1
-
+        preHashStringList.append(preHashString)
+        
     # To see/check concatenated value string before hash algorithm is performed:
-    logging.debug(prehashStringList)
-    return (hashValueList)
+    logging.debug(preHashStringList)
+
+    return preHashStringList
+
+def xmlEpcisHash(path, hashalg):
+    """Read all EPCIS Events from the EPCIS XML document at path.
+    Compute a normalized form (pre-hash string) for each event and
+    return an array of the event hashes computed from the pre-hash by
+    hashalg.
+    """
+    preHashStringList = computePreHashFromXmlFile(path)
+    
+    # Calculate hash values and prefix them according to RFC 6920
+    hashValueList = []
+    for preHashString in preHashStringList:
+        if hashalg == 'sha256':
+            hashString = 'ni:///sha-256;' + \
+                hashlib.sha256(preHashString.encode('utf-8')).hexdigest()
+        elif hashalg == 'sha3_256':
+            hashString = 'ni:///sha3_256;' + \
+                hashlib.sha3_256(preHashString.encode('utf-8')).hexdigest()
+        elif hashalg == 'sha384':
+            hashString = 'ni:///sha-384;' + \
+                hashlib.sha384(preHashString.encode('utf-8')).hexdigest()
+        elif hashalg == 'sha512':
+            hashString = 'ni:///sha-512;' + \
+                hashlib.sha512(preHashString.encode('utf-8')).hexdigest()
+        hashValueList.append(hashString)
+
+    return hashValueList
 
 
 def main():
