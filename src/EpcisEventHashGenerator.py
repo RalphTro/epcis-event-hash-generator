@@ -132,6 +132,7 @@ def readXmlFile(path):
     with open(path, 'r') as file:
         data = file.read()
 
+    #TODO: this should not actually be needed:
     data = data.replace('<extension>', '').replace('</extension>', '').replace(
         '<baseExtension>', '').replace('</baseExtension>', '')
     logging.debug("removed extensions tags:\n%s", data)
@@ -147,12 +148,18 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """
     texts = ""
     for (childName, subChildOrder) in childOrder:
-        for child in root.iter(childName):
+        #logging.debug("looking for child tag '%s' of root %s", childName, root)
+        for child in root.iterfind(childName):
             if subChildOrder:
                 texts += recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder)
             else:
                 for text in child.itertext():
+                    #logging.debug("Adding text '%s' from child %s", text, child)
                     texts += text
+        #child name might also refer to an attribute
+        texts += root.get(childName, "")
+        
+                    
     return texts
 
 
