@@ -148,6 +148,7 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """
     texts = ""
     for (childName, subChildOrder) in childOrder:
+        texts+="|"
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
         for child in root.iterfind(childName):
             if subChildOrder:
