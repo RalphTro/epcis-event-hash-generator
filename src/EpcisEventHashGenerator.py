@@ -26,369 +26,185 @@ import re
 import hashlib
 
 
+PROP_ORDER = [
+    ('eventTime', None),
+    ('eventTimeZoneOffset', None),
+    ('eventID', None), #TODO: how to handle hash-id?
+    ('errorDeclaration',
+     [
+         ('declarationTime', None),
+         ('reason', None),
+         ('correctiveEventIDs/correctiveEventID', None)
+     ]),
+    ('bizTransactionList/bizTransaction', None),
+    ('parentID', None),
+    ('epcList/epc', None),
+    ('inputEPCList/epc', None),
+    ('childEPCs/epc', None),
+    ('quantityList/quantityElement',
+     [
+         ('epcClass', None),
+         ('quantity', None),
+         ('uom', None)
+     ]),
+    ('childQuantityList/quantityElement',
+     [
+         ('epcClass', None),
+         ('quantity', None),
+         ('uom', None)
+     ]),
+    ('inputQuantityList/quantityElement',
+     [
+         ('epcClass', None),
+         ('quantity', None),
+         ('uom', None)
+     ]),
+    ('outputEPCList/epc', None),
+    ('outputQuantityList/quantityElement',
+     [
+         ('epcClass', None),
+         ('quantity', None),
+         ('uom', None)
+     ]),
+    ('action', None),
+    ('transformationID', None),
+    ('bizStep', None),
+    ('disposition', None),
+    ('readPoint/id', None),
+    ('bizLocation/id', None),
+    ('bizTransactionList/bizTransaction', None),
+    ('sourceList/source', None),
+    ('destinationList/destination', None),
+    ('sensorElementList/sensorElement',
+     [('sensorMetaData',
+      [
+          ('time', None),
+          ('startTime',None),
+          ('endTime',None),
+          ('deviceID',None),
+          ('deviceMetaData',None),
+          ('rawData',None),
+          ('dataProcessingMethod',None),
+          ('bizRules', None)
+      ]),#end sensorMetaData
+      ('sensorReport',
+       [
+           ('type', None),
+           ('deviceID', None),
+           ('deviceMetaData', None),
+           ('rawData', None),
+           ('dataProcessingMethod', None),
+           ('microorganism', None),
+           ('chemicalSubstance', None),
+           ('value', None),
+           ('stringValue', None),
+           ('booleanValue', None),
+           ('hexBinaryValue', None),
+           ('uriValue', None),
+           ('minValue', None),
+           ('maxValue', None),
+           ('meanValue', None),
+           ('sDev', None),
+           ('percRank', None),
+           ('percValue', None),
+           ('uom', None),
+       ])#end sensorReport
+     ])#end sensorElement    
+    ]
+"""The property order data structure describes the ordering in which
+to concatenate the values of the fields of EPCIS event. It is a list
+of pairs. The first part of each pair is a string, naming the xml
+element. If the element might have children whose order needs to be
+defined, the second element is a property order for the children,
+otherwise the second element is None.
+
+For brevity, it is permissive to use e.g.
+    ('readPoint/id', None)
+instead of
+    ('readPoint',[('id', None)])
+
+"""
+
 def readXmlFile(path):
-    """Decode XML, count elements and re-encode.
+    """Read XML file, remove useless extension tags and return parsed root element.
 
     """
-    with open(path, 'rb') as xml_file:
-        tree = ET.parse(xml_file)
-        root = tree.getroot()
+    with open(path, 'r') as file:
+        data = file.read()
 
-    # Pass entire xml document as a string:
-    xml_str = ET.tostring(root).decode()
-    docElements = []
-    docElements.extend(elem.tag for elem in root.iter())
-    c = Counter(docElements)
+    data = data.replace('<extension>', '').replace('</extension>', '').replace(
+        '<baseExtension>', '').replace('</baseExtension>', '')
+    logging.debug("removed extensions tags:\n%s", data)
 
-    return (c, xml_str)
+    return ET.fromstring(data)
 
-def fetchRepeatableValues(position, fieldname, d, root2):
-    try:
-        a = 0
-        valueString = str()
-        while a < (d[fieldname]):
-            valueString = valueString + root2.find(position)[a].text
-            a = a + 1
-        return (valueString)
-    except (AttributeError, IndexError):
-        pass
 
-def fetchQuantityValues(epcClassPos, quantityPos, uomPos, fieldname, d, root2):
-    try:
-        q = 0
-        quantityList = str()
-        while q < (d[fieldname]):
-            try:
-                quantityList = quantityList + \
-                    root2.findall(epcClassPos)[q].text
-            except IndexError:
-                pass
-            try:
-                quantityList = quantityList + \
-                    root2.findall(quantityPos)[q].text
-            except IndexError:
-                pass
-            try:
-                quantityList = quantityList + \
-                    root2.findall(uomPos)[q].text
-            except IndexError:
-                pass
-            q = q + 1
-        return (quantityList)
-    except AttributeError:
-        pass
+def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
+    """Fetch all texts from root (if it is a simple element) or its
+    children and concatenate the values in the given order. childOrder is
+    expected to be a property order, see PROP_ORDER.
 
-def eventToPreHashString(root2, event):
-    docElements2 = []
-    docElements2.extend(elem.tag for elem in root2.iter())
-    d = Counter(docElements2)
-
-    preHashString = ""
-    
-    try:
-        preHashString = root2.find('eventTime').text
-    except (AttributeError):
-        pass
-    try:
-        preHashString = preHashString + \
-            root2.find('eventTimeZoneOffset').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('eventID').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            root2.find('errorDeclaration/declarationTime').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            root2.find('errorDeclaration/reason').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues(
-                'errorDeclaration/correctiveEventIDs', 'correctiveEventID', d, root2)
-    except TypeError:
-        pass
-    try:
-        if str(event).startswith('<TransactionEvent>') == True:
-            preHashString = preHashString + \
-                fetchRepeatableValues(
-                    'bizTransactionList', 'bizTransaction', d, root2)
-    except IndexError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('parentID').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues('epcList', 'epc', d, root2)
-    except TypeError:
-        pass
-    try:
-        i = 0
-        inputEpcCount = len(root2.findall('inputEPCList/epc'))
-        while i < inputEpcCount:
-            try:
-                preHashString = preHashString + \
-                    root2.findall('inputEPCList/epc')[i].text
-                i = i + 1
-            except IndexError:
-                pass
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues('childEPCs', 'epc', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + fetchQuantityValues('quantityList/quantityElement/epcClass',
-                                                            'quantityList/quantityElement/quantity', 'quantityList/quantityElement/uom', 'quantityElement', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + fetchQuantityValues('childQuantityList/quantityElement/epcClass',
-                                                            'childQuantityList/quantityElement/quantity', 'childQuantityList/quantityElement/uom', 'quantityElement', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + fetchQuantityValues('inputQuantityList/quantityElement/epcClass',
-                                                            'inputQuantityList/quantityElement/quantity', 'inputQuantityList/quantityElement/uom', 'quantityElement', d, root2)
-    except TypeError:
-        pass
-    try:
-        o = 0
-        inputEpcCount = len(root2.findall('outputEPCList/epc'))
-        while o < inputEpcCount:
-            try:
-                preHashString = preHashString + \
-                    root2.findall('outputEPCList/epc')[o].text
-                o = o + 1
-            except IndexError:
-                pass
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues('outputEPCList', 'epc', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + fetchQuantityValues('outputQuantityList/quantityElement/epcClass',
-                                                            'outputQuantityList/quantityElement/quantity', 'outputQuantityList/quantityElement/uom', 'quantityElement', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('action').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('transformationID').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('bizStep').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('disposition').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('readPoint/id').text
-    except AttributeError:
-        pass
-    try:
-        preHashString = preHashString + root2.find('bizLocation/id').text
-    except AttributeError:
-        pass
-        
-    try:
-        if str(event).startswith('<ObjectEvent>') or str(event).startswith('<AggregationEvent>') or str(event).startswith('<TransformationEvent>') or str(event).startswith('<AssociationEvent>') == True:
-            preHashString = preHashString + \
-                fetchRepeatableValues(
-                    'bizTransactionList', 'bizTransaction', d, root2)
-    except IndexError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues('sourceList', 'source', d, root2)
-    except TypeError:
-        pass
-    try:
-        preHashString = preHashString + \
-            fetchRepeatableValues('destinationList', 'destination', d, root2)
-    except TypeError:
-        pass
-    for elem in root2.iterfind('sensorElementList/sensorElement/sensorMetaData'):
-        sensorMetaDataDict = (elem.tag, elem.attrib)[1]
-        if 'time' in sensorMetaDataDict:
-            preHashString = preHashString + sensorMetaDataDict.get('time')
-            if 'startTime' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('startTime')
-            if 'endTime' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('endTime')
-            if 'deviceID' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('deviceID')
-            if 'deviceMetaData' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('deviceMetaData')
-            if 'rawData' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('rawData')
-            if 'dataProcessingMethod' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('dataProcessingMethod')
-            if 'bizRules' in sensorMetaDataDict:
-                preHashString = preHashString + \
-                    sensorMetaDataDict.get('bizRules')
-            for elem in root2.iterfind('sensorElementList/sensorElement/sensorReport'):
-                sensorReportDict = (elem.tag, elem.attrib)[1]
-                if 'type' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('type')
-                if 'deviceID' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('deviceID')
-                if 'deviceMetaData' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('deviceMetaData')
-                if 'rawData' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('rawData')
-                if 'dataProcessingMethod' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('dataProcessingMethod')
-                if 'time' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('time')
-                if 'microorganism' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('microorganism')
-                if 'chemicalSubstance' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('chemicalSubstance')
-                if 'value' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('value')
-                if 'stringValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('stringValue')
-                if 'booleanValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('booleanValue')
-                if 'hexBinaryValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('hexBinaryValue')
-                if 'uriValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('uriValue')
-                if 'minValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('minValue')
-                if 'maxValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('maxValue')
-                if 'meanValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('meanValue')
-                if 'sDev' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('sDev')
-                if 'percRank' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('percRank')
-                if 'percValue' in sensorReportDict:
-                    preHashString = preHashString + \
-                        sensorReportDict.get('percValue')
-                if 'uom' in sensorReportDict:
-                    preHashString = preHashString + sensorReportDict.get('uom')
-    return preHashString
+    """
+    texts = ""
+    for (childName, subChildOrder) in childOrder:
+        for child in root.iter(childName):
+            if subChildOrder:
+                texts += recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder)
+            else:
+                for text in child.itertext():
+                    texts += text
+    return texts
 
 
 def computePreHashFromXmlFile(path):
     """Read EPCIS XML document and generate pre-hashe strings.
 
     """
-    (count, xml_str) = readXmlFile(path)
-
-    totalCount = count['ObjectEvent'] + count['AggregationEvent'] + count['TransactionEvent'] + count['TransformationEvent'] + count['AssociationEvent']
+    root = readXmlFile(path)
 
     # Extract all events that are part of eventList
-    eventListString = xml_str[(re.search('<EventList>', xml_str).start(
-    ) + 11): (re.search('</EventList>', xml_str).end() - 12)]
+    eventListElement = None
+    for el in root.iter("EventList"):
+        if eventListElement:
+            logging.error("There should be at most one eventList tag!")
+        eventListElement = el
+    if eventListElement is None:
+        logging.error("No eventList tag found")
+        raise ValueError("No eventList tag found in " + path)
 
-    # Remove all <extension> and <baseExtension> tags, new lines, tabs
-    cleanedUpELS = eventListString.replace('<extension>', '').replace('</extension>', '').replace(
-        '<baseExtension>', '').replace('</baseExtension>', '').replace('\t', '').replace('\n', '')
-
-    # Add extracted events to eventList/remove them from cleanedUpELS
+    logging.debug("eventListElement=%s", eventListElement)
+    
+    # Sort events by type
+    # TODO: what about sorting among elements of the same type?
     eventList = []
-    for e in range(count['ObjectEvent']):
-        try:
-            eventSegment = (cleanedUpELS[re.search('<ObjectEvent>', cleanedUpELS).start(
-            ): re.search('</ObjectEvent>', cleanedUpELS).end()])
-            eventList.append(eventSegment)
-            cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
-        except AttributeError:
-            pass
-    for e in range(count['AggregationEvent']):
-        try:
-            eventSegment = (cleanedUpELS[re.search('<AggregationEvent>', cleanedUpELS).start(
-            ): re.search('</AggregationEvent>', cleanedUpELS).end()])
-            eventList.append(eventSegment)
-            cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
-        except AttributeError:
-            pass
-    for e in range(count['TransactionEvent']):
-        try:
-            eventSegment = (cleanedUpELS[re.search('<TransactionEvent>', cleanedUpELS).start(
-            ): re.search('</TransactionEvent>', cleanedUpELS).end()])
-            eventList.append(eventSegment)
-            cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
-        except AttributeError:
-            pass
-    for e in range(count['TransformationEvent']):
-        try:
-            eventSegment = (cleanedUpELS[re.search('<TransformationEvent>', cleanedUpELS).start(
-            ): re.search('</TransformationEvent>', cleanedUpELS).end()])
-            eventList.append(eventSegment)
-            cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
-        except AttributeError:
-            pass
-    for e in range(count['AssociationEvent']):
-        try:
-            eventSegment = (cleanedUpELS[re.search('<AssociationEvent>', cleanedUpELS).start(
-            ): re.search('</AssociationEvent>', cleanedUpELS).end()])
-            eventList.append(eventSegment)
-            cleanedUpELS = cleanedUpELS.replace(eventSegment, '')
-        except AttributeError:
-            pass
+    for e in eventListElement.iter("ObjectEvent"):
+        eventList += e
+    for e in eventListElement.iter("AggregationEvent"):
+        eventList += e
+    for e in eventListElement.iter("TransactionEvent"):
+        eventList += e
+    for e in eventListElement.iter("TransformationEvent"):
+        eventList += e
+    for e in eventListElement.iter("AssociationEvent"):
+        eventList += e
 
-    # Fetch all standard attribute values of the contained events, concatenate them and write the result into prehashStringList
+    logging.debug("eventList=%s", eventList)
+    
     preHashStringList = []
     for event in eventList:
+        logging.debug("prehashing event:\n%s", event)
         try:
-            tree2 = ET.ElementTree(ET.fromstring(event))
-            root2 = tree2.getroot()
-            preHashStringList.append(eventToPreHashString(root2, event))
-        except (IndexError, ET.ParseError):
+            preHashStringList += recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
+        except Exception as e:
+            logging.error("could not parse event:\n%s\n\nerror: %s", event, e)
             pass
         
         
     # To see/check concatenated value string before hash algorithm is performed:
-    logging.debug(preHashStringList)
+    logging.debug("preHashStringList = {}".format(preHashStringList))
 
     return preHashStringList
+
 
 def xmlEpcisHash(path, hashalg):
     """Read all EPCIS Events from the EPCIS XML document at path.
