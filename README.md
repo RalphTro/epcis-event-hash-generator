@@ -267,9 +267,9 @@ tbd
 
 ## Usage/Short test script 
 The script may be used as a command line utility like so:
-`
-python src/EpcisEventHashGenerator.py -f test/sensorObjectEvent.xml
-`
+```
+python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
+```
 
 
 ## References
