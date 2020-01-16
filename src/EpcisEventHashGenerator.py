@@ -412,7 +412,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="Generate a canonical hash from an EPCIS Document.")
-    parser.add_argument("-f", "--file", help="EPCIS file")
+    parser.add_argument("file", help="EPCIS file")
     parser.add_argument(
         "-a",
         "--algorithm",
