@@ -161,32 +161,20 @@ def computePreHashFromXmlFile(path):
 
     """
     root = readXmlFile(path)
-
-    # Extract all events that are part of eventList
-    eventListElement = None
-    for el in root.iter("EventList"):
-        if eventListElement:
-            logging.error("There should be at most one eventList tag!")
-        eventListElement = el
-    if eventListElement is None:
-        logging.error("No eventList tag found")
-        raise ValueError("No eventList tag found in " + path)
-
-    logging.debug("eventListElement=%s", eventListElement)
     
     # Sort events by type
     # TODO: what about sorting among elements of the same type?
     eventList = []
-    for e in eventListElement.iter("ObjectEvent"):
-        eventList += e
-    for e in eventListElement.iter("AggregationEvent"):
-        eventList += e
-    for e in eventListElement.iter("TransactionEvent"):
-        eventList += e
-    for e in eventListElement.iter("TransformationEvent"):
-        eventList += e
-    for e in eventListElement.iter("AssociationEvent"):
-        eventList += e
+    for e in root.iter("ObjectEvent"):
+        eventList.append(e)
+    for e in root.iter("AggregationEvent"):
+        eventList.append(e)
+    for e in root.iter("TransactionEvent"):
+        eventList.append(e)
+    for e in root.iter("TransformationEvent"):
+        eventList.append(e)
+    for e in root.iter("AssociationEvent"):
+        eventList.append(e)
 
     logging.debug("eventList=%s", eventList)
     
@@ -194,7 +182,7 @@ def computePreHashFromXmlFile(path):
     for event in eventList:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList += recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
+            preHashStringList.append(recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER))
         except Exception as e:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, e)
             pass
@@ -229,6 +217,9 @@ def xmlEpcisHash(path, hashalg):
         elif hashalg == 'sha512':
             hashString = 'ni:///sha-512;' + \
                 hashlib.sha512(preHashString.encode('utf-8')).hexdigest()
+        else:
+            raise ValueError("Unsupported Hashing Algorithm: " + hashString)
+        
         hashValueList.append(hashString)
 
     return hashValueList
