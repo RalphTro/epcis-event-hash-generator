@@ -8,7 +8,7 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 ## Usage (for the inconvenient)
 The script may be used as a command line utility like so:
 ```
-python src/EpcisEventHashGenerator.py -f test/sensorObjectEvent.xml
+python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 ```
 
 
@@ -290,7 +290,6 @@ To calculate the pre-hash string, extract and concatenate the values of the foll
 
 ## Installation
 tbd
-
 
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
