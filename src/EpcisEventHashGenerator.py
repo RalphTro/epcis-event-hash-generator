@@ -249,7 +249,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="Generate a canonical hash from an EPCIS Document.")
-    parser.add_argument("file", help="EPCIS file")
+    parser.add_argument("file", help="EPCIS file", nargs="+")
     parser.add_argument(
         "-a",
         "--algorithm",
@@ -262,6 +262,11 @@ def main():
         help="Set the log level. Default: INFO.",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="INFO")
+    parser.add_argument(
+        "-b",
+        "--batch",
+        help="If given, write the new line separated list of hashes for each input file into a sibling output file with the same name + '.hashes' instead of stdout.",
+        action="store_true")
 
     args = parser.parse_args()
 
@@ -275,10 +280,17 @@ def main():
         parser.print_help()
         sys.exit(1)
     else:
-        logging.debug("reading from file: '{}'".format(args.file))
+        logging.debug("reading from files: '{}'".format(args.file))
 
-    print("Hashes of the events contained in '{}':\n{}".format(
-        args.file, xmlEpcisHash(args.file, args.algorithm)))
+    for filename in args.file:
+        hashes = xmlEpcisHash(filename, args.algorithm)
+
+        if args.batch:
+            with open(filename+'.hashes', 'w') as outfile:
+                outfile.write("\n".join(hashes)+"\n")
+        else:
+            print("Hashes of the events contained in '{}':\n{}".format(
+                filename,hashes))
 
 
 # goto main if script is run as entrypoint
