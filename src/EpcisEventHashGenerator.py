@@ -150,13 +150,20 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     for (childName, subChildOrder) in childOrder:
         texts+="|"
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
+        listOfValues = []
         for child in root.iterfind(childName):
             if subChildOrder:
-                texts += recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder)
+                listOfValues.append(recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder))
             else:
                 for text in child.itertext():
                     #logging.debug("Adding text '%s' from child %s", text, child)
-                    texts += text
+                    listOfValues.append(text)
+        #sort list of values of children with the same name to resolve issue 10
+        logging.debug("sorting values %s", listOfValues)
+        listOfValues.sort()
+        logging.debug("sorted: %s", listOfValues)
+        texts += "".join(listOfValues)
+
         #child name might also refer to an attribute
         texts += root.get(childName, "")
         
