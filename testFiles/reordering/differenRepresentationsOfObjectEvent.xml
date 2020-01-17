@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2019-10-21T14:59:02.099+02:00" xmlns:cbvmda="urn:epcglobal:cbv:mda" xmlns:example="http://ns.example.com/epcis" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<EPCISBody>
+		<EventList>
+			<ObjectEvent>
+				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
+				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+				<epcList>
+					<epc>urn:epc:id:sscc:5200001.0111111146</epc>
+				</epcList>
+				<action>OBSERVE</action>
+				<bizStep>urn:epcglobal:cbv:bizstep:departing</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:5200001.99901.0</id>
+				</readPoint>
+				<bizTransactionList>
+					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
+					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
+				</bizTransactionList>
+				<extension>
+					<sourceList>
+						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
+					</sourceList>
+					<destinationList>
+						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
+						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
+					</destinationList>
+				</extension>
+			</ObjectEvent>
+			<ObjectEvent>
+				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
+				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+				<epcList>
+					<epc>urn:epc:id:sscc:5200001.0111111146</epc>
+				</epcList>
+				<action>OBSERVE</action>
+				<bizStep>urn:epcglobal:cbv:bizstep:departing</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:5200001.99901.0</id>
+				</readPoint>
+				<bizTransactionList>
+					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
+					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
+				</bizTransactionList>
+				<extension>
+					<sourceList>
+						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
+					</sourceList>
+					<destinationList>
+						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
+						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
+					</destinationList>
+				</extension>
+			</ObjectEvent>
+			<ObjectEvent>
+				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
+				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+				<epcList>
+					<epc>urn:epc:id:sscc:5200001.0111111146</epc>
+				</epcList>
+				<action>OBSERVE</action>
+				<bizStep>urn:epcglobal:cbv:bizstep:departing</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:5200001.99901.0</id>
+				</readPoint>
+				<bizTransactionList>
+					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
+					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
+				</bizTransactionList>
+				<extension>
+					<sourceList>
+						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
+					</sourceList>
+					<destinationList>
+						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
+						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
+					</destinationList>
+				</extension>
+			</ObjectEvent>
+		</EventList>
+	</EPCISBody>
+</epcis:EPCISDocument>
