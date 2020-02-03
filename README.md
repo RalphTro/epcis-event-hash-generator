@@ -84,7 +84,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All individual event IDs being part of the correctiveEventIDs element MUST be sequenced <b>in lexicographical order</b></i></td>
+            <td colspan=5><i>All individual event IDs being part of the correctiveEventIDs element MUST be sequenced in lexicographical order</i></td>
         </tr>
        <tr>
           <td>7</td>
@@ -94,26 +94,26 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
       </tr>
       <tr>
         <td/>
-        <td colspan=5><i>All individual bizTransaction IDs being part of the bizTransactionList MUST be sequenced <b>in lexicographical order</b>  </i></td>
+        <td colspan=5><i>All individual bizTransaction IDs being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
       </tr>
       <tr>
             <td>8</td>
             <td>epcList – epc </td>
-            <td>parentID, <b>prefixed with one lowercase letter 'p'</b></td>
-            <td>parentID, <b>prefixed with one lowercase letter 'p'</b></td>
-            <td>inputEPCList – epc, <b>prefixed with the two lowercase letters 'ie'</b>, followed by the epc values</td>
-            <td>parentID, <b>prefixed with one lowercase letter 'p'</b></td>
+            <td>parentID, prefixed with one lowercase letter 'p'</td>
+            <td>parentID, prefixed with one lowercase letter 'p'</td>
+            <td>inputEPCList – epc, <b>prefixed with the two lowercase letters 'ie', followed by the epc values</td>
+            <td>parentID, prefixed with one lowercase letter 'p'</td>
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All EPC/EPC Class values being part of the respective lists MUST be sequenced <b>in lexicographical order</b></i>             </td>
+            <td colspan=5><i>All EPC/EPC Class values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>9</td>
             <td>quantityList - epcClass</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
-            <td>inputQuantityList – epcClass, <b>prefixed with the two lowercase letters 'iq'</b>, followed by the quantity values</td></td>
+            <td>inputQuantityList – epcClass, prefixed with the two lowercase letters 'iq', followed by the quantity values</td></td>
             <td>childEPCs – epc</td>
         </tr>
         <tr>
@@ -121,13 +121,13 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>-</td>
             <td>childQuantityList – epcClass</td>
             <td>quantityList - epcClass</td>
-            <td>outputEPCList – epc, <b>prefixed with the two lowercase letters 'oe'</b>, followed by the epc values</td></td>
+            <td>outputEPCList – epc, prefixed with the two lowercase letters 'oe', followed by the epc values</td></td>
             <td>childQuantityList – epcClassc</td>
         </tr>
         <tr>
             <td>11</td>
             <td colspan=3>-</td>
-            <td>outputQuantityList – epcClass, <b>prefixed with the two lowercase letters 'oq'</b>, followed by the quantity values</td></td>
+            <td>outputQuantityList – epcClass, prefixed with the two lowercase letters 'oq', followed by the quantity values</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
@@ -170,7 +170,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced <b>in lexicographical order</i></td>
+            <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
             <td>20</td>
@@ -283,6 +283,16 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         <tr>
             <td>47</td>
             <td colspan=5>sensorElement – sensorReport – uom</td>
+        </tr>
+        <tr>
+            <td>48</td>
+            <td colspan=5>ILMD</td>
+            <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
+        </tr>
+        <tr>
+            <td>49</td>
+            <td colspan=5>User extensions</td>
+            <td colspan=5><i>All user extension field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
     </tbody>
 </table>
