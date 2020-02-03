@@ -4,9 +4,9 @@
 .. module:: EpcisEventHashGenerator
    :synopsis: EPCIS event hash calculator.
 
-.. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>
+.. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
 
-Copyright 2019 Ralph Troeger
+Copyright 2019-2020 Ralph Troeger, Sebastian Schmittner
 
 This program is free software: you can redistribute it and/or modify
 it under the terms given in the LICENSE file.
@@ -148,14 +148,22 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """
     texts = ""
     for (childName, subChildOrder) in childOrder:
+        texts+="|"
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
+        listOfValues = []
         for child in root.iterfind(childName):
             if subChildOrder:
-                texts += recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder)
+                listOfValues.append(recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder))
             else:
                 for text in child.itertext():
                     #logging.debug("Adding text '%s' from child %s", text, child)
-                    texts += text
+                    listOfValues.append(text)
+        #sort list of values of children with the same name to resolve issue 10
+        logging.debug("sorting values %s", listOfValues)
+        listOfValues.sort()
+        logging.debug("sorted: %s", listOfValues)
+        texts += "".join(listOfValues)
+
         #child name might also refer to an attribute
         texts += root.get(childName, "")
         
@@ -248,7 +256,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="Generate a canonical hash from an EPCIS Document.")
-    parser.add_argument("file", help="EPCIS file")
+    parser.add_argument("file", help="EPCIS file", nargs="+")
     parser.add_argument(
         "-a",
         "--algorithm",
@@ -261,6 +269,11 @@ def main():
         help="Set the log level. Default: INFO.",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
         default="INFO")
+    parser.add_argument(
+        "-b",
+        "--batch",
+        help="If given, write the new line separated list of hashes for each input file into a sibling output file with the same name + '.hashes' instead of stdout.",
+        action="store_true")
 
     args = parser.parse_args()
 
@@ -274,10 +287,17 @@ def main():
         parser.print_help()
         sys.exit(1)
     else:
-        logging.debug("reading from file: '{}'".format(args.file))
+        logging.debug("reading from files: '{}'".format(args.file))
 
-    print("Hashes of the events contained in '{}':\n{}".format(
-        args.file, xmlEpcisHash(args.file, args.algorithm)))
+    for filename in args.file:
+        hashes = xmlEpcisHash(filename, args.algorithm)
+
+        if args.batch:
+            with open(filename+'.hashes', 'w') as outfile:
+                outfile.write("\n".join(hashes)+"\n")
+        else:
+            print("Hashes of the events contained in '{}':\n{}".format(
+                filename,hashes))
 
 
 # goto main if script is run as entrypoint
