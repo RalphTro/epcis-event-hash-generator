@@ -28,10 +28,10 @@ This is why industry needs to have a consistent, reliable approach to create a h
 
 For any algorithm that is to be considered a faithful hash of an EPCIS event, we require the following properties:
 
-- Different (valid) serialisations of the **same event** need to yield the **same hash**.
-- In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
-- The same event serialised in JSON-LD or XML must yield the same hash.
-- Any relevant **change of an event** must lead to a **change of the hash**. In particular, the hash must change if
++ Different (valid) serialisations of the **same event** need to yield the **same hash**.
++ In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
++ The same event serialised in JSON-LD or XML must yield the same hash.
++ Any relevant **change of an event** must lead to a **change of the hash**. In particular, the hash must change if
   - any value of any field present in the event is changed.
   - a field is added or removed.
 
@@ -84,7 +84,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>Note: each individual event ID in exactly the same sequence as it appears in the correctiveEventIDs element<i/></td>
+            <td colspan=5><i>Note: each individual event ID which is part of the correctiveEventIDs element, *in lexicographical order*</i></td>
         </tr>
        <tr>
           <td>7</td>
