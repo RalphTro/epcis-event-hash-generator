@@ -14,12 +14,12 @@ python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 
 
 ## Introduction  
-There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b>  - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner provider who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it via the eventID.
+There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID.
 EPCIS events have a couple of differences to other electronic documents:
 + They are embedded in an EPCIS document that can contain multiple events 
 + As of EPCIS 2.0, it is permitted to capture and share EPCIS data through two different syntaxes (XML and JSON-LD)
 + EPCIS events provides ample flexibility to include user-specific extensions 
-+ When expressed in JSON, the sequence of elements may vary
++ When expressed in JSON-LD, the sequence of elements may vary
 
 This is why industry needs to have a consistent, reliable approach to create a hash value that is viable to uniquely identify a specific EPCIS event. 
 
@@ -29,9 +29,8 @@ This is why industry needs to have a consistent, reliable approach to create a h
 For any algorithm that is to be considered a faithful hash of an EPCIS event, we require the following properties:
 
 - Different (valid) serialisations of the **same event** need to yield the **same hash**.
-  - In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
-  - The same event serialised in JSON or XML must yield the same hash.
-
+- In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
+- The same event serialised in JSON-LD or XML must yield the same hash.
 - Any relevant **change of an event** must lead to a **change of the hash**. In particular, the hash must change if
   - any value of any field present in the event is changed.
   - a field is added or removed.
@@ -39,9 +38,9 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 ## Algorithm
 
-For hashing strings, standard implementations of the relevant hash algorithms (such as sha256) are avaiable for all relevant languages. Hence the focus here is on deriving a so calle *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
+For hashing strings, standard implementations of the relevant hash algorithms (such as sha256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate the values of the following attributes of a given EPCIS event according to the following sequence, i.e. in exactly this order. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
+To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
 <table>
     <thead>
@@ -302,7 +301,7 @@ tbd
 
 <img alt="MIT" style="border-width:0" src="https://opensource.org/files/OSIApproved_1.png" width="150px;"/><br />
 
-Copyright 2019 Ralph Tröger <ralph.troeger@gs1.de>
+Copyright 2019 Ralph Tröger <ralph.troeger@gs1.de>, Sebastian Schmittner (schmittner@eecc.info)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
