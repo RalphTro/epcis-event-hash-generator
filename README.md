@@ -286,8 +286,11 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td>48</td>
-            <td colspan=5>ILMD</td>
-        </tr>
+            <td>ILMD</td>
+            <td colspan=2>-</td>
+            <td>ILMD</td>
+            <td>-</td>
+        </tr>      
         <tr>
             <td/>
             <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
@@ -295,6 +298,9 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         <tr>
             <td>49</td>
             <td colspan=5>User extensions</td>
+        </tr>
+        <tr>
+            <td/>
             <td colspan=5><i>All user extension field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
     </tbody>
