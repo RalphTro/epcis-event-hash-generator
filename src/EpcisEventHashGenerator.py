@@ -4,9 +4,9 @@
 .. module:: EpcisEventHashGenerator
    :synopsis: EPCIS event hash calculator.
 
-.. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>
+.. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
 
-Copyright 2019 Ralph Troeger
+Copyright 2019-2020 Ralph Troeger, Sebastian Schmittner
 
 This program is free software: you can redistribute it and/or modify
 it under the terms given in the LICENSE file.
