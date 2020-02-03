@@ -101,7 +101,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>epcList – epc </td>
             <td>parentID, prefixed with one lowercase letter 'p'</td>
             <td>parentID, prefixed with one lowercase letter 'p'</td>
-            <td>inputEPCList – epc, <b>prefixed with the two lowercase letters 'ie', followed by the epc values</td>
+            <td>inputEPCList – epc, prefixed with the two lowercase letters 'ie', followed by the epc values</td>
             <td>parentID, prefixed with one lowercase letter 'p'</td>
         </tr>
         <tr>
@@ -287,6 +287,9 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         <tr>
             <td>48</td>
             <td colspan=5>ILMD</td>
+        </tr>
+        <tr>
+            <td/>
             <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
