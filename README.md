@@ -84,7 +84,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>Note: each individual event ID which is part of the correctiveEventIDs element, *in lexicographical order*</i></td>
+            <td colspan=5><i>Note: each individual event ID which is part of the correctiveEventIDs element, <b>in lexicographical order</b></i></td>
         </tr>
        <tr>
           <td>7</td>
