@@ -98,11 +98,11 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
       </tr>
       <tr>
             <td>8</td>
-            <td>epcList – epc </td>
-            <td>parentID, prefixed with one lowercase letter 'p'</td>
-            <td>parentID, prefixed with one lowercase letter 'p'</td>
-            <td>inputEPCList – epc, prefixed with the two lowercase letters 'ie', followed by the epc values</td>
-            <td>parentID, prefixed with one lowercase letter 'p'</td>
+            <td>epcList – epc</td>
+            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
+            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
+            <td>[prefix with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
+            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
         </tr>
         <tr>
             <td/>
@@ -113,22 +113,22 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
-            <td>[prefix with two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>[prefix with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td>childEPCs – epc</td>
         </tr>
         <tr>
             <td>10</td>
             <td/>
-            <td>childQuantityList – epcClass</td>
-            <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
-            <td>outputEPCList – epc, prefixed with the two lowercase letters 'oe', followed by the epc values</td></td>
-            <td>childQuantityList – epcClassc</td>
+            <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
+            <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
+            <td>[prefix with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
+            <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
             <td>11</td>
             <td/>
             <td colspan=2>-</td>
-            <td>outputQuantityList – epcClass, prefixed with the two lowercase letters 'oq', followed by the quantity values</td></td>
+            <td>[prefix with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
