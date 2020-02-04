@@ -14,7 +14,7 @@ def disabled(reason):
     return _func
 
 
-@disabled("Currently, User Extensions are ignored")
+
 def testDistinct():
     """
     Assert that there are no collisions, i.e. different events must have different hashes.

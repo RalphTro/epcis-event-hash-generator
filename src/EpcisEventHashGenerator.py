@@ -36,46 +36,47 @@ PROP_ORDER = [
          ('reason', None),
          ('correctiveEventIDs/correctiveEventID', None)
      ]),
-    ('bizTransactionList/bizTransaction', None),
+    ('bizTransactionList',[('bizTransaction', None)]),
     ('parentID', None),
-    ('epcList/epc', None),
-    ('inputEPCList/epc', None),
-    ('childEPCs/epc', None),
-    ('quantityList/quantityElement',
+    ('epcList', [('epc', None)]),
+    ('inputEPCList', [('epc', None)]),
+    ('childEPCs', [('epc', None)]),
+    ('quantityList',[('quantityElement',
      [
          ('epcClass', None),
          ('quantity', None),
          ('uom', None)
-     ]),
-    ('childQuantityList/quantityElement',
+     ])]),
+    ('childQuantityList',[('quantityElement',
      [
          ('epcClass', None),
          ('quantity', None),
          ('uom', None)
-     ]),
-    ('inputQuantityList/quantityElement',
+     ])
+    ]),
+    ('inputQuantityList',[('quantityElement',
      [
          ('epcClass', None),
          ('quantity', None),
          ('uom', None)
-     ]),
-    ('outputEPCList/epc', None),
-    ('outputQuantityList/quantityElement',
+     ])]),
+    ('outputEPCList',[('epc', None)]),
+    ('outputQuantityList',[('quantityElement',
      [
          ('epcClass', None),
          ('quantity', None),
          ('uom', None)
-     ]),
+     ])]),
     ('action', None),
     ('transformationID', None),
     ('bizStep', None),
     ('disposition', None),
-    ('readPoint/id', None),
-    ('bizLocation/id', None),
-    ('bizTransactionList/bizTransaction', None),
-    ('sourceList/source', None),
-    ('destinationList/destination', None),
-    ('sensorElementList/sensorElement',
+    ('readPoint',[('id', None)]),
+    ('bizLocation',[('id', None)]),
+    ('bizTransactionList',[('bizTransaction', None)]),
+    ('sourceList',[('source', None)]),
+    ('destinationList',[('destination', None)]),
+    ('sensorElementList',[('sensorElement',
      [('sensorMetaData',
       [
           ('time', None),
@@ -109,7 +110,7 @@ PROP_ORDER = [
            ('percValue', None),
            ('uom', None),
        ])#end sensorReport
-     ])#end sensorElement    
+     ])])#end sensorElement    
     ]
 """The property order data structure describes the ordering in which
 to concatenate the values of the fields of EPCIS event. It is a list
@@ -122,6 +123,7 @@ For brevity, it is permissive to use e.g.
     ('readPoint/id', None)
 instead of
     ('readPoint',[('id', None)])
+but NOT for top level elements.
 
 """
 
@@ -148,7 +150,7 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """
     texts = ""
     for (childName, subChildOrder) in childOrder:
-        texts+="|"
+        texts += "|"
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
         listOfValues = []
         for child in root.iterfind(childName):
@@ -168,6 +170,31 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
         texts += root.get(childName, "")
         
                     
+    return texts
+
+
+def gatherElementsNotInChildOrder(root, childOrder):
+    """
+    Collects vendor extensions not covered by the defined child order. Consumes the root.
+    """
+    texts = ""
+    
+    for (childName, _) in childOrder:
+        covered_children = root.findall(childName)
+        logging.debug("Children covered by ordering: %s", covered_children)
+        for child in covered_children:
+            root.remove(child)
+
+    remaining_children = list(root)
+    logging.debug("Remaining elements: %s", remaining_children)
+    for child in remaining_children:
+        texts += "|"
+        listOfValues = []
+        for text in child.itertext():
+            listOfValues.append(text)
+        listOfValues.sort()
+        texts += "".join(listOfValues)
+      
     return texts
 
 
@@ -197,7 +224,10 @@ def computePreHashFromXmlFile(path):
     for event in eventList:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER))
+            preHashStringList.append(
+                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
+                + gatherElementsNotInChildOrder(event, PROP_ORDER)
+            )
         except Exception as e:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, e)
             pass
