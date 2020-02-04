@@ -110,7 +110,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td>9</td>
-            <td>quantityList - epcClass</td>
+            <td>quantityList - quantityElement - epcClass</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
             <td>inputQuantityList – epcClass, prefixed with the two lowercase letters 'iq', followed by the quantity values</td></td>
@@ -118,7 +118,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td>10</td>
-            <td>-</td>
+            <td>quantityList - quantityElement - quantity</td>
             <td>childQuantityList – epcClass</td>
             <td>quantityList - epcClass</td>
             <td>outputEPCList – epc, prefixed with the two lowercase letters 'oe', followed by the epc values</td></td>
@@ -126,7 +126,8 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td>11</td>
-            <td colspan=3>-</td>
+            <td>quantityList - quantityElement - uom</td>
+            <td colspan=2>-</td>
             <td>outputQuantityList – epcClass, prefixed with the two lowercase letters 'oq', followed by the quantity values</td></td>
             <td colspan=1>-</td>
         </tr>
