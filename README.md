@@ -101,34 +101,38 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>epcList – epc</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
-            <td>[prefix with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
+            <td>[prefix the entire ID sequence with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All EPC/EPC Class values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
+            <td colspan=5><i>All EPC values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>9</td>
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
-            <td>[prefix with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>[prefix the entire ID sequence with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td>childEPCs – epc</td>
+        </tr>
+        <tr>
+            <td/>
+            <td colspan=5><i>All Quantity Elements being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>10</td>
             <td/>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
             <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
-            <td>[prefix with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
+            <td>[prefix the entire ID sequence with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
             <td>11</td>
             <td/>
             <td colspan=2>-</td>
-            <td>[prefix with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>[prefix the entire ID sequence with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
@@ -172,6 +176,10 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         <tr>
             <td/>
             <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced in lexicographical order</td>
+        </tr>
+        <tr>
+            <td>20</td>
+            <td colspan=5>sensorElement – sensorMetaData (time + startTime + endTime + deviceID + deviceMetaData + rawData + dataProcessingMethod + bizRules)</td>
         </tr>
         <tr>
             <td>20</td>
