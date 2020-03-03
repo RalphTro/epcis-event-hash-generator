@@ -38,11 +38,11 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 ## Algorithm
 
-For hashing strings, standard implementations of the relevant hash algorithms (such as sha256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
+For hashing strings, standard implementations of the relevant hash algorithms (such as sha-256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. First, ALL values of ALL EPCIS standard fields (*except recordTime*), *separated by a comma (',')* are concatenated as one string. Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
+To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs according to the following sequence, i.e. in exactly this order. First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
 
-Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
+Note that all key/value pairs MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
 <table>
     <thead>
@@ -219,6 +219,10 @@ Note that all values MUST be added in the identical order as specified below (co
         </tr>
     </tbody>
 </table>
+
+For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
+
+<img src="hashingAlgorithmLogicIllustration.jpg">
 
 ## Installation
 tbd
