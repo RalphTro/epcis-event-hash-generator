@@ -268,7 +268,7 @@ def xmlEpcisHash(path, hashalg):
         
         hashValueList.append(hashString)
 
-    return hashValueList
+    return (hashValueList, preHashStringList)
 
 
 def main():
@@ -305,6 +305,12 @@ def main():
         "--batch",
         help="If given, write the new line separated list of hashes for each input file into a sibling output file with the same name + '.hashes' instead of stdout.",
         action="store_true")
+    parser.add_argument(
+        "-p",
+        "--prehash",
+        help="If given, also output the prehash string to stdout. Output to a .prehashes file, if combined with -b.",
+        action="store_true")
+    
 
     args = parser.parse_args()
 
@@ -322,14 +328,18 @@ def main():
 
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
-        hashes = xmlEpcisHash(filename, args.algorithm)
+        (hashes, prehashes) = xmlEpcisHash(filename, args.algorithm)
 
         if args.batch:
             with open(filename+'.hashes', 'w') as outfile:
                 outfile.write("\n".join(hashes)+"\n")
+            if args.prehash:
+                with open(filename+'.prehashes', 'w') as outfile:
+                    outfile.write("\n".join(prehashes)+"\n")
         else:
-            print("Hashes of the events contained in '{}':\n{}".format(
-                filename,hashes))
+            print("\n\nHashes of the events contained in '{}':\n{}".format(filename,hashes))
+            if args.prehash:
+                print("\nPre-hash strings:\n{}".format(prehashes))
 
 
 # goto main if script is run as entrypoint
