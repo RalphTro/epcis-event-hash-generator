@@ -17,9 +17,9 @@ python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID.
 EPCIS events have a couple of differences to other electronic documents:
 + They are embedded in an EPCIS document that can contain multiple events 
-+ As of EPCIS 2.0, it is permitted to capture and share EPCIS data through two different syntaxes (XML and JSON-LD)
++ As of EPCIS 2.0, it is permitted to capture and share EPCIS data through two different syntaxes (XML and JSON/JSON-LD)
 + EPCIS events provides ample flexibility to include user-specific extensions 
-+ When expressed in JSON-LD, the sequence of elements may vary
++ When expressed in JSON/JSON-LD, the sequence of elements may vary
 
 This is why industry needs to have a consistent, reliable approach to create a hash value that is viable to uniquely identify a specific EPCIS event. 
 
@@ -30,7 +30,7 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 + Different (valid) serialisations of the **same event** need to yield the **same hash**.
 + In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
-+ The same event serialised in JSON-LD or XML must yield the same hash.
++ The same event serialised in JSON/JSON-LD or XML must yield the same hash.
 + Any relevant **change of an event** must lead to a **change of the hash**. In particular, the hash must change if
   - any value of any field present in the event is changed.
   - a field is added or removed.
@@ -40,7 +40,9 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 For hashing strings, standard implementations of the relevant hash algorithms (such as sha256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
+To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. First, ALL values of ALL EPCIS standard fields (*except recordTime*), *separated by a comma (',')* are concatenated as one string. Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), followed by an equal sign ('=') and the actual value.  
+
+Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
 <table>
     <thead>
@@ -99,10 +101,10 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
       <tr>
             <td>8</td>
             <td>epcList – epc</td>
-            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
-            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
-            <td>[prefix the entire epc sequence with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
-            <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
+            <td>parentID</td>
+            <td>parentID</td>
+            <td>inputEPCList – epc</td>
+            <td>parentID</td>
         </tr>
         <tr>
             <td/>
@@ -113,7 +115,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
-            <td>[prefix the entire quantityElement sequence with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td>childEPCs – epc</td>
         </tr>
         <tr>
@@ -125,14 +127,14 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td/>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
             <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
-            <td>[prefix the entire epc sequence with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
+            <td>outputEPCList – epc</td></td>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
             <td>11</td>
             <td/>
             <td colspan=2>-</td>
-            <td>[prefix the entire quantityElement sequence with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
@@ -206,7 +208,10 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All user extension field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
+            <td colspan=5><i>All user extension element names irrespective of their level MUST be prefixed with their namespace, followed by a pound sign ('#'). If they contain a value, the value MUST be prefixed with an equal sign ('='). <br>
+              (Example: https://ns.example.com/epcis#myField=abc123) <br>
+              Then, all fields belonging to the same level MUST be sequenced in lexicographical order according to their contained values.
+              In contrast to all EPCIS standard fields, a comma MUST NOT be inserted to separate several user extensions. 
         </tr>
     </tbody>
 </table>
