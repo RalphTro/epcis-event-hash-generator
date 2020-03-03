@@ -20,7 +20,7 @@ file for details.
 
 import logging
 import sys
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ElementTree
 from collections import Counter
 import re
 import hashlib
@@ -140,7 +140,7 @@ def readXmlFile(path):
         '<baseExtension>', '').replace('</baseExtension>', '')
     logging.debug("removed extensions tags:\n%s", data)
 
-    return ET.fromstring(data)
+    return ElementTree.fromstring(data)
 
 
 def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
@@ -203,20 +203,17 @@ def computePreHashFromXmlFile(path):
     """Read EPCIS XML document and generate pre-hashe strings.
 
     """
-    root = readXmlFile(path)
+    try:
+        root = readXmlFile(path);
+        logging.debug(root);
+        events = list(root.find("*EventList"))
+    except Exception as e:
+        logging.debug(e)
+        logging.error("'%s' does not contain an epcis xml document with EventList.", path)
+        return []
     
-    # Sort events by type
-    # TODO: what about sorting among elements of the same type?
     eventList = []
-    for e in root.iter("ObjectEvent"):
-        eventList.append(e)
-    for e in root.iter("AggregationEvent"):
-        eventList.append(e)
-    for e in root.iter("TransactionEvent"):
-        eventList.append(e)
-    for e in root.iter("TransformationEvent"):
-        eventList.append(e)
-    for e in root.iter("AssociationEvent"):
+    for e in events:
         eventList.append(e)
 
     logging.debug("eventList=%s", eventList)
@@ -225,7 +222,7 @@ def computePreHashFromXmlFile(path):
     for event in eventList:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(
+            preHashStringList.append(e.tag + ":" +
                 recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)[1:]
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
