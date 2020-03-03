@@ -20,8 +20,6 @@ file for details.
 
 import logging
 import sys
-import xml.etree.ElementTree as ElementTree
-from collections import Counter
 import re
 import hashlib
 
@@ -128,19 +126,6 @@ but NOT for top level elements.
 
 """
 
-def readXmlFile(path):
-    """Read XML file, remove useless extension tags and return parsed root element.
-
-    """
-    with open(path, 'r') as file:
-        data = file.read()
-
-    #TODO: this should not actually be needed:
-    data = data.replace('<extension>', '').replace('</extension>', '').replace(
-        '<baseExtension>', '').replace('</baseExtension>', '')
-    logging.debug("removed extensions tags:\n%s", data)
-
-    return ElementTree.fromstring(data)
 
 
 def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
