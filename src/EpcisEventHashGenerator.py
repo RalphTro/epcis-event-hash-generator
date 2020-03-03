@@ -25,8 +25,6 @@ from collections import Counter
 import re
 import hashlib
 
-DIVISION_CHAR = ","
-
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
@@ -232,7 +230,7 @@ def computePreHashFromXmlFile(path):
     for event in events:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(event.tag + DIVISION_CHAR +
+            preHashStringList.append(event.tag +
                 recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
