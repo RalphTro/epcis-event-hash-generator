@@ -40,7 +40,7 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 For hashing strings, standard implementations of the relevant hash algorithms (such as sha256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. First, ALL values of ALL EPCIS standard fields (*except recordTime*), *separated by a comma (',')* are concatenated as one string. Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), followed by an equal sign ('=') and the actual value.  
+To calculate the pre-hash string, extract and concatenate the values of EPCIS event attributes according to the following sequence, i.e. in exactly this order. First, ALL values of ALL EPCIS standard fields (*except recordTime*), *separated by a comma (',')* are concatenated as one string. Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
 
 Note that all values MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
@@ -58,14 +58,18 @@ Note that all values MUST be added in the identical order as specified below (co
     <tbody>
         <tr>
             <td>1</td>
-            <td colspan=5>eventTime</td>
+            <td colspan=5>eventType</td>
         </tr>
         <tr>
             <td>2</td>
-            <td colspan=5>eventTimeZoneOffset</td>
+            <td colspan=5>eventTime</td>
         </tr>
         <tr>
             <td>3</td>
+            <td colspan=5>eventTimeZoneOffset</td>
+        </tr>
+        <tr>
+            <td>4</td>
             <td colspan=5>eventID</td>
         </tr>
         <tr>
@@ -73,15 +77,15 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>Note: Even if an event ID value is already present (which is NOT required!), this method may still be beneficial, e.g. when organisations require to store a unique fingerprint of EPCIS events on a distributed shared ledger.<i/></td>
         </tr>
         <tr>
-            <td>4</td>
+            <td>5</td>
             <td colspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
         <tr>
-            <td>5</td>
+            <td>6</td>
             <td colspan=5>ErrorDeclaration – reason</td>
         </tr>
         <tr>
-            <td>6</td>
+            <td>7</td>
             <td colspan=5>ErrorDeclaration – correctiveEventIDs</td>
         </tr>
         <tr>
@@ -89,7 +93,7 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All individual event IDs being part of the correctiveEventIDs element MUST be sequenced in lexicographical order</i></td>
         </tr>
        <tr>
-          <td>7</td>
+          <td>8</td>
           <td colspan=2>-</td>
           <td>bizTransactionList – bizTransaction</td>
           <td colspan=2>-</td>
@@ -99,7 +103,7 @@ Note that all values MUST be added in the identical order as specified below (co
         <td colspan=5><i>All individual bizTransaction IDs being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
       </tr>
       <tr>
-            <td>8</td>
+            <td>9</td>
             <td>epcList – epc</td>
             <td>parentID</td>
             <td>parentID</td>
@@ -111,7 +115,7 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All EPC values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>9</td>
+            <td>10</td>
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
@@ -123,7 +127,7 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All Quantity Elements being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>10</td>
+            <td>11</td>
             <td/>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
             <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
@@ -131,14 +135,14 @@ Note that all values MUST be added in the identical order as specified below (co
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
-            <td>11</td>
+            <td>12</td>
             <td/>
             <td colspan=2>-</td>
             <td>outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
-            <td>12</td>
+            <td>13</td>
             <td>action</td>
             <td>action</td>
             <td>action</td>
@@ -146,33 +150,33 @@ Note that all values MUST be added in the identical order as specified below (co
             <td>action</td>
         </tr>
         <tr>
-            <td>13</td>
+            <td>14</td>
             <td colspan=5>bizStep</td>
         </tr>
         <tr>
-            <td>14</td>
+            <td>15</td>
             <td colspan=5>disposition</td>
         </tr>
         <tr>
-            <td>15</td>
+            <td>16</td>
             <td colspan=5>readPoint</td>
         </tr>
         <tr>
-            <td>16</td>
+            <td>17</td>
             <td colspan=5>bizLocation</td>
         </tr>
         <tr>
-            <td>17</td>
+            <td>18</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
             <td>-</td>
             <td colspan=2>bizTransactionList – bizTransaction</td>
         </tr>
         <tr>
-            <td>18</td>
+            <td>19</td>
             <td colspan=5>sourceList – source</td>
         </tr>
         <tr>
-            <td>19</td>
+            <td>20</td>
             <td colspan=5>destinationList – destination</td>
         </tr>
         <tr>
@@ -180,11 +184,11 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
-            <td>20</td>
+            <td>21</td>
             <td colspan=5>sensorElement – sensorMetaData (time + startTime + endTime + deviceID + deviceMetaData + rawData + dataProcessingMethod + bizRules)</td>
         </tr>
         <tr>
-            <td>21</td>
+            <td>22</td>
             <td colspan=5>sensorElement – sensorReport (type + deviceID + deviceMetaData + rawData + dataProcessingMethod + time + microorganism + chemicalSubstance + value + stringValue + booleanValue + hexBinaryValue + uriValue + minValue + maxValue + meanValue + sDev + percRank + percValue + uom)</td>
         </tr>
         <tr>
@@ -192,7 +196,7 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All Sensor Elements MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>22</td>
+            <td>23</td>
             <td>ILMD</td>
             <td colspan=2>-</td>
             <td>ILMD</td>
@@ -203,7 +207,7 @@ Note that all values MUST be added in the identical order as specified below (co
             <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
-            <td>23</td>
+            <td>24</td>
             <td colspan=5>User extensions</td>
         </tr>
         <tr>
