@@ -1,2 +1,4 @@
-TransformationEvent:2019-09-10T08:40:21.3142715Z,+02:00,,,,,,,urn:epc:id:sgtin:4047111.012345.1111urn:epc:id:sgtin:4047111.012345.2222,,,,,,urn:epc:id:sgtin:4047111.012345.3333,,,,urn:epcglobal:cbv:bizstep:repairing,urn:epcglobal:cbv:disp:damaged,,,,,,
-TransformationEvent:2019-09-10T08:40:21.3142715Z,+02:00,,,,,,,urn:epc:id:sgtin:4047111.012345.1111,,,,,,urn:epc:id:sgtin:4047111.012345.2222urn:epc:id:sgtin:4047111.012345.3333,,,,urn:epcglobal:cbv:bizstep:repairing,urn:epcglobal:cbv:disp:damaged,,,,,,
+TransformationEvent,2019-09-10T08:40:21.3142715Z,+02:00,,,,,,,urn:epc:id:sgtin:4047111.012345.1111urn:epc:id:sgtin:4047111.012345.2222,,,,,,urn:epc:id:sgtin:4047111.012345.3333,,,,urn:epcglobal:cbv:bizstep:repairing,urn:epcglobal:cbv:disp:damaged,,,,,,=
+          
+TransformationEvent,2019-09-10T08:40:21.3142715Z,+02:00,,,,,,,urn:epc:id:sgtin:4047111.012345.1111,,,,,,urn:epc:id:sgtin:4047111.012345.2222urn:epc:id:sgtin:4047111.012345.3333,,,,urn:epcglobal:cbv:bizstep:repairing,urn:epcglobal:cbv:disp:damaged,,,,,,=
+          

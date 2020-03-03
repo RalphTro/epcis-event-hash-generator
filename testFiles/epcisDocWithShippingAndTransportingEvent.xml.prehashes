@@ -1,2 +1,4 @@
-ObjectEvent:2020-02-20T12:50:00.000+01:00,+01:00,,,,urn:epcglobal:cbv:bt:4012345000009:ASN1099,,,urn:epc:id:sscc:4012345.1112223334,,,,,,,,OBSERVE,,urn:epcglobal:cbv:bizstep:departing,,,urn:epc:id:sgln:4012345.00022.0,,,urn:epcglobal:cbv:bt:4012345000009:ASN1099,,urn:epc:id:sgln:4012345.00000.0,,urn:epc:id:sgln:4023333.00000.0,
-ObjectEvent:2020-02-20T16:50:00.000+01:00,+01:00,,,,,,urn:epc:id:sscc:4012345.1112223334,,,,,,,,OBSERVE,,urn:epcglobal:cbv:bizstep:transporting,,,geo:47.506694,11.104301,,,,,
+ObjectEvent,2020-02-20T12:50:00.000+01:00,+01:00,,,,urn:epcglobal:cbv:bt:4012345000009:ASN1099,,,urn:epc:id:sscc:4012345.1112223334,,,,,,,,OBSERVE,,urn:epcglobal:cbv:bizstep:departing,,,urn:epc:id:sgln:4012345.00022.0,,,urn:epcglobal:cbv:bt:4012345000009:ASN1099,,urn:epc:id:sgln:4012345.00000.0,,urn:epc:id:sgln:4023333.00000.0,=
+				
+ObjectEvent,2020-02-20T16:50:00.000+01:00,+01:00,,,,,,urn:epc:id:sscc:4012345.1112223334,,,,,,,,OBSERVE,,urn:epcglobal:cbv:bizstep:transporting,,,geo:47.506694,11.104301,,,,,=
+				

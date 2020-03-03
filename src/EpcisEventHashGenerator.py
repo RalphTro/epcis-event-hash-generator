@@ -173,12 +173,26 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
                     
     return texts
 
+def genericElementToPreHashString(root):
+    listOfValues = []
+
+    children = list(root)
+    logging.debug("Parsing remaining elements: %s", children)
+    if len(children)==0:
+        for text in root.itertext():
+            listOfValues.append("=" + text)
+    else:
+        for child in root:      
+            listOfValues.append( child.tag.replace("{","").replace("}","#") + genericElementToPreHashString(child))
+
+    listOfValues.sort()
+    return "".join(listOfValues)
+
 
 def gatherElementsNotInChildOrder(root, childOrder):
     """
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
-    texts = ""
     
     for (childName, _) in childOrder:
         covered_children = root.findall(childName)
@@ -186,17 +200,8 @@ def gatherElementsNotInChildOrder(root, childOrder):
         for child in covered_children:
             root.remove(child)
 
-    remaining_children = list(root)
-    logging.debug("Remaining elements: %s", remaining_children)
-    for child in remaining_children:
-        texts += DIVISION_CHAR + child.tag.replace("{","").replace("}","#") + "="
-        listOfValues = []
-        for text in child.itertext():
-            listOfValues.append(text)
-        listOfValues.sort()
-        texts += "".join(listOfValues)
-      
-    return texts
+    logging.debug("Parsing remaining elements in: %s", root)
+    return genericElementToPreHashString(root)
 
 
 def computePreHashFromXmlFile(path):
@@ -218,7 +223,7 @@ def computePreHashFromXmlFile(path):
     for event in events:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(event.tag + ":" +
+            preHashStringList.append(event.tag + DIVISION_CHAR +
                 recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)[1:]
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
