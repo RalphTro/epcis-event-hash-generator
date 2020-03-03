@@ -152,25 +152,28 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     texts = ""
     for (childName, subChildOrder) in childOrder:
         # division char
-        texts += DIVISION_CHAR
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
         listOfValues = []
+        prefix = ""
         for child in root.iterfind(childName):
             if subChildOrder:
                 listOfValues.append(recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder))
+                prefix = childName
             else:
-                for text in child.itertext():
-                    #logging.debug("Adding text '%s' from child %s", text, child)
-                    listOfValues.append(text)
-        #sort list of values of children with the same name to resolve issue 10
+                text = child.text
+                logging.debug("Adding text '%s' from child %s", text, child)
+                listOfValues.append(childName + "=" + text.strip()) #stripping white space unfortunately not always automatic
+
+        #sort list of values to resolve issue 10
         logging.debug("sorting values %s", listOfValues)
         listOfValues.sort()
         logging.debug("sorted: %s", listOfValues)
-        texts += "".join(listOfValues)
+        texts += prefix + "".join(listOfValues)
 
         #child name might also refer to an attribute
-        texts += root.get(childName, "")        
-                    
+        attribute = root.get(childName, "")
+        if attribute:
+            texts += childName + "=" + attribute
     return texts
 
 def genericElementToPreHashString(root):
@@ -180,7 +183,7 @@ def genericElementToPreHashString(root):
     logging.debug("Parsing remaining elements: %s", children)
     if len(children)==0:
         for text in root.itertext():
-            listOfValues.append("=" + text)
+            listOfValues.append("=" + text.strip())
     else:
         for child in root:      
             listOfValues.append( child.tag.replace("{","").replace("}","#") + genericElementToPreHashString(child))
@@ -200,9 +203,15 @@ def gatherElementsNotInChildOrder(root, childOrder):
         for child in covered_children:
             root.remove(child)
 
+    # remove recordTime, if any
+    for child in root.findall("recordTime"):
+        root.remove(child)
+    
     logging.debug("Parsing remaining elements in: %s", root)
-    return genericElementToPreHashString(root)
+    if list(root):
+        return genericElementToPreHashString(root)
 
+    return ""
 
 def computePreHashFromXmlFile(path):
     """Read EPCIS XML document and generate pre-hashe strings.
@@ -224,7 +233,7 @@ def computePreHashFromXmlFile(path):
         logging.debug("prehashing event:\n%s", event)
         try:
             preHashStringList.append(event.tag + DIVISION_CHAR +
-                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)[1:]
+                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
         except Exception as ex:
