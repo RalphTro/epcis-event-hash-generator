@@ -247,7 +247,7 @@ def computePreHashFromXmlFile(path):
     return preHashStringList
 
 
-def xmlEpcisHash(path, hashalg):
+def xmlEpcisHash(path, hashalg="sha256"):
     """Read all EPCIS Events from the EPCIS XML document at path.
     Compute a normalized form (pre-hash string) for each event and
     return an array of the event hashes computed from the pre-hash by
