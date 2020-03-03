@@ -25,6 +25,7 @@ from collections import Counter
 import re
 import hashlib
 
+DIVISION_CHAR = ","
 
 PROP_ORDER = [
     ('eventTime', None),
@@ -150,7 +151,8 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """
     texts = ""
     for (childName, subChildOrder) in childOrder:
-        texts += "|"
+        # division char
+        texts += DIVISION_CHAR
         #logging.debug("looking for child tag '%s' of root %s", childName, root)
         listOfValues = []
         for child in root.iterfind(childName):
@@ -167,8 +169,7 @@ def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
         texts += "".join(listOfValues)
 
         #child name might also refer to an attribute
-        texts += root.get(childName, "")
-        
+        texts += root.get(childName, "")        
                     
     return texts
 
@@ -181,14 +182,14 @@ def gatherElementsNotInChildOrder(root, childOrder):
     
     for (childName, _) in childOrder:
         covered_children = root.findall(childName)
-        logging.debug("Children covered by ordering: %s", covered_children)
+        logging.debug("Children '%s' covered by ordering: %s", childName, covered_children)
         for child in covered_children:
             root.remove(child)
 
     remaining_children = list(root)
     logging.debug("Remaining elements: %s", remaining_children)
     for child in remaining_children:
-        texts += "|"
+        texts += DIVISION_CHAR + child.tag.replace("{","").replace("}","#") + "="
         listOfValues = []
         for text in child.itertext():
             listOfValues.append(text)
@@ -225,7 +226,7 @@ def computePreHashFromXmlFile(path):
         logging.debug("prehashing event:\n%s", event)
         try:
             preHashStringList.append(
-                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
+                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)[1:]
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
         except Exception as e:
@@ -320,6 +321,7 @@ def main():
         logging.debug("reading from files: '{}'".format(args.file))
 
     for filename in args.file:
+        # ACTUAL ALGORITHM CALL:
         hashes = xmlEpcisHash(filename, args.algorithm)
 
         if args.batch:
