@@ -220,6 +220,10 @@ Note that all values MUST be added in the identical order as specified below (co
     </tbody>
 </table>
 
+For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
+
+<img src="hashingAlgorithmLogicIllustration.jpg">
+
 ## Installation
 tbd
 
