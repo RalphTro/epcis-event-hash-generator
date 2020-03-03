@@ -101,34 +101,38 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td>epcList – epc</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
-            <td>[prefix with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
+            <td>[prefix the entire epc sequence with the two lowercase letters 'ie'] <br> inputEPCList – epc</td>
             <td>[prefix with the lowercase letter 'p'] <br> parentID</td>
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All EPC/EPC Class values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
+            <td colspan=5><i>All EPC values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>9</td>
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
-            <td>[prefix with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>[prefix the entire quantityElement sequence with the two lowercase letters 'iq'] <br> inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td>childEPCs – epc</td>
+        </tr>
+        <tr>
+            <td/>
+            <td colspan=5><i>All Quantity Elements being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>10</td>
             <td/>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
             <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
-            <td>[prefix with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
+            <td>[prefix the entire epc sequence with the two lowercase letters 'oe'] <br> outputEPCList – epc</td></td>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
             <td>11</td>
             <td/>
             <td colspan=2>-</td>
-            <td>[prefix with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
+            <td>[prefix the entire quantityElement sequence with the two lowercase letters 'oq'] <br> outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
@@ -175,118 +179,18 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
         </tr>
         <tr>
             <td>20</td>
-            <td colspan=5>sensorElement – sensorMetaData – time</td>
+            <td colspan=5>sensorElement – sensorMetaData (time + startTime + endTime + deviceID + deviceMetaData + rawData + dataProcessingMethod + bizRules)</td>
         </tr>
         <tr>
             <td>21</td>
-            <td colspan=5>sensorElement – sensorMetaData – startTime</td>
+            <td colspan=5>sensorElement – sensorReport (type + deviceID + deviceMetaData + rawData + dataProcessingMethod + time + microorganism + chemicalSubstance + value + stringValue + booleanValue + hexBinaryValue + uriValue + minValue + maxValue + meanValue + sDev + percRank + percValue + uom)</td>
+        </tr>
+        <tr>
+            <td/>
+            <td colspan=5><i>All Sensor Elements MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
             <td>22</td>
-            <td colspan=5>sensorElement – sensorMetaData – endTime</td>
-        </tr>
-        <tr>
-            <td>23</td>
-            <td colspan=5>sensorElement – sensorMetaData – deviceID</td>
-        </tr>
-        <tr>
-            <td>24</td>
-            <td colspan=5>sensorElement – sensorMetaData – deviceMetaData</td>
-        </tr>
-        <tr>
-            <td>25</td>
-            <td colspan=5>sensorElement – sensorMetaData – rawData</td>
-        </tr>
-        <tr>
-            <td>26</td>
-            <td colspan=5>sensorElement – sensorMetaData – dataProcessingMethod</td>
-        </tr>
-        <tr>
-            <td>27</td>
-            <td colspan=5>sensorElement – sensorMetaData – bizRules</td>
-        </tr>
-        <tr>
-            <td>28</td>
-            <td colspan=5>sensorElement – sensorReport – type</td>
-        </tr>
-        <tr>
-            <td>29</td>
-            <td colspan=5>sensorElement – sensorReport – deviceID</td>
-        </tr>
-        <tr>
-            <td>30</td>
-            <td colspan=5>sensorElement – sensorReport – deviceMetaData</td>
-        </tr>
-        <tr>
-            <td>31</td>
-            <td colspan=5>sensorElement – sensorReport – rawData</td>
-        </tr>
-        <tr>
-            <td>32</td>
-            <td colspan=5>sensorElement – sensorReport – dataProcessingMethod</td>
-        </tr>
-        <tr>
-            <td>33</td>
-            <td colspan=5>sensorElement – sensorReport – time</td>
-        </tr>
-        <tr>
-            <td>34</td>
-            <td colspan=5>sensorElement – sensorReport – microorganism</td>
-        </tr>
-        <tr>
-            <td>35</td>
-            <td colspan=5>sensorElement – sensorReport – chemicalSubstance</td>
-        </tr>
-        <tr>
-            <td>36</td>
-            <td colspan=5>sensorElement – sensorReport – value</td>
-        </tr>
-        <tr>
-            <td>37</td>
-            <td colspan=5>sensorElement – sensorReport – stringValue</td>
-        </tr>
-        <tr>
-            <td>38</td>
-            <td colspan=5>sensorElement – sensorReport – booleanValue</td>
-        </tr>
-        <tr>
-            <td>39</td>
-            <td colspan=5>sensorElement – sensorReport – hexBinaryValue</td>
-        </tr>
-        <tr>
-            <td>40</td>
-            <td colspan=5>sensorElement – sensorReport – uriValue</td>
-        </tr>
-        <tr>
-            <td>41</td>
-            <td colspan=5>sensorElement – sensorReport – minValue</td>
-        </tr>
-        <tr>
-            <td>42</td>
-            <td colspan=5>sensorElement – sensorReport – maxValue</td>
-        </tr>
-        <tr>
-            <td>43</td>
-            <td colspan=5>sensorElement – sensorReport – meanValue</td>
-        </tr>
-        <tr>
-            <td>44</td>
-            <td colspan=5>sensorElement – sensorReport – sDev</td>
-        </tr>
-        <tr>
-            <td>45</td>
-            <td colspan=5>sensorElement – sensorReport – percRank</td>
-        </tr>
-        <tr>
-            <td>46</td>
-            <td colspan=5>sensorElement – sensorReport – percValue</td>
-        </tr>
-        <tr>
-            <td>47</td>
-            <td colspan=5>sensorElement – sensorReport – uom</td>
-        </tr>
-        <tr>
-            <td>48</td>
             <td>ILMD</td>
             <td colspan=2>-</td>
             <td>ILMD</td>
@@ -297,7 +201,7 @@ To calculate the pre-hash string, extract and concatenate the values of EPCIS ev
             <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
-            <td>49</td>
+            <td>23</td>
             <td colspan=5>User extensions</td>
         </tr>
         <tr>
