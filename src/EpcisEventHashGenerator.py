@@ -207,27 +207,23 @@ def computePreHashFromXmlFile(path):
         root = readXmlFile(path);
         logging.debug(root);
         events = list(root.find("*EventList"))
-    except Exception as e:
-        logging.debug(e)
+    except Exception as ex:
+        logging.debug(ex)
         logging.error("'%s' does not contain an epcis xml document with EventList.", path)
         return []
     
-    eventList = []
-    for e in events:
-        eventList.append(e)
-
-    logging.debug("eventList=%s", eventList)
+    logging.debug("eventList=%s", events)
     
     preHashStringList = []
-    for event in eventList:
+    for event in events:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(e.tag + ":" +
+            preHashStringList.append(event.tag + ":" +
                 recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)[1:]
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
-        except Exception as e:
-            logging.error("could not parse event:\n%s\n\nerror: %s", event, e)
+        except Exception as ex:
+            logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
             pass
         
         

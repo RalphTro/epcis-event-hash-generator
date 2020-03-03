@@ -9,6 +9,7 @@ def testExplicitHashValues():
         for filename in filenames:
             if filename.endswith("xml"):
                 actualHashes = xmlEpcisHash(TEST_FILE_PATH + filename, "sha256")[0]
+                assert len(actualHashes) > 0
                 with open(TEST_FILE_PATH + filename + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
                 print("Testing file " + filename)
