@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """This is a prove of concept implementation of an algorithm to calculate a hash of EPCIS events. A small command line utility to calculate the hashes is provided for convenience.
 
-.. module:: EpcisEventHashGenerator
-   :synopsis: EPCIS event hash calculator.
+.. module:: epcis_event_hash_generator
+   :synopsis: Calculates the EPCIS event hash as specified in https://github.com/RalphTro/epcis-event-hash-generator/
 
 .. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
 
