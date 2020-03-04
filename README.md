@@ -6,7 +6,7 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 
 
 ## Usage (for the inconvenient)
-The script may be used as a command line utility like so:
+The script may be used as a command line utility like that:
 ```
 python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 ```
@@ -14,7 +14,7 @@ python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 
 
 ## Introduction  
-There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID.
+There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID value.
 EPCIS events have a couple of differences to other electronic documents:
 + They are embedded in an EPCIS document that can contain multiple events 
 + As of EPCIS 2.0, it is permitted to capture and share EPCIS data through two different syntaxes (XML and JSON/JSON-LD)
@@ -29,7 +29,7 @@ This is why industry needs to have a consistent, reliable approach to create a h
 For any algorithm that is to be considered a faithful hash of an EPCIS event, we require the following properties:
 
 + Different (valid) serialisations of the **same event** need to yield the **same hash**.
-+ In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. See e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter.
++ In particular, if serialised in XML, the hash must be independend of irrelevant whitespace, ordering of elements in an unordered list, the name used for namespaces, etc. (see e.g. https://en.wikipedia.org/wiki/XML_Signature#XML_canonicalization for more details on the matter).
 + The same event serialised in JSON/JSON-LD or XML must yield the same hash.
 + Any relevant **change of an event** must lead to a **change of the hash**. In particular, the hash must change if
   - any value of any field present in the event is changed.
@@ -38,9 +38,9 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 ## Algorithm
 
-For hashing strings, standard implementations of the relevant hash algorithms (such as sha-256) are avaiable for all relevant languages. Hence the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
+For hashing strings, standard implementations of the relevant hash algorithms (such as sha-256) are avaiable for all relevant languages. Hence, the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs according to the following sequence, i.e. in exactly this order. First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
+To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs exactly according to the following sequence. First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
 
 Note that all key/value pairs MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
@@ -214,8 +214,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td/>
             <td colspan=5><i>All user extension element names irrespective of their level MUST be prefixed with their namespace, followed by a pound sign ('#'). If they contain a value, the value MUST be prefixed with an equal sign ('='). <br>
               (Example: https://ns.example.com/epcis#myField=abc123) <br>
-              Then, all fields belonging to the same level MUST be sequenced in lexicographical order according to their contained values.
-              In contrast to all EPCIS standard fields, a comma MUST NOT be inserted to separate several user extensions. 
+              Then, all fields belonging to the same level MUST be sequenced in lexicographical order depending on the contained values.
         </tr>
     </tbody>
 </table>
