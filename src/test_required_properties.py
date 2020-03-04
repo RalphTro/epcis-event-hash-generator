@@ -2,8 +2,8 @@ from .EpcisEventHashGenerator import xmlEpcisHash
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/"
-TEST_FILE_PATH_SAME_EVENT = "../testFiles/reordering/"
+TEST_FILE_PATH = "../testFiles/examples"
+TEST_FILE_PATH_SAME_EVENT = "../testFiles/expected_equal/"
 
 
 def disabled(reason):
