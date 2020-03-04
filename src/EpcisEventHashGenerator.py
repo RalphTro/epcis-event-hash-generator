@@ -230,7 +230,7 @@ def computePreHashFromXmlFile(path):
     for event in events:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append(event.tag +
+            preHashStringList.append("eventType=" + event.tag +
                 recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
                 + gatherElementsNotInChildOrder(event, PROP_ORDER)
             )
