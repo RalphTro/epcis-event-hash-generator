@@ -1,4 +1,4 @@
-from .EpcisEventHashGenerator import xmlEpcisHash
+from .epcis_event_hash_generator import xmlEpcisHash
 
 from os import walk
 

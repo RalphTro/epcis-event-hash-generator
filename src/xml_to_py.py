@@ -6,6 +6,7 @@ A simple object here may be a
 - unordered list of simple objects
 
 Mappings (dictionaries) are modeled as (unordered) lists of pairs.
+Python lists are used although they are ordered, the order is to be ignored. (Sets are unsuitable since they enforce unique elements.)
 
 For example
 <obj>
@@ -44,7 +45,7 @@ import logging
 import xml.etree.ElementTree as ElementTree
 
 
-def readEpcisDocumentInXml(path):
+def read_epcis_document_xml(path):
     """Read XML file, remove useless EPCIS extension tags and return the parsed root of the ElementTree.
     """
     with open(path, 'r') as file:
@@ -57,30 +58,32 @@ def readEpcisDocumentInXml(path):
     return ElementTree.fromstring(data)
 
 
-def xmlToPy(root):
+def xml_to_py(root):
     """ Perform the conversion from ElementTree to a simple python object.
     """
     obj = []
     # add all XML Attributes
-    obj += root.items
+    obj += root.items()
         
     # Recurs through children    
     for child in root:
-        obj.append((child.tag,  xmlToPy(child)))
+        obj.append((child.tag,  xml_to_py(child)))
 
     # If the element has neither attributes nor children, return the text
     if len(obj) == 0:
         return root.text
 
+    # Sort lists to compensate for using ordered list to model unordered ones
+    obj.sort()
     return obj
 
 
-def eventListFromEpcisDocumentXml(path):
+def event_list_from_epcis_document_xml(path):
     """Read EPCIS XML document and generate the event List in the form of a simple python object
 
     """
     try:
-        root = readXmlFile(path);
+        root = read_epcis_document_xml(path);
         logging.debug("Reading %s yields %s = %s",path, root, list(root));
         eventList = root.find("*EventList")
         if not eventList:
@@ -90,7 +93,7 @@ def eventListFromEpcisDocumentXml(path):
         logging.error("'%s' does not contain a valid EPCIS XML document with EventList.", path)
         return []
 
-    obj = xmlToPy(e)
+    obj = xml_to_py(eventList)
 
     logging.debug("Simple python object:\n%s", obj)
     
