@@ -2,8 +2,8 @@
 
 A simple object here may be a
 - string
-- (ordered) tuple of simple object
 - unordered list of simple objects
+- pair of a string and a list of simple objects
 
 Mappings (dictionaries) are modeled as (unordered) lists of pairs.
 Python lists are used although they are ordered, the order is to be ignored. (Sets are unsuitable since they enforce unique elements.)
@@ -12,17 +12,18 @@ For example
 <obj>
   <a>
     <b>3</b>
+    <b>3</b>
     <b>5</b>
-    <c e="f"><d>Hello</d><d>World</d></c>
+    <c e="f"><d>Hello</d><d x="y">World</d></c>
   </a>
   <d>2</d>
 </obj>
 
 is converted to
 
-obj = [("d","2"),("a",[("b","3"),("b","5"),("c",[("e","f"),("d","Hello"),("d","World")])])]
+obj = [("d","2",[]),("a", "", [("b","3",[]),("b","3",[]),("b","5",[]),("c","",[("e","f",[]),("d","Hello",[]),("d","World",[("x","y",[])])])])]
 
-Caution: If an element has (attributes or children) and text, the text is ignored. Before/After text (e.g. <a> before_text <b>1</b></a>) is always ignored.
+Before/After text (e.g. <a> before_text <b>1</b></a>) is always ignored.
 
 
 .. module:: xml_to_py
@@ -45,7 +46,7 @@ import logging
 import xml.etree.ElementTree as ElementTree
 
 
-def read_epcis_document_xml(path):
+def _read_epcis_document_xml(path):
     """Read XML file, remove useless EPCIS extension tags and return the parsed root of the ElementTree.
     """
     with open(path, 'r') as file:
@@ -58,23 +59,27 @@ def read_epcis_document_xml(path):
     return ElementTree.fromstring(data)
 
 
-def xml_to_py(root):
+def _xml_to_py(root, sort=True):
     """ Perform the conversion from ElementTree to a simple python object.
     """
-    obj = []
+    children = []
     # add all XML Attributes
-    obj += root.items()
+    children += [(x,y,[]) for (x,y) in root.items()]
         
     # Recurs through children    
     for child in root:
-        obj.append((child.tag,  xml_to_py(child)))
-
-    # If the element has neither attributes nor children, return the text
-    if len(obj) == 0:
-        return root.text
+        children.append(_xml_to_py(child))
 
     # Sort lists to compensate for using ordered list to model unordered ones
-    obj.sort()
+    if sort:
+        children.sort()
+        
+    text=""
+    if root.text:
+        text = root.text.strip()
+    obj = (root.tag, text, children)    
+    
+    logging.debug("xml_to_py(%s) = %s", root, obj)
     return obj
 
 
@@ -83,17 +88,18 @@ def event_list_from_epcis_document_xml(path):
 
     """
     try:
-        root = read_epcis_document_xml(path);
+        root = _read_epcis_document_xml(path);
         logging.debug("Reading %s yields %s = %s",path, root, list(root));
         eventList = root.find("*EventList")
         if not eventList:
-            raise Exception("No EventList found")
-    except Exception as ex:
+            raise ValueError("No EventList found")
+    except (ValueError, OSError) as ex:
         logging.debug(ex)
         logging.error("'%s' does not contain a valid EPCIS XML document with EventList.", path)
         return []
 
-    obj = xml_to_py(eventList)
+    # sort=False => preserve document order of events
+    obj = _xml_to_py(eventList, False)
 
     logging.debug("Simple python object:\n%s", obj)
     
