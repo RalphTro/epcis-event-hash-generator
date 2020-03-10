@@ -216,8 +216,8 @@ def computePreHashFromXmlFile(path):
 
     """
     try:
-        root = readXmlFile(path);
-        logging.debug(root);
+        root = readXmlFile(path)
+        logging.debug(root)
         events = list(root.find("*EventList"))
     except Exception as ex:
         logging.debug(ex)

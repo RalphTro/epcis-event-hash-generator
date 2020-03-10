@@ -2,7 +2,7 @@ from .EpcisEventHashGenerator import xmlEpcisHash
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/examples/"
+TEST_FILE_PATH = "../testFiles/examples/epcisDocWithSensorDataObjectEvent.xml"
 
 def testExplicitHashValues():  
     for (_, _, filenames) in walk(TEST_FILE_PATH):
