@@ -28,7 +28,7 @@ import hashlib
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
-    ('eventID', None), #TODO: how to handle hash-id?
+    ('eventID', None), 
     ('errorDeclaration',
      [
          ('declarationTime', None),
@@ -112,7 +112,7 @@ PROP_ORDER = [
      ])])#end sensorElement    
     ]
 """The property order data structure describes the ordering in which
-to concatenate the values of the fields of EPCIS event. It is a list
+to concatenate the contents of an EPCIS event. It is a list
 of pairs. The first part of each pair is a string, naming the xml
 element. If the element might have children whose order needs to be
 defined, the second element is a property order for the children,
@@ -127,7 +127,7 @@ but NOT for top level elements.
 """
 
 def readXmlFile(path):
-    """Read XML file, remove useless extension tags and return parsed root element.
+    """Read XML file, remove extension tags and return parsed root element.
 
     """
     with open(path, 'r') as file:
@@ -143,7 +143,7 @@ def readXmlFile(path):
 
 def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
     """Fetch all texts from root (if it is a simple element) or its
-    children and concatenate the values in the given order. childOrder is
+    children and concatenate them in the given order. childOrder is
     expected to be a property order, see PROP_ORDER.
 
     """
@@ -201,7 +201,7 @@ def gatherElementsNotInChildOrder(root, childOrder):
         for child in covered_children:
             root.remove(child)
 
-    # remove recordTime, if any
+    # remove recordTime, if present  
     for child in root.findall("recordTime"):
         root.remove(child)
     
@@ -212,7 +212,7 @@ def gatherElementsNotInChildOrder(root, childOrder):
     return ""
 
 def computePreHashFromXmlFile(path):
-    """Read EPCIS XML document and generate pre-hashe strings.
+    """Read EPCIS XML document and generate pre-hash strings.
 
     """
     try:
