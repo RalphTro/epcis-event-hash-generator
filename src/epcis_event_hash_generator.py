@@ -32,7 +32,7 @@ except ImportError:
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
-    ('eventID', None), #TODO: how to handle hash-id?
+    ('eventID', None), 
     ('errorDeclaration',
      [
          ('declarationTime', None),
@@ -116,14 +116,13 @@ PROP_ORDER = [
      ])])#end sensorElement    
     ]
 """The property order data structure describes the ordering in which
-to concatenate the values of the fields of EPCIS event. It is a list
+to concatenate the contents of an EPCIS event. It is a list
 of pairs. The first part of each pair is a string, naming the xml
 element. If the element might have children whose order needs to be
 defined, the second element is a property order for the children,
 otherwise the second element is None.
 
 """
-
 
 
 def recurse_through_children_in_order(root, child_order):
