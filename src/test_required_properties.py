@@ -1,33 +1,25 @@
-from .epcis_event_hash_generator import xmlEpcisHash
+from .epcis_event_hash_generator import xml_epcis_hash
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/examples"
+TEST_FILE_PATH = "../testFiles/examples/"
 TEST_FILE_PATH_SAME_EVENT = "../testFiles/expected_equal/"
 
 
-def disabled(reason):
-    def _func(f):
-        def _arg():
-            print(f.__name__ + ' has been disabled. ' + reason)
-        return _arg
-    return _func
-
-
-
-def testDistinct():
+def test_distinct():
     """
     Assert that there are no collisions, i.e. different events must have different hashes.
     """
-    allHashes = []
+    all_hashes = []
 
     for (_, _, filenames) in walk(TEST_FILE_PATH):
         for filename in filenames:
             if filename.endswith("xml"):
-                allHashes += xmlEpcisHash(TEST_FILE_PATH + filename, "sha256")[0]
+                all_hashes += xml_epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
         break
     
-    assert len(allHashes) == len(set(allHashes))
+    assert all_hashes
+    assert len(all_hashes) == len(set(all_hashes))
     
 def testEqual():    
     """
@@ -36,5 +28,5 @@ def testEqual():
     for (_, _, filenames) in walk(TEST_FILE_PATH_SAME_EVENT):
         for filename in filenames:
             if filename.endswith("xml"):
-                assert len(set(xmlEpcisHash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[0])) == 1
+                assert len(set(xml_epcis_hash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[0])) == 1
         break

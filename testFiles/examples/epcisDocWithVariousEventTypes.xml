@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2019-10-21T14:59:02.099+02:00" xmlns:cbvmda="urn:epcglobal:cbv:mda" xmlns:example="http://ns.example.com/epcis" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<EPCISBody>
-		<EventList>
+	  <EventList>
 			<ObjectEvent>
 				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
 				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>

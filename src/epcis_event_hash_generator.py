@@ -20,10 +20,14 @@ file for details.
 
 import logging
 import sys
-import xml.etree.ElementTree as ElementTree
-from collections import Counter
 import re
 import hashlib
+
+# python imports... oO
+try:
+    from .xml_to_py import event_list_from_epcis_document_xml as read_xml
+except ImportError:
+    from xml_to_py import event_list_from_epcis_document_xml as read_xml
 
 PROP_ORDER = [
     ('eventTime', None),
@@ -33,7 +37,7 @@ PROP_ORDER = [
      [
          ('declarationTime', None),
          ('reason', None),
-         ('correctiveEventIDs/correctiveEventID', None)
+         ('correctiveEventIDs', [('correctiveEventID', None)])
      ]),
     ('bizTransactionList',[('bizTransaction', None)]),
     ('parentID', None),
@@ -118,121 +122,84 @@ element. If the element might have children whose order needs to be
 defined, the second element is a property order for the children,
 otherwise the second element is None.
 
-For brevity, it is permissive to use e.g.
-    ('readPoint/id', None)
-instead of
-    ('readPoint',[('id', None)])
-but NOT for top level elements.
-
 """
 
-def readXmlFile(path):
-    """Read XML file, remove extension tags and return parsed root element.
 
-    """
-    with open(path, 'r') as file:
-        data = file.read()
-
-    #TODO: this should not actually be needed:
-    data = data.replace('<extension>', '').replace('</extension>', '').replace(
-        '<baseExtension>', '').replace('</baseExtension>', '')
-    logging.debug("removed extensions tags:\n%s", data)
-
-    return ElementTree.fromstring(data)
-
-
-def recurseThroughChildsInGivenOrderAndConcatText(root, childOrder):
+def recurse_through_children_in_order(root, child_order):
     """Fetch all texts from root (if it is a simple element) or its
-    children and concatenate them in the given order. childOrder is
+    children and concatenate the values in the given order. child_order is
     expected to be a property order, see PROP_ORDER.
 
     """
     texts = ""
-    for (childName, subChildOrder) in childOrder:
-        # division char
-        #logging.debug("looking for child tag '%s' of root %s", childName, root)
-        listOfValues = []
+    for (child_name, sub_child_order) in child_order:
+        list_of_values = []
         prefix = ""
-        for child in root.iterfind(childName):
-            if subChildOrder:
-                listOfValues.append(recurseThroughChildsInGivenOrderAndConcatText(child, subChildOrder))
-                prefix = childName
-            else:
-                text = child.text
-                logging.debug("Adding text '%s' from child %s", text, child)
-                listOfValues.append(childName + "=" + text.strip()) #stripping white space unfortunately not always automatic
+        for child in [x for x in root if x[0] == child_name]:
+            if sub_child_order:
+                list_of_values.append(recurse_through_children_in_order(child[2], sub_child_order))
+                prefix = child_name
+            if child[1]:
+                logging.debug("Adding text '%s'", child[1])
+                list_of_values.append(child_name + "=" + child[1].strip()) #stripping white space unfortunately not always automatic
 
         #sort list of values to resolve issue 10
-        logging.debug("sorting values %s", listOfValues)
-        listOfValues.sort()
-        logging.debug("sorted: %s", listOfValues)
-        texts += prefix + "".join(listOfValues)
+        logging.debug("sorting values %s", list_of_values)
+        list_of_values.sort()
+        logging.debug("sorted: %s", list_of_values)
+        texts += prefix + "".join(list_of_values)
 
-        #child name might also refer to an attribute
-        attribute = root.get(childName, "")
-        if attribute:
-            texts += childName + "=" + attribute
     return texts
 
-def genericElementToPreHashString(root):
-    listOfValues = []
+def generic_element_to_prehash_string(root):
+    list_of_values = []
 
-    children = list(root)
-    logging.debug("Parsing remaining elements: %s", children)
-    if len(children)==0:
-        for text in root.itertext():
-            listOfValues.append("=" + text.strip())
+    logging.debug("Parsing remaining elements: %s", root)
+    if isinstance(root, str) and root:
+        list_of_values.append("=" + root.strip())
     else:
         for child in root:      
-            listOfValues.append( child.tag.replace("{","").replace("}","#") + genericElementToPreHashString(child))
+            list_of_values.append( child[0].replace("{","").replace("}","#") + generic_element_to_prehash_string(child[1])+ generic_element_to_prehash_string(child[2]))
 
-    listOfValues.sort()
-    return "".join(listOfValues)
+    list_of_values.sort()
+    return "".join(list_of_values)
 
 
-def gatherElementsNotInChildOrder(root, childOrder):
+def gather_elements_not_in_order(root, child_order):
     """
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
     
-    for (childName, _) in childOrder:
-        covered_children = root.findall(childName)
-        logging.debug("Children '%s' covered by ordering: %s", childName, covered_children)
+    # remove recordTime, if any
+    child_order_or_record_time = child_order + [("recordTime", None)]
+    
+    for (child_name, _) in child_order_or_record_time:
+        covered_children = [x for x in root if x[0] == child_name]
+        logging.debug("Children '%s' covered by ordering: %s", child_name, covered_children)
         for child in covered_children:
             root.remove(child)
-
-    # remove recordTime, if present  
-    for child in root.findall("recordTime"):
-        root.remove(child)
     
     logging.debug("Parsing remaining elements in: %s", root)
-    if list(root):
-        return genericElementToPreHashString(root)
+    if root:
+        return generic_element_to_prehash_string(root)
 
     return ""
 
-def computePreHashFromXmlFile(path):
-    """Read EPCIS XML document and generate pre-hash strings.
+def compute_prehash_from_xml_file(path):
+    """Read EPCIS XML document and generate pre-hashe strings.
 
     """
-    try:
-        root = readXmlFile(path)
-        logging.debug(root)
-        events = list(root.find("*EventList"))
-    except Exception as ex:
-        logging.debug(ex)
-        logging.error("'%s' does not contain an epcis xml document with EventList.", path)
-        return []
+    events = read_xml(path)
     
-    logging.debug("eventList=%s", events)
+    logging.debug("#events = %s\neventList = %s", len(events[2]), events)
     
-    preHashStringList = []
-    for event in events:
+    prehash_string_list = []
+    for event in events[2]:
         logging.debug("prehashing event:\n%s", event)
         try:
-            preHashStringList.append("eventType=" + event.tag +
-                recurseThroughChildsInGivenOrderAndConcatText(event, PROP_ORDER)
-                + gatherElementsNotInChildOrder(event, PROP_ORDER)
+            prehash_string_list.append("eventType=" + event[0] +
+                recurse_through_children_in_order(event[2], PROP_ORDER)
+                + gather_elements_not_in_order(event[2], PROP_ORDER)
             )
         except Exception as ex:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
@@ -240,40 +207,40 @@ def computePreHashFromXmlFile(path):
         
         
     # To see/check concatenated value string before hash algorithm is performed:
-    logging.debug("preHashStringList = {}".format(preHashStringList))
+    logging.debug("prehash_string_list = {}".format(prehash_string_list))
 
-    return preHashStringList
+    return prehash_string_list
 
 
-def xmlEpcisHash(path, hashalg="sha256"):
+def xml_epcis_hash(path, hashalg="sha256"):
     """Read all EPCIS Events from the EPCIS XML document at path.
     Compute a normalized form (pre-hash string) for each event and
     return an array of the event hashes computed from the pre-hash by
     hashalg.
     """
-    preHashStringList = computePreHashFromXmlFile(path)
+    prehash_string_list = compute_prehash_from_xml_file(path)
     
     # Calculate hash values and prefix them according to RFC 6920
     hashValueList = []
-    for preHashString in preHashStringList:
+    for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
-            hashString = 'ni:///sha-256;' + \
-                hashlib.sha256(preHashString.encode('utf-8')).hexdigest()
+            hash_string = 'ni:///sha-256;' + \
+                hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha3_256':
-            hashString = 'ni:///sha3_256;' + \
-                hashlib.sha3_256(preHashString.encode('utf-8')).hexdigest()
+            hash_string = 'ni:///sha3_256;' + \
+                hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha384':
-            hashString = 'ni:///sha-384;' + \
-                hashlib.sha384(preHashString.encode('utf-8')).hexdigest()
+            hash_string = 'ni:///sha-384;' + \
+                hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha512':
-            hashString = 'ni:///sha-512;' + \
-                hashlib.sha512(preHashString.encode('utf-8')).hexdigest()
+            hash_string = 'ni:///sha-512;' + \
+                hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest()
         else:
-            raise ValueError("Unsupported Hashing Algorithm: " + hashString)
+            raise ValueError("Unsupported Hashing Algorithm: " + hash_string)
         
-        hashValueList.append(hashString)
+        hashValueList.append(hash_string)
 
-    return (hashValueList, preHashStringList)
+    return (hashValueList, prehash_string_list)
 
 
 def main():
@@ -333,7 +300,7 @@ def main():
 
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = xmlEpcisHash(filename, args.algorithm)
+        (hashes, prehashes) = xml_epcis_hash(filename, args.algorithm)
 
         if args.batch:
             with open(filename+'.hashes', 'w') as outfile:
@@ -342,9 +309,9 @@ def main():
                 with open(filename+'.prehashes', 'w') as outfile:
                     outfile.write("\n".join(prehashes)+"\n")
         else:
-            print("\n\nHashes of the events contained in '{}':\n{}".format(filename,hashes))
+            print("\n\nHashes of the events contained in '{}':\n".format(filename) + "\n".join(hashes))
             if args.prehash:
-                print("\nPre-hash strings:\n{}".format(prehashes))
+                print("\nPre-hash strings:\n" +"\n---\n".join(prehashes))
 
 
 # goto main if script is run as entrypoint

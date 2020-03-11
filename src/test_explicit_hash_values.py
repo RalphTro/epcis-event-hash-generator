@@ -1,4 +1,4 @@
-from .epcis_event_hash_generator import xmlEpcisHash
+from .epcis_event_hash_generator import xml_epcis_hash
 
 from os import walk
 
@@ -9,7 +9,7 @@ def testExplicitHashValues():
         for filename in filenames:
             if filename.endswith("xml"):
                 print("Testing file " + filename)
-                actualHashes = xmlEpcisHash(TEST_FILE_PATH + filename, "sha256")[0]
+                actualHashes = xml_epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
                 assert len(actualHashes) > 0
                 with open(TEST_FILE_PATH + filename + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
