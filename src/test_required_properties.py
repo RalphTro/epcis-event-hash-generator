@@ -2,7 +2,7 @@ from .epcis_event_hash_generator import xml_epcis_hash
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/examples"
+TEST_FILE_PATH = "../testFiles/examples/"
 TEST_FILE_PATH_SAME_EVENT = "../testFiles/expected_equal/"
 
 

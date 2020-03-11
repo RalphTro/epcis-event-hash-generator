@@ -134,17 +134,15 @@ def recurse_through_children_in_order(root, child_order):
     """
     texts = ""
     for (child_name, sub_child_order) in child_order:
-        # division char
-        #logging.debug("looking for child tag '%s' of root %s", child_name, root)
         list_of_values = []
         prefix = ""
-        for child in [x[1] for x in root if x[0] == child_name]:
+        for child in [x for x in root if x[0] == child_name]:
             if sub_child_order:
-                list_of_values.append(recurse_through_children_in_order(child, sub_child_order))
+                list_of_values.append(recurse_through_children_in_order(child[2], sub_child_order))
                 prefix = child_name
-            else:
-                logging.debug("Adding text '%s'", child)
-                list_of_values.append(child_name + "=" + child.strip()) #stripping white space unfortunately not always automatic
+            if child[1]:
+                logging.debug("Adding text '%s'", child[1])
+                list_of_values.append(child_name + "=" + child[1].strip()) #stripping white space unfortunately not always automatic
 
         #sort list of values to resolve issue 10
         logging.debug("sorting values %s", list_of_values)
@@ -158,11 +156,11 @@ def generic_element_to_prehash_string(root):
     list_of_values = []
 
     logging.debug("Parsing remaining elements: %s", root)
-    if isinstance(root, str):
+    if isinstance(root, str) and root:
         list_of_values.append("=" + root.strip())
     else:
         for child in root:      
-            list_of_values.append( child[0].replace("{","").replace("}","#") + generic_element_to_prehash_string(child[1]))
+            list_of_values.append( child[0].replace("{","").replace("}","#") + generic_element_to_prehash_string(child[1])+ generic_element_to_prehash_string(child[2]))
 
     list_of_values.sort()
     return "".join(list_of_values)
@@ -194,15 +192,15 @@ def compute_prehash_from_xml_file(path):
     """
     events = read_xml(path)
     
-    logging.debug("eventList (len = %s) = %s", len(events), events)
+    logging.debug("#events = %s\neventList = %s", len(events[2]), events)
     
     prehash_string_list = []
-    for event in events:
+    for event in events[2]:
         logging.debug("prehashing event:\n%s", event)
         try:
             prehash_string_list.append("eventType=" + event[0] +
-                recurse_through_children_in_order(event[1], PROP_ORDER)
-                + gather_elements_not_in_order(event[1], PROP_ORDER)
+                recurse_through_children_in_order(event[2], PROP_ORDER)
+                + gather_elements_not_in_order(event[2], PROP_ORDER)
             )
         except Exception as ex:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
