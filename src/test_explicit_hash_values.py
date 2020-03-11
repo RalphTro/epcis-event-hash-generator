@@ -1,8 +1,8 @@
-from .EpcisEventHashGenerator import xmlEpcisHash
+from .epcis_event_hash_generator import xmlEpcisHash
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/examples/epcisDocWithSensorDataObjectEvent.xml"
+TEST_FILE_PATH = "../testFiles/examples/"
 
 def testExplicitHashValues():  
     for (_, _, filenames) in walk(TEST_FILE_PATH):
