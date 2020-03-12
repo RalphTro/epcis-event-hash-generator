@@ -90,7 +90,7 @@ PROP_ORDER = [
           ('rawData',None),
           ('dataProcessingMethod',None),
           ('bizRules', None)
-      ]),#end sensorMetaData
+      ]), # end sensorMetaData
       ('sensorReport',
        [
            ('type', None),
@@ -185,7 +185,7 @@ def gather_elements_not_in_order(root, child_order):
 
     return ""
 
-def compute_prehash_from_xml_file(path):
+def compute_prehash_from_file(path):
     """Read EPCIS XML document and generate pre-hashe strings.
 
     """
@@ -218,7 +218,7 @@ def xml_epcis_hash(path, hashalg="sha256"):
     return an array of the event hashes computed from the pre-hash by
     hashalg.
     """
-    prehash_string_list = compute_prehash_from_xml_file(path)
+    prehash_string_list = compute_prehash_from_file(path)
     
     # Calculate hash values and prefix them according to RFC 6920
     hashValueList = []
