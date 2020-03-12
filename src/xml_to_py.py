@@ -96,7 +96,7 @@ def event_list_from_epcis_document_xml(path):
     except (ValueError, OSError) as ex:
         logging.debug(ex)
         logging.error("'%s' does not contain a valid EPCIS XML document with EventList.", path)
-        return []
+        return ("","",[])
 
     # sort=False => preserve document order of events
     obj = _xml_to_py(eventList, False)
