@@ -57,3 +57,4 @@ def event_list_from_epcis_document_json(path):
     """
 
     return ("","",[])
+
