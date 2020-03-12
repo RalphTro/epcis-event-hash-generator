@@ -48,25 +48,59 @@ file for details.
 import logging
 import json
 
-def json_to_py(json_obj):
-    py_obj = ("","",[])
-    if "isA" in json_obj:
-        py_obj[0] = json_obj["isA"]
 
+SKIP_KEYS = ["isA"]
+
+def json_to_py(json_obj):
+    """ Recursively convert a string/list/dict to a simple python object
+    """
     
+    py_obj = ("", "", [])
+
+    if isinstance(json_obj, list):
+        for child in json_obj:
+            py_obj[2].append(json_to_py(child))
+    elif isinstance(json_obj, dict):
+        if "isA" in json_obj:
+            py_obj = (json_obj["isA"], "", [])
+            
+        for (key, val) in [x for x in json_obj.items() if x[0] not in SKIP_KEYS]:
+            child = json_to_py(val)
+            child = (key, child[1], child[2])
+
+            # Names of list elements (e.g. 'epc' elements of 'epsList') are omitted in current json ld form -> restore
+            if key.endswith("List"):
+                named_elements=[]
+                for element in child[2]:
+                    if not element[0]:
+                        named_elements.append((key[:-4], element[1], element[2]))
+                    else:
+                        named_elements.append(element)
+                child = (child[0], child[1], named_elements)
+            
+            py_obj[2].append(child)
+    else:
+        logging.debug("converting '%s' to str", json_obj)
+        return ("",str(json_obj),[])
     
+    py_obj[2].sort()
+    return py_obj
+
 
 def event_list_from_epcis_document_json(path):
     """Read EPCIS JSON document and generate the event List in the form of a simple python object
 
     """
-    data = json.loads(path)
+    with open(path, 'r') as file:
+        data = file.read()
 
-    event_list = data["epcisBody"]["eventList"]
+    json_obj = json.loads(data)
+
+    event_list = json_obj["epcisBody"]["eventList"]
     events=[]
 
     for event in event_list:
         events.append(json_to_py(event))
     
-    return ("eventList","",events)
+    return ("eventList", "", events)
 

@@ -22,6 +22,7 @@ import logging
 import sys
 import re
 import hashlib
+import os
 
 # import syntax differs depending on whether this is run as a module or as a script
 try:
@@ -226,10 +227,10 @@ def main():
 
         # Output:
         if args.batch:
-            with open(filename+'.hashes', 'w') as outfile:
-                outfile.write("\n".join(hashes)+"\n")
+            with open(os.path.splitext(filename)[0] + '.hashes', 'w') as outfile:
+                outfile.write("\n".join(hashes) + "\n")
             if args.prehash:
-                with open(filename+'.prehashes', 'w') as outfile:
+                with open(os.path.splitext(filename)[0] + '.prehashes', 'w') as outfile:
                     outfile.write("\n".join(prehashes)+"\n")
         else:
             print("\n\nHashes of the events contained in '{}':\n".format(filename) + "\n".join(hashes))
