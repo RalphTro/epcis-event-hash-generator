@@ -6,11 +6,21 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 
 
 ## Usage (for the inconvenient)
-The script may be used as a command line utility like that:
+The script may be used as a command line utility like this:
 ```
 python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 ```
 
+See
+```
+python src/EpcisEventHashGenerator.py -h
+```
+for usage information.
+
+Tests are run via
+```
+cd src; pytest
+```
 
 ## Introduction  
 There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID value.
