@@ -23,12 +23,15 @@ import sys
 import re
 import hashlib
 
-# python imports... oO
+# import syntax differs depending on whether this is run as a module or as a script
 try:
     from .xml_to_py import event_list_from_epcis_document_xml as read_xml
+    from .json_to_py import event_list_from_epcis_document_json as read_json
 except ImportError:
     from xml_to_py import event_list_from_epcis_document_xml as read_xml
+    from json_to_py import event_list_from_epcis_document_json as read_json
 
+    
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
@@ -185,11 +188,16 @@ def gather_elements_not_in_order(root, child_order):
 
     return ""
 
-def compute_prehash_from_file(path):
-    """Read EPCIS XML document and generate pre-hashe strings.
-
+def compute_prehash_from_file(path, enforce = None):
+    """Read EPCIS document and generate pre-hashe strings.
+    Use enforce = "XML" or "JSON" to ignore file ending.
     """
-    events = read_xml(path)
+    if enforce == "XML" or path.lower().endswith(".xml"):
+        events = read_xml(path)
+    elif enforce == "JSON" or path.lower().endswith(".json"):
+        events = read_json(path)
+    else:
+        logging.error("Filename '%s' ending not recognized.", path)
     
     logging.debug("#events = %s\neventList = %s", len(events[2]), events)
     
@@ -212,7 +220,7 @@ def compute_prehash_from_file(path):
     return prehash_string_list
 
 
-def xml_epcis_hash(path, hashalg="sha256"):
+def epcis_hash(path, hashalg="sha256"):
     """Read all EPCIS Events from the EPCIS XML document at path.
     Compute a normalized form (pre-hash string) for each event and
     return an array of the event hashes computed from the pre-hash by
@@ -243,11 +251,7 @@ def xml_epcis_hash(path, hashalg="sha256"):
     return (hashValueList, prehash_string_list)
 
 
-def main():
-    """The main function reads the path to the xml file
-    and optionally the hash algorithm from the command
-    line arguments and calls the actual algorithm.
-    """
+def command_line_parsing():
     import argparse
 
     logger_cfg = {
@@ -298,10 +302,23 @@ def main():
     else:
         logging.debug("reading from files: '{}'".format(args.file))
 
-    for filename in args.file:
-        # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = xml_epcis_hash(filename, args.algorithm)
+    return args
 
+
+def main():
+    """The main function reads the path to the xml file
+    and optionally the hash algorithm from the command
+    line arguments and calls the actual algorithm.
+    """
+
+    args = command_line_parsing()
+            
+    for filename in args.file:
+        
+        # ACTUAL ALGORITHM CALL:
+        (hashes, prehashes) = epcis_hash(filename, args.algorithm)
+
+        # Output:
         if args.batch:
             with open(filename+'.hashes', 'w') as outfile:
                 outfile.write("\n".join(hashes)+"\n")

@@ -1,15 +1,15 @@
-from .epcis_event_hash_generator import xml_epcis_hash
+from .epcis_event_hash_generator import epcis_hash
 
 from os import walk
 
 TEST_FILE_PATH = "../testFiles/examples/"
 
-def testExplicitHashValues():  
+def test_explicit_hash_values():  
     for (_, _, filenames) in walk(TEST_FILE_PATH):
         for filename in filenames:
-            if filename.endswith("xml"):
+            if filename.endswith("xml") or filename.endswith("json"):
                 print("Testing file " + filename)
-                actualHashes = xml_epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
+                actualHashes = epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
                 assert len(actualHashes) > 0
                 with open(TEST_FILE_PATH + filename + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
