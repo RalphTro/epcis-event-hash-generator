@@ -49,11 +49,34 @@ import logging
 import json
 
 
-SKIP_KEYS = ["isA"]
+SKIP_KEYS = ["isA", "#text"]
+
+_namespaces = {} # global dictionary gathered during parsing
+
+def namespace_replace(key):
+    """If the key contains a namespace (followed by ":"), replace it with
+    the {naemspace_url} from the _namespaces dict.
+    """
+    splitted = key.split(":",1)
+    if len(splitted)>1:
+        return _namespaces[splitted[0]]+splitted[1]
+    
+    return key
+
+def add_missing_xml_substructure(py_obj):
+    """
+    Some of the object substructure in XML EPCIS is just not present in JSON... oO
+    """
+    if py_obj[0] == "readPoint":
+        assert not py_obj[2]
+        return (py_obj[0], "", [("id", py_obj[1])])
+
+    return py_obj
 
 def json_to_py(json_obj):
     """ Recursively convert a string/list/dict to a simple python object
     """
+    global _namespaces
     
     py_obj = ("", "", [])
 
@@ -64,27 +87,46 @@ def json_to_py(json_obj):
         if "isA" in json_obj:
             py_obj = (json_obj["isA"], "", [])
             
-        for (key, val) in [x for x in json_obj.items() if x[0] not in SKIP_KEYS]:
-            child = json_to_py(val)
-            child = (key, child[1], child[2])
-
-            # Names of list elements (e.g. 'epc' elements of 'epsList') are omitted in current json ld form -> restore
-            if key.endswith("List"):
-                named_elements=[]
-                for element in child[2]:
-                    if not element[0]:
-                        named_elements.append((key[:-4], element[1], element[2]))
-                    else:
-                        named_elements.append(element)
-                child = (child[0], child[1], named_elements)
+        if "#text" in json_obj:
+            py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
+        
             
-            py_obj[2].append(child)
+        for (key, val) in [x for x in json_obj.items() if x[0] not in SKIP_KEYS]:
+            if key.startswith("@xmlns"):
+                _namespaces[key[7:]] = "{" + val + "}"
+                logging.debug("Namespaces: %s", _namespaces)
+                
+                py_obj = (namespace_replace(py_obj[0]), py_obj[1], py_obj[2])
+            else:
+                # first find namespaces in child, then replace in key!
+                child = json_to_py(val)
+
+                key = namespace_replace(key) 
+
+                # Names of list elements (e.g. 'epc' elements of 'epsList') are omitted in current json ld form -> restore
+                if key.endswith("List"):
+                    named_elements=[]
+                    for element in child[2]:
+                        if not element[0]:
+                            named_elements.append((key[:-4], element[1], element[2]))
+                        else:
+                            named_elements.append(element)
+                    child = add_missing_xml_substructure((key, child[1], named_elements))
+                    py_obj[2].append(child)
+
+                elif isinstance(val, list):
+                    for element in child[2]:
+                        py_obj[2].append((key,element[1],element[2]))
+                else:
+                    child = add_missing_xml_substructure((key, child[1], child[2]))
+                    py_obj[2].append(child)                                
+                    
     else:
         logging.debug("converting '%s' to str", json_obj)
         return ("",str(json_obj),[])
     
     py_obj[2].sort()
-    return py_obj
+    return add_missing_xml_substructure(py_obj)
 
 
 def event_list_from_epcis_document_json(path):
