@@ -6,12 +6,21 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 
 
 ## Usage (for the inconvenient)
-The script may be used as a command line utility like that:
+The script may be used as a command line utility like this:
 ```
 python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
 ```
 
+See
+```
+python src/EpcisEventHashGenerator.py -h
+```
+for usage information.
 
+Tests are run via
+```
+cd src; pytest
+```
 
 ## Introduction  
 There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID value.
@@ -219,6 +228,14 @@ Note that all key/value pairs MUST be added in the identical order as specified 
     </tbody>
 </table>
 
+The last step consists in **embedding the resulting hash value in the 'ni' URI scheme as specified in RFC6920**, as follows:<br>
+ni:///{digest algorithm};{digest value} <br>
+(i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), and the digest value)<br>
+For instance, when applying sha-256 and sha-512 for the pre-hash string, the corresponding ni Hash URIs would look as follows:<br>
+ni:///sha-256;ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae <br>
+ni:///sha-512;daef4953b9783365cad6615223720506cc46c5167cd16ab500fa597aa08ff964<br>eb24fb19687f34d7665f778fcb6c5358fc0a5b81e1662cf90f73a2671c53f991
+
+
 For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
 
 <img src="hashingAlgorithmLogicIllustration.jpg">
@@ -229,8 +246,8 @@ tbd
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
 * Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
-
-
+* RFC 6920, Naming Things with Hashes, https://tools.ietf.org/html/rfc6920
+* Named Information Hash ALgorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
 
 
 ## License
