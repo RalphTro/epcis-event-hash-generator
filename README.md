@@ -228,11 +228,11 @@ Note that all key/value pairs MUST be added in the identical order as specified 
     </tbody>
 </table>
 
-The last step consists in embedding the resulting hash value in the 'ni' URI scheme as specified in RFC6920, as follows:
-ni:///{digest algorithm};{digest value} 
-(i.e. characters 'n', 'i', followed by one colon (';'), three slash characters ('/'), the digest algorithm, one semicolon (';'), and the digest value)
-For instance, when applying sha-256 and sha-512 for the pre-hash string, the corresponding ni Hash URIs would look as follows:
-ni:///sha-256;ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae
+The last step consists in **embedding the resulting hash value in the 'ni' URI scheme as specified in RFC6920**, as follows:<br>
+ni:///{digest algorithm};{digest value} <br>
+(i.e. characters 'n', 'i', followed by one colon (';'), three slash characters ('/'), the digest algorithm, one semicolon (';'), and the digest value)<br>
+For instance, when applying sha-256 and sha-512 for the pre-hash string, the corresponding ni Hash URIs would look as follows:<br>
+ni:///sha-256;ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae <br>
 ni:///sha-512;daef4953b9783365cad6615223720506cc46c5167cd16ab500fa597aa08ff964eb24fb19687f34d7665f778fcb6c5358fc0a5b81e1662cf90f73a2671c53f991
 
 
