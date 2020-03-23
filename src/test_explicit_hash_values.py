@@ -4,7 +4,8 @@ from os import walk, path
 
 TEST_FILE_PATH = "../testFiles/examples/"
 
-def test_explicit_hash_values():  
+def test_explicit_hash_values():
+    num_tested = 0
     for (_, _, filenames) in walk(TEST_FILE_PATH):
         for filename in filenames:
             if filename.endswith("xml") or filename.endswith("json"):
@@ -14,6 +15,8 @@ def test_explicit_hash_values():
                 with open(TEST_FILE_PATH + path.splitext(filename)[0] + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
                 assert actualHashes == expectedHashes
+                num_tested+=1
         break
+    assert num_tested > 0
 
 

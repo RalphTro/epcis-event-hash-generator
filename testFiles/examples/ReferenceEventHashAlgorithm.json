@@ -24,21 +24,15 @@
           "example:mySubField1": "2",
           "example:mySubField2": "5"
         },
-        "https:myField2": {
-          "@xmlns:https": "https://ns.example.com/epcis",
+        "example:myField2": {
+          "@xmlns:example": "https://ns.example.com/epcis",
           "#text": "0"
         },
-        "https:myField3": {
-          "@xmlns:https": "https://ns.example.com/epcis",
-          "https:mySubField3": [
-            {
-              "@xmlns:example": "https://ns.example.com/epcis",
-              "#text": "3"
-            },
-            {
-              "@xmlns:example": "https://ns.example.com/epcis",
-              "#text": "1"
-            }
+        "example:myField3": {
+          "@xmlns:example": "https://ns.example.com/epcis",
+          "example:mySubField3": [
+            "3",
+            "1"
           ]
         }
       }
