@@ -8,7 +8,7 @@
     "eventList": [
       {
         "isA": "ObjectEvent",
-        "eventTime": "2019-10-21T11:00:30+01:00",
+        "eventTime": "2019-10-21T11:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
           "urn:epc:id:sscc:5200001.0111111146"
@@ -45,7 +45,7 @@
       },
       {
         "isA": "ObjectEvent",
-        "eventTime": "2019-10-21T12:00:30+01:00",
+        "eventTime": "2019-10-21T12:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
           "urn:epc:id:sscc:5200001.0111111146"
@@ -90,7 +90,7 @@
       },
       {
         "isA": "ObjectEvent",
-        "eventTime": "2019-10-21T15:45:00+01:00",
+        "eventTime": "2019-10-21T15:45:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
           "urn:epc:id:sscc:4012345.0111111111"
@@ -102,7 +102,7 @@
       },
       {
         "isA": "ObjectEvent",
-        "eventTime": "2019-10-21T14:58:56+02:00",
+        "eventTime": "2019-10-21T14:58:56.000+02:00",
         "eventTimeZoneOffset": "+02:00",
         "quantityList": [
           {
@@ -173,7 +173,7 @@
       },
       {
         "isA": "AggregationEvent",
-        "eventTime": "2019-10-21T14:02:56+02:00",
+        "eventTime": "2019-10-21T14:02:56.000+02:00",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:4012344.0998811122",
         "childEPCs": [

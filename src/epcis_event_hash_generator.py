@@ -22,108 +22,18 @@ import logging
 import sys
 import re
 import hashlib
+import os
 
-# python imports... oO
+# import syntax differs depending on whether this is run as a module or as a script
 try:
     from .xml_to_py import event_list_from_epcis_document_xml as read_xml
+    from .json_to_py import event_list_from_epcis_document_json as read_json
+    from . import PROP_ORDER
 except ImportError:
     from xml_to_py import event_list_from_epcis_document_xml as read_xml
-
-PROP_ORDER = [
-    ('eventTime', None),
-    ('eventTimeZoneOffset', None),
-    ('eventID', None), 
-    ('errorDeclaration',
-     [
-         ('declarationTime', None),
-         ('reason', None),
-         ('correctiveEventIDs', [('correctiveEventID', None)])
-     ]),
-    ('bizTransactionList',[('bizTransaction', None)]),
-    ('parentID', None),
-    ('epcList', [('epc', None)]),
-    ('inputEPCList', [('epc', None)]),
-    ('childEPCs', [('epc', None)]),
-    ('quantityList',[('quantityElement',
-     [
-         ('epcClass', None),
-         ('quantity', None),
-         ('uom', None)
-     ])]),
-    ('childQuantityList',[('quantityElement',
-     [
-         ('epcClass', None),
-         ('quantity', None),
-         ('uom', None)
-     ])
-    ]),
-    ('inputQuantityList',[('quantityElement',
-     [
-         ('epcClass', None),
-         ('quantity', None),
-         ('uom', None)
-     ])]),
-    ('outputEPCList',[('epc', None)]),
-    ('outputQuantityList',[('quantityElement',
-     [
-         ('epcClass', None),
-         ('quantity', None),
-         ('uom', None)
-     ])]),
-    ('action', None),
-    ('transformationID', None),
-    ('bizStep', None),
-    ('disposition', None),
-    ('readPoint',[('id', None)]),
-    ('bizLocation',[('id', None)]),
-    ('bizTransactionList',[('bizTransaction', None)]),
-    ('sourceList',[('source', None)]),
-    ('destinationList',[('destination', None)]),
-    ('sensorElementList',[('sensorElement',
-     [('sensorMetaData',
-      [
-          ('time', None),
-          ('startTime',None),
-          ('endTime',None),
-          ('deviceID',None),
-          ('deviceMetaData',None),
-          ('rawData',None),
-          ('dataProcessingMethod',None),
-          ('bizRules', None)
-      ]),#end sensorMetaData
-      ('sensorReport',
-       [
-           ('type', None),
-           ('deviceID', None),
-           ('deviceMetaData', None),
-           ('rawData', None),
-           ('dataProcessingMethod', None),
-           ('microorganism', None),
-           ('chemicalSubstance', None),
-           ('value', None),
-           ('stringValue', None),
-           ('booleanValue', None),
-           ('hexBinaryValue', None),
-           ('uriValue', None),
-           ('minValue', None),
-           ('maxValue', None),
-           ('meanValue', None),
-           ('sDev', None),
-           ('percRank', None),
-           ('percValue', None),
-           ('uom', None),
-       ])#end sensorReport
-     ])])#end sensorElement    
-    ]
-"""The property order data structure describes the ordering in which
-to concatenate the contents of an EPCIS event. It is a list
-of pairs. The first part of each pair is a string, naming the xml
-element. If the element might have children whose order needs to be
-defined, the second element is a property order for the children,
-otherwise the second element is None.
-
-"""
-
+    from json_to_py import event_list_from_epcis_document_json as read_json
+    from __init__ import PROP_ORDER
+    
 
 def recurse_through_children_in_order(root, child_order):
     """Fetch all texts from root (if it is a simple element) or its
@@ -185,13 +95,20 @@ def gather_elements_not_in_order(root, child_order):
 
     return ""
 
-def compute_prehash_from_xml_file(path):
-    """Read EPCIS XML document and generate pre-hashe strings.
-
+def compute_prehash_from_file(path, enforce = None):
+    """Read EPCIS document and generate pre-hashe strings.
+    Use enforce = "XML" or "JSON" to ignore file ending.
     """
-    events = read_xml(path)
+    if enforce == "XML" or path.lower().endswith(".xml"):
+        events = read_xml(path)
+    elif enforce == "JSON" or path.lower().endswith(".json"):
+        events = read_json(path)
+    else:
+        logging.error("Filename '%s' ending not recognized.", path)
     
-    logging.debug("#events = %s\neventList = %s", len(events[2]), events)
+    logging.info("#events = %s", len(events[2]))
+    for i in range(len(events[2])):
+        logging.info("%s: %s\n", i, events[2][i])
     
     prehash_string_list = []
     for event in events[2]:
@@ -212,13 +129,13 @@ def compute_prehash_from_xml_file(path):
     return prehash_string_list
 
 
-def xml_epcis_hash(path, hashalg="sha256"):
+def epcis_hash(path, hashalg="sha256"):
     """Read all EPCIS Events from the EPCIS XML document at path.
     Compute a normalized form (pre-hash string) for each event and
     return an array of the event hashes computed from the pre-hash by
     hashalg.
     """
-    prehash_string_list = compute_prehash_from_xml_file(path)
+    prehash_string_list = compute_prehash_from_file(path)
     
     # Calculate hash values and prefix them according to RFC 6920
     hashValueList = []
@@ -243,16 +160,10 @@ def xml_epcis_hash(path, hashalg="sha256"):
     return (hashValueList, prehash_string_list)
 
 
-def main():
-    """The main function reads the path to the xml file
-    and optionally the hash algorithm from the command
-    line arguments and calls the actual algorithm.
-    """
+def command_line_parsing():
     import argparse
 
     logger_cfg = {
-        "level":
-        logging.INFO,
         "format":
         "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
     }
@@ -271,7 +182,7 @@ def main():
         "--log",
         help="Set the log level. Default: INFO.",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        default="INFO")
+        default="WARNING")
     parser.add_argument(
         "-b",
         "--batch",
@@ -298,15 +209,28 @@ def main():
     else:
         logging.debug("reading from files: '{}'".format(args.file))
 
-    for filename in args.file:
-        # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = xml_epcis_hash(filename, args.algorithm)
+    return args
 
+
+def main():
+    """The main function reads the path to the xml file
+    and optionally the hash algorithm from the command
+    line arguments and calls the actual algorithm.
+    """
+
+    args = command_line_parsing()
+            
+    for filename in args.file:
+        
+        # ACTUAL ALGORITHM CALL:
+        (hashes, prehashes) = epcis_hash(filename, args.algorithm)
+
+        # Output:
         if args.batch:
-            with open(filename+'.hashes', 'w') as outfile:
-                outfile.write("\n".join(hashes)+"\n")
+            with open(os.path.splitext(filename)[0] + '.hashes', 'w') as outfile:
+                outfile.write("\n".join(hashes) + "\n")
             if args.prehash:
-                with open(filename+'.prehashes', 'w') as outfile:
+                with open(os.path.splitext(filename)[0] + '.prehashes', 'w') as outfile:
                     outfile.write("\n".join(prehashes)+"\n")
         else:
             print("\n\nHashes of the events contained in '{}':\n".format(filename) + "\n".join(hashes))
