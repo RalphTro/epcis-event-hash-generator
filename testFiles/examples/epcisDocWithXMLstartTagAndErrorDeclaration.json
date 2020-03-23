@@ -8,7 +8,7 @@
     "eventList": [
       {
         "isA": "TransformationEvent",
-        "eventTime": "2020-01-14T00:00:00+01:00",
+        "eventTime": "2020-01-14T00:00:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "eventID": "urn:uuid:374d95fc-9457-4a51-bd6a-0bba133845a8",
         "inputEPCList": [
@@ -32,7 +32,7 @@
         "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
         "readPoint": "urn:epc:id:sgln:4012345.00000.0",
         "errorDeclaration": {
-          "declarationTime": "2020-01-15T00:00:00+01:00",
+          "declarationTime": "2020-01-15T00:00:00.000+01:00",
           "reason": "urn:epcglobal:cbv:er:incorrect_data",
           "example:vendorExtension": {
             "@xmlns:example": "http://ns.example.com/epcis",

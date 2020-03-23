@@ -90,7 +90,7 @@
       },
       {
         "isA": "ObjectEvent",
-        "eventTime": "2019-10-21T15:45:00+01:00",
+        "eventTime": "2019-10-21T15:45:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
           "urn:epc:id:sscc:4012345.0111111111"
