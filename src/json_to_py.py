@@ -64,15 +64,55 @@ def namespace_replace(key):
     return key
 
 
-def add_missing_xml_substructure(py_obj):
+def correct_xml_vs_js_structure_missmatch(py_obj):
     """
-    Some of the object substructure in XML EPCIS is just not present in JSON... oO
+    Some of the object substructure in XML EPCIS is just not present in JSON or unsystematically renamed... oO
     """
-    if py_obj[0] == "readPoint":
+
+    # readpoint and bizLocation have a nested id in XML but not in JSON
+    if py_obj[0] == "readPoint" or py_obj[0] == "bizLocation":
         assert not py_obj[2]
         return py_obj[0], "", [("id", py_obj[1], [])]
 
+    # bisTransaction, source and destination have a nested id in JSON but not in XML
+    if py_obj[0] == "bizTransaction" or py_obj[0] == "source" or py_obj[0] == "destination":
+        for element in [x for x in py_obj[2] if x[0] == py_obj[0]]:
+            py_obj[2].remove(element)
+            return py_obj[0], element[1], py_obj[2]
+
+    # inconsistent child names / omissions
+    if py_obj[0] == "inputEPC" or py_obj[0] == "outputEPC":
+        return "epc", py_obj[1], py_obj[2]
+
+    # quantity can be a quantityList child which should be called quantityElement (omitted in JSON) or the quantity
+    # property of such an element... -.-
+    if py_obj[0] == "inputQuantity" or py_obj[0] == "outputQuantity" or py_obj[0] == "childQuantity" or (py_obj[0] == "quantity" and len(py_obj[2]) > 0):
+        return "quantityElement", py_obj[1], py_obj[2]
+
+    if py_obj[0] == "inputQuantity" or py_obj[0] == "outputQuantity":
+        return "quantityElement", py_obj[1], py_obj[2]
+
     return py_obj
+
+
+def deep_structure_corretion(py_obj):
+    """deep copy, applying xml_vs_js_structure_mismatch depth first"""
+
+    corrected_children = []
+
+    # particularly tricky case of structure mismatch: list of childEPCs VS childEPCs list of EPCs
+    child_epcs = []
+    for child in [element for element in py_obj[2] if element[0] == "childEPCs"]:
+        child_epcs.append(("epc", child[1], []))
+
+    if child_epcs:
+        corrected_children.append(("childEPCs", "", child_epcs))
+
+    # actual recursion
+    for child in [element for element in py_obj[2] if not element[0] == "childEPCs"]:
+        corrected_children.append(deep_structure_corretion(child))
+
+    return correct_xml_vs_js_structure_missmatch((py_obj[0], py_obj[1], corrected_children))
 
 
 def json_to_py(json_obj):
@@ -113,14 +153,14 @@ def json_to_py(json_obj):
                             named_elements.append((key[:-4], element[1], element[2]))
                         else:
                             named_elements.append(element)
-                    child = add_missing_xml_substructure((key, child[1], named_elements))
+                    child = (key, child[1], named_elements)
                     py_obj[2].append(child)
 
                 elif isinstance(val, list):
                     for element in child[2]:
                         py_obj[2].append((key, element[1], element[2]))
                 else:
-                    child = add_missing_xml_substructure((key, child[1], child[2]))
+                    child = (key, child[1], child[2])
                     py_obj[2].append(child)
 
     else:
@@ -128,7 +168,7 @@ def json_to_py(json_obj):
         return "", str(json_obj), []
 
     py_obj[2].sort()
-    return add_missing_xml_substructure(py_obj)
+    return py_obj
 
 
 def event_list_from_epcis_document_json(path):
@@ -144,6 +184,6 @@ def event_list_from_epcis_document_json(path):
     events = []
 
     for event in event_list:
-        events.append(json_to_py(event))
+        events.append(deep_structure_corretion(json_to_py(event)))
 
-    return ("eventList", "", events)
+    return ("EventList", "", events)

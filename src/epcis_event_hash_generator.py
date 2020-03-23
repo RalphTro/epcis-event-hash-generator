@@ -106,7 +106,9 @@ def compute_prehash_from_file(path, enforce = None):
     else:
         logging.error("Filename '%s' ending not recognized.", path)
     
-    logging.debug("#events = %s\neventList = %s", len(events[2]), events)
+    logging.info("#events = %s", len(events[2]))
+    for i in range(len(events[2])):
+        logging.info("%s: %s\n", i, events[2][i])
     
     prehash_string_list = []
     for event in events[2]:
@@ -162,8 +164,6 @@ def command_line_parsing():
     import argparse
 
     logger_cfg = {
-        "level":
-        logging.INFO,
         "format":
         "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
     }
@@ -182,7 +182,7 @@ def command_line_parsing():
         "--log",
         help="Set the log level. Default: INFO.",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        default="INFO")
+        default="WARNING")
     parser.add_argument(
         "-b",
         "--batch",

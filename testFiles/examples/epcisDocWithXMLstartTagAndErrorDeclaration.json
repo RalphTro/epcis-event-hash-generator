@@ -25,7 +25,7 @@
         "outputQuantityList": [
           {
             "epcClass": "urn:epc:idpat:sgtin:4012345.044444.*",
-            "quantity": 452,
+            "quantity": 452.0,
             "uom": "KGM"
           }
         ],
