@@ -1,8 +1,13 @@
-from .epcis_event_hash_generator import epcis_hash
+try:
+   from .context import epcis_event_hash_generator
+except ImportError:
+   from context import epcis_event_hash_generator
+
+from epcis_event_hash_generator.epcis_event_hash_generator import epcis_hash
 
 from os import walk, path
 
-TEST_FILE_PATH = "../testFiles/examples/"
+TEST_FILE_PATH = "examples/"
 
 def test_explicit_hash_values():
     num_tested = 0

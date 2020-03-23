@@ -1,4 +1,9 @@
-from . import xml_to_py
+try:
+   from .context import epcis_event_hash_generator
+except ImportError:
+   from context import epcis_event_hash_generator
+
+from epcis_event_hash_generator import xml_to_py
 
 import xml.etree.ElementTree as ElementTree
 
@@ -22,7 +27,7 @@ def test_docstring_example():
 
    
 def test_epcsi_reference_example():
-    actual_obj = xml_to_py.event_list_from_epcis_document_xml("../testFiles/examples/ReferenceEventHashAlgorithm.xml")
+    actual_obj = xml_to_py.event_list_from_epcis_document_xml("examples/ReferenceEventHashAlgorithm.xml")
 
     print(actual_obj)
 

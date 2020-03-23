@@ -2,7 +2,7 @@
 This is a proposal/reference implementation for a method to uniquely identify an EPCIS event or validate the integrity thereof. To this end, a syntax-/representation-agnostic approach based on hashing is developed.
 The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint of the latter. 
 
-<img src="epcisEventHashGenerator.jpg">
+![EPCIS event hash generator algorithm illustration](docs/epcisEventHashGenerator.jpg)
 
 
 ## Usage (for the inconvenient)
@@ -238,10 +238,7 @@ ni:///sha-512;daef4953b9783365cad6615223720506cc46c5167cd16ab500fa597aa08ff964<b
 
 For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
 
-<img src="hashingAlgorithmLogicIllustration.jpg">
-
-## Installation
-tbd
+![Example EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
 
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis

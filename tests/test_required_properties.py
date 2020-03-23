@@ -1,9 +1,16 @@
-from .epcis_event_hash_generator import epcis_hash
+try:
+   from .context import epcis_event_hash_generator
+except ImportError:
+   from context import epcis_event_hash_generator
+
+
+from epcis_event_hash_generator.epcis_event_hash_generator import epcis_hash
+    
 
 from os import walk
 
-TEST_FILE_PATH = "../testFiles/examples/"
-TEST_FILE_PATH_SAME_EVENT = "../testFiles/expected_equal/"
+TEST_FILE_PATH = "examples/"
+TEST_FILE_PATH_SAME_EVENT = "expected_equal/"
 
 
 def test_distinct():
