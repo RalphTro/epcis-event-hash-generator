@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="epcis-event-hash-generator",
-    version="1.0.1",
+    version="1.1.0",
     author=" Ralph Troeger; Sebastian Schmittner",
     author_email="ralph.troeger@gs1.de;schmittner@eecc.info",
     description="Exemplary implementation of the epcis event hash generator algorithm described in the README",
