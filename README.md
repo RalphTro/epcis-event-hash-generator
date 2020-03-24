@@ -11,18 +11,12 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 ## Usage (for the inconvenient)
 The script may be used as a command line utility like this:
 ```
-python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
+python epcis_event_hash_generator/epcis_event_hash_generator.py -h
 ```
-
-See
-```
-python src/EpcisEventHashGenerator.py -h
-```
-for usage information.
 
 Tests are run via
 ```
-cd src; pytest
+cd tests; pytest
 ```
 
 ## Introduction  
