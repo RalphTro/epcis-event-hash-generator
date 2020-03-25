@@ -241,7 +241,7 @@ For better understanding, the following illustration includes the data content o
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
 * Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
 * RFC 6920, Naming Things with Hashes, https://tools.ietf.org/html/rfc6920
-* Named Information Hash ALgorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
+* Named Information Hash Algorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
 
 
 ## License
