@@ -26,14 +26,13 @@ import os
 
 # import syntax differs depending on whether this is run as a module or as a script
 try:
-    from .xml_to_py import event_list_from_epcis_document_xml as read_xml
-    from .json_to_py import event_list_from_epcis_document_json as read_json
-    from . import PROP_ORDER
+    from .context import epcis_event_hash_generator
 except ImportError:
-    from xml_to_py import event_list_from_epcis_document_xml as read_xml
-    from json_to_py import event_list_from_epcis_document_json as read_json
-    from __init__ import PROP_ORDER
-    
+    from context import epcis_event_hash_generator
+
+from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
+from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
+from epcis_event_hash_generator import PROP_ORDER
 
 def recurse_through_children_in_order(root, child_order):
     """Fetch all texts from root (if it is a simple element) or its
@@ -51,15 +50,17 @@ def recurse_through_children_in_order(root, child_order):
                 prefix = child_name
             if child[1]:
                 logging.debug("Adding text '%s'", child[1])
-                list_of_values.append(child_name + "=" + child[1].strip()) #stripping white space unfortunately not always automatic
+                list_of_values.append(
+                    child_name + "=" + child[1].strip())  # stripping white space unfortunately not always automatic
 
-        #sort list of values to resolve issue 10
+        # sort list of values to resolve issue 10
         logging.debug("sorting values %s", list_of_values)
         list_of_values.sort()
         logging.debug("sorted: %s", list_of_values)
         texts += prefix + "".join(list_of_values)
 
     return texts
+
 
 def generic_element_to_prehash_string(root):
     list_of_values = []
@@ -68,8 +69,9 @@ def generic_element_to_prehash_string(root):
     if isinstance(root, str) and root:
         list_of_values.append("=" + root.strip())
     else:
-        for child in root:      
-            list_of_values.append( child[0].replace("{","").replace("}","#") + generic_element_to_prehash_string(child[1])+ generic_element_to_prehash_string(child[2]))
+        for child in root:
+            list_of_values.append(child[0].replace("{", "").replace("}", "#") + generic_element_to_prehash_string(
+                child[1]) + generic_element_to_prehash_string(child[2]))
 
     list_of_values.sort()
     return "".join(list_of_values)
@@ -79,23 +81,24 @@ def gather_elements_not_in_order(root, child_order):
     """
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
-    
+
     # remove recordTime, if any
     child_order_or_record_time = child_order + [("recordTime", None)]
-    
+
     for (child_name, _) in child_order_or_record_time:
         covered_children = [x for x in root if x[0] == child_name]
         logging.debug("Children '%s' covered by ordering: %s", child_name, covered_children)
         for child in covered_children:
             root.remove(child)
-    
+
     logging.debug("Parsing remaining elements in: %s", root)
     if root:
         return generic_element_to_prehash_string(root)
 
     return ""
 
-def compute_prehash_from_file(path, enforce = None):
+
+def compute_prehash_from_file(path, enforce=None):
     """Read EPCIS document and generate pre-hashe strings.
     Use enforce = "XML" or "JSON" to ignore file ending.
     """
@@ -105,24 +108,23 @@ def compute_prehash_from_file(path, enforce = None):
         events = read_json(path)
     else:
         logging.error("Filename '%s' ending not recognized.", path)
-    
+
     logging.info("#events = %s", len(events[2]))
     for i in range(len(events[2])):
         logging.info("%s: %s\n", i, events[2][i])
-    
+
     prehash_string_list = []
     for event in events[2]:
         logging.debug("prehashing event:\n%s", event)
         try:
             prehash_string_list.append("eventType=" + event[0] +
-                recurse_through_children_in_order(event[2], PROP_ORDER)
-                + gather_elements_not_in_order(event[2], PROP_ORDER)
-            )
+                                       recurse_through_children_in_order(event[2], PROP_ORDER)
+                                       + gather_elements_not_in_order(event[2], PROP_ORDER)
+                                       )
         except Exception as ex:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
             pass
-        
-        
+
     # To see/check concatenated value string before hash algorithm is performed:
     logging.debug("prehash_string_list = {}".format(prehash_string_list))
 
@@ -136,25 +138,25 @@ def epcis_hash(path, hashalg="sha256"):
     hashalg.
     """
     prehash_string_list = compute_prehash_from_file(path)
-    
+
     # Calculate hash values and prefix them according to RFC 6920
     hashValueList = []
     for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
             hash_string = 'ni:///sha-256;' + \
-                hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha3_256':
             hash_string = 'ni:///sha3_256;' + \
-                hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha384':
             hash_string = 'ni:///sha-384;' + \
-                hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest()
         elif hashalg == 'sha512':
             hash_string = 'ni:///sha-512;' + \
-                hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest()
         else:
             raise ValueError("Unsupported Hashing Algorithm: " + hash_string)
-        
+
         hashValueList.append(hash_string)
 
     return (hashValueList, prehash_string_list)
@@ -165,7 +167,7 @@ def command_line_parsing():
 
     logger_cfg = {
         "format":
-        "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
+            "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
     }
 
     parser = argparse.ArgumentParser(
@@ -193,14 +195,13 @@ def command_line_parsing():
         "--prehash",
         help="If given, also output the prehash string to stdout. Output to a .prehashes file, if combined with -b.",
         action="store_true")
-    
 
     args = parser.parse_args()
 
     logger_cfg["level"] = getattr(logging, args.log)
     logging.basicConfig(**logger_cfg)
 
-    #print("Log messages above level: {}".format(logger_cfg["level"]))
+    # print("Log messages above level: {}".format(logger_cfg["level"]))
 
     if not args.file:
         logging.critical("File name required.")
@@ -219,9 +220,9 @@ def main():
     """
 
     args = command_line_parsing()
-            
+
     for filename in args.file:
-        
+
         # ACTUAL ALGORITHM CALL:
         (hashes, prehashes) = epcis_hash(filename, args.algorithm)
 
@@ -231,11 +232,11 @@ def main():
                 outfile.write("\n".join(hashes) + "\n")
             if args.prehash:
                 with open(os.path.splitext(filename)[0] + '.prehashes', 'w') as outfile:
-                    outfile.write("\n".join(prehashes)+"\n")
+                    outfile.write("\n".join(prehashes) + "\n")
         else:
             print("\n\nHashes of the events contained in '{}':\n".format(filename) + "\n".join(hashes))
             if args.prehash:
-                print("\nPre-hash strings:\n" +"\n---\n".join(prehashes))
+                print("\nPre-hash strings:\n" + "\n---\n".join(prehashes))
 
 
 # goto main if script is run as entrypoint

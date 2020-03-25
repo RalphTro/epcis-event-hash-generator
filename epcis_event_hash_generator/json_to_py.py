@@ -26,7 +26,8 @@ is converted to
   ("action", "OBSERVE", [])
 ])
 
-The EPCIS standard is used to add missing names (such as "epc" in the above example) to be consistent with the XML version.
+This module contains the straight forward part of the JSON to Py conversion. The tricky part of adjusting the
+data model to get the same as when parsing the XML equivalent is imported from he json_xml_model_mismatch_correction module.
 
 
 .. module:: json_to_py
@@ -48,7 +49,12 @@ file for details.
 import logging
 import json
 
-SKIP_KEYS = ["isA", "#text"]
+try:
+    from .context import epcis_event_hash_generator
+except ImportError:
+    from context import epcis_event_hash_generator
+
+from epcis_event_hash_generator import json_xml_model_mismatch_correction
 
 _namespaces = {}  # global dictionary gathered during parsing
 
@@ -62,57 +68,6 @@ def namespace_replace(key):
         return _namespaces[splitted[0]] + splitted[1]
 
     return key
-
-
-def correct_xml_vs_js_structure_missmatch(py_obj):
-    """
-    Some of the object substructure in XML EPCIS is just not present in JSON or unsystematically renamed... oO
-    """
-
-    # readpoint and bizLocation have a nested id in XML but not in JSON
-    if py_obj[0] == "readPoint" or py_obj[0] == "bizLocation":
-        assert not py_obj[2]
-        return py_obj[0], "", [("id", py_obj[1], [])]
-
-    # bisTransaction, source and destination have a nested id in JSON but not in XML
-    if py_obj[0] == "bizTransaction" or py_obj[0] == "source" or py_obj[0] == "destination":
-        for element in [x for x in py_obj[2] if x[0] == py_obj[0]]:
-            py_obj[2].remove(element)
-            return py_obj[0], element[1], py_obj[2]
-
-    # inconsistent child names / omissions
-    if py_obj[0] == "inputEPC" or py_obj[0] == "outputEPC":
-        return "epc", py_obj[1], py_obj[2]
-
-    # quantity can be a quantityList child which should be called quantityElement (omitted in JSON) or the quantity
-    # property of such an element... -.-
-    if py_obj[0] == "inputQuantity" or py_obj[0] == "outputQuantity" or py_obj[0] == "childQuantity" or (py_obj[0] == "quantity" and len(py_obj[2]) > 0):
-        return "quantityElement", py_obj[1], py_obj[2]
-
-    if py_obj[0] == "inputQuantity" or py_obj[0] == "outputQuantity":
-        return "quantityElement", py_obj[1], py_obj[2]
-
-    return py_obj
-
-
-def deep_structure_corretion(py_obj):
-    """deep copy, applying xml_vs_js_structure_mismatch depth first"""
-
-    corrected_children = []
-
-    # particularly tricky case of structure mismatch: list of childEPCs VS childEPCs list of EPCs
-    child_epcs = []
-    for child in [element for element in py_obj[2] if element[0] == "childEPCs"]:
-        child_epcs.append(("epc", child[1], []))
-
-    if child_epcs:
-        corrected_children.append(("childEPCs", "", child_epcs))
-
-    # actual recursion
-    for child in [element for element in py_obj[2] if not element[0] == "childEPCs"]:
-        corrected_children.append(deep_structure_corretion(child))
-
-    return correct_xml_vs_js_structure_missmatch((py_obj[0], py_obj[1], corrected_children))
 
 
 def json_to_py(json_obj):
@@ -132,7 +87,7 @@ def json_to_py(json_obj):
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        for (key, val) in [x for x in json_obj.items() if x[0] not in SKIP_KEYS]:
+        for (key, val) in [x for x in json_obj.items() if x[0] not in ["isA", "#text"]]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"
                 logging.debug("Namespaces: %s", _namespaces)
@@ -144,19 +99,7 @@ def json_to_py(json_obj):
 
                 key = namespace_replace(key)
 
-                # Names of list elements (e.g. 'epc' elements of 'epsList') are omitted in current json ld form ->
-                # restore
-                if key.endswith("List"):
-                    named_elements = []
-                    for element in child[2]:
-                        if not element[0]:
-                            named_elements.append((key[:-4], element[1], element[2]))
-                        else:
-                            named_elements.append(element)
-                    child = (key, child[1], named_elements)
-                    py_obj[2].append(child)
-
-                elif isinstance(val, list):
+                if isinstance(val, list):
                     for element in child[2]:
                         py_obj[2].append((key, element[1], element[2]))
                 else:
@@ -183,7 +126,8 @@ def event_list_from_epcis_document_json(path):
     event_list = json_obj["epcisBody"]["eventList"]
     events = []
 
+    # Correct JSON/XML data model mismatch
     for event in event_list:
-        events.append(deep_structure_corretion(json_to_py(event)))
+        events.append(json_xml_model_mismatch_correction.deep_structure_correction(json_to_py(event)))
 
     return ("EventList", "", events)
