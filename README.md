@@ -101,7 +101,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
        <tr>
           <td>8</td>
           <td colspan=2>-</td>
-          <td>bizTransactionList – type - bizTransaction</td>
+          <td>bizTransactionList – type – bizTransaction</td>
           <td colspan=2>-</td>
       </tr>
       <tr>
@@ -179,11 +179,11 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         </tr>
         <tr>
             <td>19</td>
-            <td colspan=5>sourceList – type - source</td>
+            <td colspan=5>sourceList – type – source</td>
         </tr>
         <tr>
             <td>20</td>
-            <td colspan=5>destinationList – type - destination</td>
+            <td colspan=5>destinationList – type – destination</td>
         </tr>
         <tr>
             <td/>
