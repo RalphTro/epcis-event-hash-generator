@@ -11,18 +11,12 @@ The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in
 ## Usage (for the inconvenient)
 The script may be used as a command line utility like this:
 ```
-python src/EpcisEventHashGenerator.py test/sensorObjectEvent.xml
+python epcis_event_hash_generator/epcis_event_hash_generator.py -h
 ```
-
-See
-```
-python src/EpcisEventHashGenerator.py -h
-```
-for usage information.
 
 Tests are run via
 ```
-cd src; pytest
+cd tests; pytest
 ```
 
 ## Introduction  
@@ -52,7 +46,7 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 For hashing strings, standard implementations of the relevant hash algorithms (such as sha-256) are avaiable for all relevant languages. Hence, the focus here is on deriving a so-called *pre-hash string* representation of an EPCIS event which fulfils the above requirements and can subsequently be passed to a standard hashing algorithm.
 
-To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs exactly according to the following sequence. First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
+To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs exactly according to the following sequence (without any separator, i.e. an empty string between each successive element): First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
 
 Note that all key/value pairs MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
   
@@ -107,12 +101,12 @@ Note that all key/value pairs MUST be added in the identical order as specified 
        <tr>
           <td>8</td>
           <td colspan=2>-</td>
-          <td>bizTransactionList – bizTransaction</td>
+          <td>bizTransactionList – type – bizTransaction</td>
           <td colspan=2>-</td>
       </tr>
       <tr>
         <td/>
-        <td colspan=5><i>All individual bizTransaction IDs being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
+        <td colspan=5><i>All individual bizTransaction IDs (along with their preceding type, if present) being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
       </tr>
       <tr>
             <td>9</td>
@@ -179,21 +173,21 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         </tr>
         <tr>
             <td>18</td>
-            <td colspan=2>bizTransactionList – bizTransaction</td>
+            <td colspan=2>bizTransactionList – type - bizTransaction</td>
             <td>-</td>
-            <td colspan=2>bizTransactionList – bizTransaction</td>
+            <td colspan=2>bizTransactionList – type - bizTransaction</td>
         </tr>
         <tr>
             <td>19</td>
-            <td colspan=5>sourceList – source</td>
+            <td colspan=5>sourceList – type – source</td>
         </tr>
         <tr>
             <td>20</td>
-            <td colspan=5>destinationList – destination</td>
+            <td colspan=5>destinationList – type – destination</td>
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced in lexicographical order</td>
+            <td colspan=5><i>All individual source/destination IDs (along with their preceding type) being part of the respective lists MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
             <td>21</td>
@@ -247,7 +241,7 @@ For better understanding, the following illustration includes the data content o
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
 * Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
 * RFC 6920, Naming Things with Hashes, https://tools.ietf.org/html/rfc6920
-* Named Information Hash ALgorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
+* Named Information Hash Algorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
 
 
 ## License
