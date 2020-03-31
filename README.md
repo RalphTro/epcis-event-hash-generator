@@ -101,12 +101,12 @@ Note that all key/value pairs MUST be added in the identical order as specified 
        <tr>
           <td>8</td>
           <td colspan=2>-</td>
-          <td>bizTransactionList – bizTransaction</td>
+          <td>bizTransactionList – type - bizTransaction</td>
           <td colspan=2>-</td>
       </tr>
       <tr>
         <td/>
-        <td colspan=5><i>All individual bizTransaction IDs being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
+        <td colspan=5><i>All individual bizTransaction IDs (along with their preceding type, if present) being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
       </tr>
       <tr>
             <td>9</td>
@@ -173,21 +173,21 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         </tr>
         <tr>
             <td>18</td>
-            <td colspan=2>bizTransactionList – bizTransaction</td>
+            <td colspan=2>bizTransactionList – type - bizTransaction</td>
             <td>-</td>
-            <td colspan=2>bizTransactionList – bizTransaction</td>
+            <td colspan=2>bizTransactionList – type - bizTransaction</td>
         </tr>
         <tr>
             <td>19</td>
-            <td colspan=5>sourceList – source</td>
+            <td colspan=5>sourceList – type - source</td>
         </tr>
         <tr>
             <td>20</td>
-            <td colspan=5>destinationList – destination</td>
+            <td colspan=5>destinationList – type - destination</td>
         </tr>
         <tr>
             <td/>
-            <td colspan=5><i>All individual source/destination IDs being part of the respective lists MUST be sequenced in lexicographical order</td>
+            <td colspan=5><i>All individual source/destination IDs (along with their preceding type) being part of the respective lists MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
             <td>21</td>
