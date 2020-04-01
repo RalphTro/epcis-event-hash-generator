@@ -76,22 +76,14 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         </tr>
         <tr>
             <td>4</td>
-            <td colspan=5>eventID</td>
-        </tr>
-        <tr>
-            <td/>
-            <td colspan=5><i>Note: Even if an event ID value is already present (which is NOT required!), this method may still be beneficial, e.g. when organisations require to store a unique fingerprint of EPCIS events on a distributed shared ledger.<i/></td>
-        </tr>
-        <tr>
-            <td>5</td>
             <td colspan=5>ErrorDeclaration – declarationTime</td>
         </tr>
         <tr>
-            <td>6</td>
+            <td>5</td>
             <td colspan=5>ErrorDeclaration – reason</td>
         </tr>
         <tr>
-            <td>7</td>
+            <td>6</td>
             <td colspan=5>ErrorDeclaration – correctiveEventIDs</td>
         </tr>
         <tr>
@@ -99,7 +91,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All individual event IDs being part of the correctiveEventIDs element MUST be sequenced in lexicographical order</i></td>
         </tr>
        <tr>
-          <td>8</td>
+          <td>7</td>
           <td colspan=2>-</td>
           <td>bizTransactionList – type – bizTransaction</td>
           <td colspan=2>-</td>
@@ -109,7 +101,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         <td colspan=5><i>All individual bizTransaction IDs (along with their preceding type, if present) being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
       </tr>
       <tr>
-            <td>9</td>
+            <td>8</td>
             <td>epcList – epc</td>
             <td>parentID</td>
             <td>parentID</td>
@@ -121,7 +113,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All EPC values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>10</td>
+            <td>9</td>
             <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
             <td>childEPCs – epc</td>
             <td>epcList – epc</td>
@@ -133,7 +125,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All Quantity Elements being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>11</td>
+            <td>10</td>
             <td/>
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
             <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
@@ -141,14 +133,14 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
         </tr>
         <tr>
-            <td>12</td>
+            <td>11</td>
             <td/>
             <td colspan=2>-</td>
             <td>outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
             <td colspan=1>-</td>
         </tr>
         <tr>
-            <td>13</td>
+            <td>12</td>
             <td>action</td>
             <td>action</td>
             <td>action</td>
@@ -156,33 +148,33 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td>action</td>
         </tr>
         <tr>
-            <td>14</td>
+            <td>13</td>
             <td colspan=5>bizStep</td>
         </tr>
         <tr>
-            <td>15</td>
+            <td>14</td>
             <td colspan=5>disposition</td>
         </tr>
         <tr>
-            <td>16</td>
+            <td>15</td>
             <td colspan=5>readPoint</td>
         </tr>
         <tr>
-            <td>17</td>
+            <td>16</td>
             <td colspan=5>bizLocation</td>
         </tr>
         <tr>
-            <td>18</td>
+            <td>17</td>
             <td colspan=2>bizTransactionList – type - bizTransaction</td>
             <td>-</td>
             <td colspan=2>bizTransactionList – type - bizTransaction</td>
         </tr>
         <tr>
-            <td>19</td>
+            <td>18</td>
             <td colspan=5>sourceList – type – source</td>
         </tr>
         <tr>
-            <td>20</td>
+            <td>19</td>
             <td colspan=5>destinationList – type – destination</td>
         </tr>
         <tr>
@@ -190,11 +182,11 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All individual source/destination IDs (along with their preceding type) being part of the respective lists MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
-            <td>21</td>
+            <td>20</td>
             <td colspan=5>sensorElement – sensorMetaData (time + startTime + endTime + deviceID + deviceMetaData + rawData + dataProcessingMethod + bizRules)</td>
         </tr>
         <tr>
-            <td>22</td>
+            <td>21</td>
             <td colspan=5>sensorElement – sensorReport (type + deviceID + deviceMetaData + rawData + dataProcessingMethod + time + microorganism + chemicalSubstance + value + stringValue + booleanValue + hexBinaryValue + uriValue + minValue + maxValue + meanValue + sDev + percRank + percValue + uom)</td>
         </tr>
         <tr>
@@ -202,7 +194,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All Sensor Elements MUST be sequenced in lexicographical order</i>             </td>
         </tr>
         <tr>
-            <td>23</td>
+            <td>22</td>
             <td>ILMD</td>
             <td colspan=2>-</td>
             <td>ILMD</td>
@@ -213,7 +205,7 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
         </tr>
         <tr>
-            <td>24</td>
+            <td>23</td>
             <td colspan=5>User extensions</td>
         </tr>
         <tr>
