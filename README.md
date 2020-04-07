@@ -229,6 +229,8 @@ For better understanding, the following illustration includes the data content o
 
 ![Example EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
 
+The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
+
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
 * Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
