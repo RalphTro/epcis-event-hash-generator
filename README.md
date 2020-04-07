@@ -29,6 +29,7 @@ EPCIS events have a couple of differences to other electronic documents:
 
 This is why industry needs to have a consistent, reliable approach to create a hash value that is viable to uniquely identify a specific EPCIS event. 
 
+Notice that the algorithm described here provides a way of *hashing* an event. A *signature* scheme can be build using this hash, but the hash by itself does not yield a proof of authenticity/authorship. For example, a man in the middle attack can re-compute the hash after tampering.
 
 ## Requirements
 
