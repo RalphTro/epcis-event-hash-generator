@@ -158,11 +158,11 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         </tr>
         <tr>
             <td>15</td>
-            <td colspan=5>readPoint</td>
+            <td colspan=5>readPoint - id</td>
         </tr>
         <tr>
             <td>16</td>
-            <td colspan=5>bizLocation</td>
+            <td colspan=5>bizLocation - id</td>
         </tr>
         <tr>
             <td>17</td>
