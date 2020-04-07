@@ -9,7 +9,6 @@ PROP_ORDER = [
          ('reason', None),
          ('correctiveEventIDs', [('correctiveEventID', None)])
      ]),
-    ('bizTransactionList', [('bizTransaction', None)]),
     ('parentID', None),
     ('epcList', [('epc', None)]),
     ('inputEPCList', [('epc', None)]),
@@ -46,9 +45,9 @@ PROP_ORDER = [
     ('disposition', None),
     ('readPoint', [('id', None)]),
     ('bizLocation', [('id', None)]),
-    ('bizTransactionList', [('bizTransaction', None)]),
-    ('sourceList', [('source', None)]),
-    ('destinationList', [('destination', None)]),
+    ('bizTransactionList', [('type', None), ('bizTransaction', None)]),
+    ('sourceList', [('type', None), ('source', None)]),
+    ('destinationList', [('type', None), ('destination', None)]),
     ('sensorElementList', [('sensorElement',
                             [('sensorMetaData',
                               [
