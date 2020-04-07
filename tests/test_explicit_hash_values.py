@@ -3,7 +3,7 @@ try:
 except ImportError:
    from context import epcis_event_hash_generator
 
-from epcis_event_hash_generator.epcis_event_hash_generator import epcis_hash
+from epcis_event_hash_generator.hash_generator import epcis_hash
 
 from os import walk, path
 

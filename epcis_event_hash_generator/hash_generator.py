@@ -1,7 +1,6 @@
-#!/usr/bin/python3
-"""This is a prove of concept implementation of an algorithm to calculate a hash of EPCIS events. A small command line utility to calculate the hashes is provided for convenience.
+"""This is a prove of concept implementation of an algorithm to calculate a hash of EPCIS events.
 
-.. module:: epcis_event_hash_generator
+.. module:: hash_generator
    :synopsis: Calculates the EPCIS event hash as specified in https://github.com/RalphTro/epcis-event-hash-generator/
 
 .. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
@@ -18,11 +17,8 @@ file for details.
 
 """
 
-import logging
-import sys
-import re
 import hashlib
-import os
+import logging
 
 # import syntax differs depending on whether this is run as a module or as a script
 try:
@@ -33,6 +29,7 @@ except ImportError:
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
 from epcis_event_hash_generator import PROP_ORDER
+
 
 def recurse_through_children_in_order(root, child_order):
     """Fetch all texts from root (if it is a simple element) or its
@@ -160,85 +157,3 @@ def epcis_hash(path, hashalg="sha256"):
         hashValueList.append(hash_string)
 
     return (hashValueList, prehash_string_list)
-
-
-def command_line_parsing():
-    import argparse
-
-    logger_cfg = {
-        "format":
-            "%(asctime)s %(funcName)s (%(lineno)d) [%(levelname)s]:    %(message)s"
-    }
-
-    parser = argparse.ArgumentParser(
-        description="Generate a canonical hash from an EPCIS Document.")
-    parser.add_argument("file", help="EPCIS file", nargs="+")
-    parser.add_argument(
-        "-a",
-        "--algorithm",
-        help="Hashing algorithm to use.",
-        choices=["sha256", "sha3_256", "sha384", "sha512"],
-        default="sha256")
-    parser.add_argument(
-        "-l",
-        "--log",
-        help="Set the log level. Default: INFO.",
-        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        default="WARNING")
-    parser.add_argument(
-        "-b",
-        "--batch",
-        help="If given, write the new line separated list of hashes for each input file into a sibling output file with the same name + '.hashes' instead of stdout.",
-        action="store_true")
-    parser.add_argument(
-        "-p",
-        "--prehash",
-        help="If given, also output the prehash string to stdout. Output to a .prehashes file, if combined with -b.",
-        action="store_true")
-
-    args = parser.parse_args()
-
-    logger_cfg["level"] = getattr(logging, args.log)
-    logging.basicConfig(**logger_cfg)
-
-    # print("Log messages above level: {}".format(logger_cfg["level"]))
-
-    if not args.file:
-        logging.critical("File name required.")
-        parser.print_help()
-        sys.exit(1)
-    else:
-        logging.debug("reading from files: '{}'".format(args.file))
-
-    return args
-
-
-def main():
-    """The main function reads the path to the xml file
-    and optionally the hash algorithm from the command
-    line arguments and calls the actual algorithm.
-    """
-
-    args = command_line_parsing()
-
-    for filename in args.file:
-
-        # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = epcis_hash(filename, args.algorithm)
-
-        # Output:
-        if args.batch:
-            with open(os.path.splitext(filename)[0] + '.hashes', 'w') as outfile:
-                outfile.write("\n".join(hashes) + "\n")
-            if args.prehash:
-                with open(os.path.splitext(filename)[0] + '.prehashes', 'w') as outfile:
-                    outfile.write("\n".join(prehashes) + "\n")
-        else:
-            print("\n\nHashes of the events contained in '{}':\n".format(filename) + "\n".join(hashes))
-            if args.prehash:
-                print("\nPre-hash strings:\n" + "\n---\n".join(prehashes))
-
-
-# goto main if script is run as entrypoint
-if __name__ == "__main__":
-    main()
