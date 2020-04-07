@@ -64,8 +64,8 @@ def _xml_to_py(root, sort=True):
     """
     children = []
     # add all XML Attributes
-    children += [(x,y,[]) for (x,y) in root.items()]
-        
+    children += [(x, y, []) for (x, y) in root.items()]
+
     # Recurs through children    
     for child in root:
         children.append(_xml_to_py(child))
@@ -73,12 +73,12 @@ def _xml_to_py(root, sort=True):
     # Sort lists to compensate for using ordered list to model unordered ones
     if sort:
         children.sort()
-        
-    text=""
+
+    text = ""
     if root.text:
         text = root.text.strip()
-    obj = (root.tag, text, children)    
-    
+    obj = (root.tag, text, children)
+
     logging.debug("xml_to_py(%s) = %s", root, obj)
     return obj
 
@@ -89,23 +89,18 @@ def event_list_from_epcis_document_xml(path):
     """
     try:
         root = _read_epcis_document_xml(path);
-        logging.debug("Reading %s yields %s = %s",path, root, list(root));
+        logging.debug("Reading %s yields %s = %s", path, root, list(root));
         eventList = root.find("*EventList")
         if not eventList:
             raise ValueError("No EventList found")
     except (ValueError, OSError) as ex:
         logging.debug(ex)
         logging.error("'%s' does not contain a valid EPCIS XML document with EventList.", path)
-        return ("","",[])
+        return ("", "", [])
 
     # sort=False => preserve document order of events
     obj = _xml_to_py(eventList, False)
 
     logging.debug("Simple python object:\n%s", obj)
-    
+
     return obj
-
-
-
-
-    

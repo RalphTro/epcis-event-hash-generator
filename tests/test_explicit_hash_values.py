@@ -1,13 +1,14 @@
 try:
-   from .context import epcis_event_hash_generator
+    from .context import epcis_event_hash_generator
 except ImportError:
-   from context import epcis_event_hash_generator
-
-from epcis_event_hash_generator.hash_generator import epcis_hash
+    from context import epcis_event_hash_generator
 
 from os import walk, path
 
+from epcis_event_hash_generator.hash_generator import epcis_hash
+
 TEST_FILE_PATH = "examples/"
+
 
 def test_explicit_hash_values():
     num_tested = 0
@@ -20,8 +21,6 @@ def test_explicit_hash_values():
                 with open(TEST_FILE_PATH + path.splitext(filename)[0] + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
                 assert actualHashes == expectedHashes
-                num_tested+=1
+                num_tested += 1
         break
     assert num_tested > 0
-
-

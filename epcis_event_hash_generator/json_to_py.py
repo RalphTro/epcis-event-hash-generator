@@ -46,8 +46,8 @@ file for details.
 
 """
 
-import logging
 import json
+import logging
 
 try:
     from .context import epcis_event_hash_generator

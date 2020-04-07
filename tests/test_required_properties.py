@@ -1,13 +1,11 @@
 try:
-   from .context import epcis_event_hash_generator
+    from .context import epcis_event_hash_generator
 except ImportError:
-   from context import epcis_event_hash_generator
-
-
-from epcis_event_hash_generator.hash_generator import epcis_hash
-    
+    from context import epcis_event_hash_generator
 
 from os import walk
+
+from epcis_event_hash_generator.hash_generator import epcis_hash
 
 TEST_FILE_PATH = "examples/"
 TEST_FILE_PATH_SAME_EVENT = "expected_equal/"
@@ -24,12 +22,12 @@ def test_distinct():
             if filename.endswith("xml"):
                 all_hashes += epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
         break
-    
+
     assert all_hashes
     assert len(all_hashes) == len(set(all_hashes))
 
-    
-def test_equal():    
+
+def test_equal():
     """
     Assert that different representations of the same events have the same hash.
     """
