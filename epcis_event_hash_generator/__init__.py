@@ -3,7 +3,6 @@
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
-    ('eventID', None),
     ('errorDeclaration',
      [
          ('declarationTime', None),
