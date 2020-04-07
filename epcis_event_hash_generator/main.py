@@ -26,6 +26,7 @@ except ImportError:
 
 import argparse
 import logging
+import os
 
 from epcis_event_hash_generator import hash_generator
 
