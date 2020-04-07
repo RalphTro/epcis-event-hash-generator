@@ -67,7 +67,7 @@ def generic_element_to_prehash_string(root):
         list_of_values.append("=" + root.strip())
     else:
         for child in root:
-            list_of_values.append(child[0].replace("{", "").replace("}", "#") + generic_element_to_prehash_string(
+            list_of_values.append(child[0] + generic_element_to_prehash_string(
                 child[1]) + generic_element_to_prehash_string(child[2]))
 
     list_of_values.sort()
