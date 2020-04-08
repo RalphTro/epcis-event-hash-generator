@@ -232,6 +232,18 @@ For better understanding, the following illustration includes the data content o
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
 
+## Use Cases and Limitations
+This algorithm has *various potential areas of application*:
+* Primary Key for EPCIS Events
+  - populating the eventID field in situations where this is required
+  - enabling to independently recalculate the eventID value on the basis of an EPCIS event's intrinsic data
+  - indexing EPCIS events in databases
+* Identifying duplicate EPCIS events
+* Matching an error declaration to an original event (see EPCIS Standard, section 7.4.1.4)
+* Notarisation of EPCIS events (i.e. leveraging digital signatures)  
+
+That said, the algorithm has limited applicability when EPCIS events are redacted (meaning that, e.g. for privacy reasons, EPCIS events are not shared entirely, but deliberately omit specific fields or including readPoint IDs with a lesser granularity - see EPCIS and CBV Implementation Guide, section 6.7). In such a case, the content of a redacted EPCIS event will in no case yield to the hash value of the original one.
+
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
 * Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
