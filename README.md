@@ -228,7 +228,11 @@ ni:///sha-512;daef4953b9783365cad6615223720506cc46c5167cd16ab500fa597aa08ff964<b
 
 For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
 
-![Example EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
+
+The following illustration provides a second example accommodating sensor data.
+
+![Example 2 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration2v1.jpg)
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
 
