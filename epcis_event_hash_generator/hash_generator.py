@@ -35,7 +35,8 @@ from epcis_event_hash_generator import PROP_ORDER
 def fix_time_stamp_format(timestamp):
     """Make sure that the timestamp is given at millisecond precision"""
     logging.debug("correcting timestamp format for '{}'".format(timestamp))
-    pattern = re.compile("(?P<date>[0-9\\-]+)T(?P<time>[0-9:]+)(?P<subseconds>\\.[0-9]+)?(?P<zoneOffset>Z|([+\-])\\d\\d:\\d\\d)?")
+    pattern = re.compile(
+        "(?P<date>[0-9\\-]+)T(?P<time>[0-9:]+)(?P<subseconds>\\.[0-9]+)?(?P<zoneOffset>Z|([+\\-])\\d\\d:\\d\\d)?")
     match = pattern.match(timestamp)
     if not match:
         logging.warning("'{}' is labelled as time but does not match the dateTime format", timestamp)
