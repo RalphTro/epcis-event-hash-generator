@@ -24,7 +24,7 @@ import logging
 try:
     from .context import epcis_event_hash_generator
 except ImportError:
-    from context import epcis_event_hash_generator
+    from context import epcis_event_hash_generator  # noqa: F401
 
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json

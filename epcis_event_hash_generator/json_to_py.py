@@ -26,8 +26,8 @@ is converted to
   ("action", "OBSERVE", [])
 ])
 
-This module contains the straight forward part of the JSON to Py conversion. The tricky part of adjusting the
-data model to get the same as when parsing the XML equivalent is imported from he json_xml_model_mismatch_correction module.
+This module contains the straight forward part of the JSON to Py conversion. The tricky part of adjusting the data
+model to get the same as when parsing the XML equivalent is imported from he json_xml_model_mismatch_correction module.
 
 
 .. module:: json_to_py
@@ -52,7 +52,7 @@ import logging
 try:
     from .context import epcis_event_hash_generator
 except ImportError:
-    from context import epcis_event_hash_generator
+    from context import epcis_event_hash_generator  # noqa: F401
 
 from epcis_event_hash_generator import json_xml_model_mismatch_correction
 

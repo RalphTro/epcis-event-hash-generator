@@ -5,8 +5,8 @@ A simple object here may be a
 - unordered list of simple objects
 - pair of a string and a list of simple objects
 
-Mappings (dictionaries) are modeled as (unordered) lists of pairs.
-Python lists are used although they are ordered, the order is to be ignored. (Sets are unsuitable since they enforce unique elements.)
+Mappings (dictionaries) are modeled as (unordered) lists of pairs. Python lists are used although they are ordered,
+the order is to be ignored. (Sets are unsuitable since they enforce unique elements.)
 
 For example
 <obj>
@@ -21,7 +21,27 @@ For example
 
 is converted to
 
-obj = [("d","2",[]),("a", "", [("b","3",[]),("b","3",[]),("b","5",[]),("c","",[("e","f",[]),("d","Hello",[]),("d","World",[("x","y",[])])])])]
+obj = [
+        ("d","2",[]),
+        ("a", "",
+            [
+                ("b","3",[]),
+                ("b","3",[]),
+                ("b","5",[]),
+                ("c","",
+                    [
+                        ("e","f",[]),
+                        ("d","Hello",[]),
+                        ("d","World",
+                            [
+                                ("x","y",[])
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
 
 Before/After text (e.g. <a> before_text <b>1</b></a>) is always ignored.
 
@@ -66,7 +86,7 @@ def _xml_to_py(root, sort=True):
     # add all XML Attributes
     children += [(x, y, []) for (x, y) in root.items()]
 
-    # Recurs through children    
+    # Recurs through children
     for child in root:
         children.append(_xml_to_py(child))
 
@@ -88,8 +108,8 @@ def event_list_from_epcis_document_xml(path):
 
     """
     try:
-        root = _read_epcis_document_xml(path);
-        logging.debug("Reading %s yields %s = %s", path, root, list(root));
+        root = _read_epcis_document_xml(path)
+        logging.debug("Reading %s yields %s = %s", path, root, list(root))
         eventList = root.find("*EventList")
         if not eventList:
             raise ValueError("No EventList found")

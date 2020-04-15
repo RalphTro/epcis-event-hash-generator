@@ -2,7 +2,8 @@
 """ This is a small command line utility to calculate the hashes using the epcis_event_hash_generator algorithm.
 
 .. module:: main
-   :synopsis: Command line utility to calculate the EPCIS event hash as specified in https://github.com/RalphTro/epcis-event-hash-generator/
+   :synopsis: Command line utility to calculate the EPCIS event hash as specified in
+              https://github.com/RalphTro/epcis-event-hash-generator/
 
 .. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
 
@@ -22,7 +23,7 @@ file for details.
 try:
     from .context import epcis_event_hash_generator
 except ImportError:
-    from context import epcis_event_hash_generator
+    from context import epcis_event_hash_generator  # noqa: F401
 
 import argparse
 import logging
@@ -56,7 +57,8 @@ def command_line_parsing():
     parser.add_argument(
         "-b",
         "--batch",
-        help="If given, write the new line separated list of hashes for each input file into a sibling output file with the same name + '.hashes' instead of stdout.",
+        help="If given, write the new line separated list of hashes for each input file into a sibling output file "
+             "with the same name + '.hashes' instead of stdout.",
         action="store_true")
     parser.add_argument(
         "-p",
