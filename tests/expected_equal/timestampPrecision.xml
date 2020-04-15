@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2"
+                     creationDate="2019-10-21T14:59:02.099+02:00"
+                     xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EPCISBody>
+        <EventList>
+            <ObjectEvent>
+                <eventTime>2019-10-21T14:58:56.000+02:00</eventTime>
+                <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+                <action>ADD</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
+                <epcList>
+                    <epc>urn:epc:id:sscc:5200001.0111111146</epc>
+                </epcList>
+            </ObjectEvent>
+            <ObjectEvent>
+                <eventTime>2019-10-21T14:58:56.0+02:00</eventTime>
+                <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+                <action>ADD</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
+                <epcList>
+                    <epc>urn:epc:id:sscc:5200001.0111111146</epc>
+                </epcList>
+            </ObjectEvent>
+            <ObjectEvent>
+                <eventTime>2019-10-21T14:58:56+02:00</eventTime>
+                <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+                <action>ADD</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
+                <epcList>
+                    <epc>urn:epc:id:sscc:5200001.0111111146</epc>
+                </epcList>
+            </ObjectEvent>
+        </EventList>
+    </EPCISBody>
+</epcis:EPCISDocument>

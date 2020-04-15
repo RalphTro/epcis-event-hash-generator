@@ -19,6 +19,7 @@ file for details.
 
 import hashlib
 import logging
+import re
 
 # import syntax differs depending on whether this is run as a module or as a script
 try:
@@ -29,6 +30,28 @@ except ImportError:
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
 from epcis_event_hash_generator import PROP_ORDER
+
+
+def fix_time_stamp_format(timestamp):
+    """Make sure that the timestamp is given at millisecond precision"""
+    logging.debug("correcting timestamp format for '{}'".format(timestamp))
+    pattern = re.compile("(?P<date>[0-9\\-]+)T(?P<time>[0-9:]+)(?P<subseconds>\\.[0-9]+)?(?P<zoneOffset>\\+.*)?")
+    match = pattern.match(timestamp)
+    if not match:
+        logging.warning("'{}' is labelled as time but does not match the dateTime format", timestamp)
+        return timestamp
+
+    fixed = match.group("date") + "T" + match.group("time")
+
+    if not match.group("subseconds"):
+        fixed += ".000"
+    else:
+        fixed += '{:0<4}'.format(match.group("subseconds"))
+
+    if match.group("zoneOffset"):
+        fixed += match.group("zoneOffset")
+    logging.debug("corrected timestamp '{}'".format(fixed))
+    return fixed
 
 
 def recurse_through_children_in_order(root, child_order):
@@ -44,17 +67,20 @@ def recurse_through_children_in_order(root, child_order):
                 list_of_values.append(recurse_through_children_in_order(child[2], sub_child_order))
                 prefix = child_name
             if child[1]:
-                logging.debug("Adding text '%s'", child[1])
-                list_of_values.append(
-                    child_name + "=" + child[1].strip())  # stripping white space unfortunately not always automatic
+                text = child[1].strip()
+                if child_name.lower().find("time") > 0 and child_name.lower().find("offset") < 0:
+                    text = fix_time_stamp_format(text)
 
-        # sort list of values to resolve issue 10
-        # logging.debug("sorting values %s", list_of_values)
+                logging.debug("Adding text '%s'", text)
+                list_of_values.append(
+                    child_name + "=" + text)
+
+        # sort list of values to fix #10
         list_of_values.sort()
         if len(list_of_values) > 1:
             logging.debug("sorted: %s", list_of_values)
 
-        if list_of_values and "".join(list_of_values):  # fixes #16
+        if "".join(list_of_values):  # fixes #16
             texts += prefix + "".join(list_of_values)
         elif prefix:
             logging.debug("Skipping empty element: %s", prefix)
