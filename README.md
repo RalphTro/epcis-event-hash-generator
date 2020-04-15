@@ -72,6 +72,10 @@ Note that all key/value pairs MUST be added in the identical order as specified 
             <td colspan=5>eventTime</td>
         </tr>
         <tr>
+            <td/>
+            <td colspan=5><i>All timestamps MUST be expressed at millisecond precision. If an EPCIS event lacks the latter, it MUST be padded with zeros, i.e. YYYY-MM-DDTHH:MM:SS.000{UTC offset}</i></td>
+        </tr>
+        <tr>
             <td>3</td>
             <td colspan=5>eventTimeZoneOffset</td>
         </tr>
