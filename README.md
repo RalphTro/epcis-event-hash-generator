@@ -1,6 +1,6 @@
 # EPCIS Event Hash Generator
 
-![Build Status](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Unit%20Tests/badge.svg)
+[![Build Status](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Unit%20Tests/badge.svg)](https://github.com/RalphTro/epcis-event-hash-generator/actions)
 
 This is a proposal/reference implementation for a method to uniquely identify an EPCIS event or validate the integrity thereof. To this end, a syntax-/representation-agnostic approach based on hashing is developed.
 The <b>PROTOTYPAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint of the latter. 
@@ -70,6 +70,10 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         <tr>
             <td>2</td>
             <td colspan=5>eventTime</td>
+        </tr>
+        <tr>
+            <td/>
+            <td colspan=5><i>All timestamps MUST be expressed at millisecond precision. If an EPCIS event lacks the latter, it MUST be padded with zeros, i.e. YYYY-MM-DDTHH:MM:SS.000{UTC offset}</i></td>
         </tr>
         <tr>
             <td>3</td>
@@ -228,9 +232,25 @@ ni:///sha-512;daef4953b9783365cad6615223720506cc46c5167cd16ab500fa597aa08ff964<b
 
 For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
 
-![Example EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
+
+The following illustration provides a second example accommodating sensor data.
+
+![Example 2 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration2v1.jpg)
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
+
+## Use Cases and Limitations
+This algorithm has *various potential areas of application*:
+* Primary Key for EPCIS Events
+  - populating the eventID field in situations where this is required
+  - enabling to independently recalculate the eventID value on the basis of an EPCIS event's intrinsic data
+  - indexing EPCIS events in databases
+* Identifying duplicate EPCIS events
+* Matching an error declaration to an original event (see EPCIS Standard, section 7.4.1.4)
+* Notarisation of EPCIS events (i.e. leveraging digital signatures)  
+
+That said, the algorithm has limited applicability when EPCIS events are redacted (meaning that, e.g. for privacy reasons, EPCIS events are not shared entirely, but deliberately omit specific fields or including readPoint IDs with a lesser granularity - see EPCIS and CBV Implementation Guide, section 6.7). In such a case, the content of a redacted EPCIS event will in no case yield to the hash value of the original one.
 
 ## References
 * EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
