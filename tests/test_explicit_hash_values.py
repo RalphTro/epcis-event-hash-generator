@@ -1,7 +1,7 @@
 try:
     from .context import epcis_event_hash_generator
 except ImportError:
-    from context import epcis_event_hash_generator
+    from context import epcis_event_hash_generator  # noqa: F401
 
 from os import walk, path
 

@@ -1,7 +1,7 @@
 try:
     from .context import epcis_event_hash_generator
 except ImportError:
-    from context import epcis_event_hash_generator
+    from context import epcis_event_hash_generator  # noqa: F401
 
 import xml.etree.ElementTree as ElementTree
 
@@ -36,19 +36,27 @@ def test_epcsi_reference_example():
 
     expected_obj = ('EventList', '', [('ObjectEvent', '', [('action', 'OBSERVE', []),
                                                            ('bizStep', 'urn:epcglobal:cbv:bizstep:departing', []), (
-                                                           'epcList', '',
-                                                           [('epc', 'urn:epc:id:sscc:4012345.0000000111', []),
-                                                            ('epc', 'urn:epc:id:sscc:4012345.0000000222', []),
-                                                            ('epc', 'urn:epc:id:sscc:4012345.0000000333', [])]),
+                                                               'epcList', '',
+                                                               [('epc', 'urn:epc:id:sscc:4012345.0000000111', []),
+                                                                ('epc', 'urn:epc:id:sscc:4012345.0000000222', []),
+                                                                ('epc', 'urn:epc:id:sscc:4012345.0000000333', [])]),
                                                            ('eventTime', '2020-03-04T11:00:30.000+01:00', []),
-                                                           ('eventTimeZoneOffset', '+01:00', []), ('readPoint', '', [
-            ('id', 'urn:epc:id:sgln:4012345.00011.987', [])]), ('recordTime', '2020-03-04T11:00:30.999+01:00', []), (
-                                                           '{https://ns.example.com/epcis}myField1', '',
-                                                           [('{https://ns.example.com/epcis}mySubField1', '2', []),
-                                                            ('{https://ns.example.com/epcis}mySubField2', '5', [])]),
+                                                           ('eventTimeZoneOffset', '+01:00', []),
+                                                           ('readPoint', '',
+                                                            [
+                                                                ('id',
+                                                                 'urn:epc:id:sgln:4012345.00011.987',
+                                                                 [])]),
+                                                           ('recordTime', '2020-03-04T11:00:30.999+01:00', []), (
+                                                               '{https://ns.example.com/epcis}myField1', '',
+                                                               [('{https://ns.example.com/epcis}mySubField1', '2', []),
+                                                                (
+                                                                    '{https://ns.example.com/epcis}mySubField2', '5',
+                                                                    [])]),
                                                            ('{https://ns.example.com/epcis}myField2', '0', []), (
-                                                           '{https://ns.example.com/epcis}myField3', '',
-                                                           [('{https://ns.example.com/epcis}mySubField3', '1', []),
-                                                            ('{https://ns.example.com/epcis}mySubField3', '3', [])])])])
+                                                               '{https://ns.example.com/epcis}myField3', '',
+                                                               [('{https://ns.example.com/epcis}mySubField3', '1', []),
+                                                                ('{https://ns.example.com/epcis}mySubField3', '3',
+                                                                 [])])])])
 
     assert expected_obj == actual_obj
