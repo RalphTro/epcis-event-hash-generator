@@ -20,7 +20,7 @@ def test_explicit_hash_values():
                 assert len(actualHashes) > 0
                 with open(TEST_FILE_PATH + path.splitext(filename)[0] + '.hashes', 'r') as expectedfile:
                     expectedHashes = expectedfile.read().splitlines()
-                assert actualHashes == expectedHashes
+                assert actualHashes == expectedHashes, "Hash for {} is not as expected!".format(filename)
                 num_tested += 1
         break
     assert num_tested > 0
