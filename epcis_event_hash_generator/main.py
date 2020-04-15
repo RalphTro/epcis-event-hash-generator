@@ -90,7 +90,6 @@ def main():
     args = command_line_parsing()
 
     for filename in args.file:
-
         # ACTUAL ALGORITHM CALL:
         (hashes, prehashes) = hash_generator.epcis_hash(filename, args.algorithm)
 

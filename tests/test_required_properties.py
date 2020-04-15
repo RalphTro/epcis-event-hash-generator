@@ -34,5 +34,7 @@ def test_equal():
     for (_, _, filenames) in walk(TEST_FILE_PATH_SAME_EVENT):
         for filename in filenames:
             if filename.endswith("xml") or filename.endswith("json"):
-                assert len(set(epcis_hash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[0])) == 1
+                assert len(set(epcis_hash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[
+                                   0])) == 1, "The events in {} have different hashes!".format(
+                    TEST_FILE_PATH_SAME_EVENT + filename)
         break

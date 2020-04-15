@@ -32,10 +32,8 @@ from epcis_event_hash_generator import PROP_ORDER
 
 
 def recurse_through_children_in_order(root, child_order):
-    """Fetch all texts from root (if it is a simple element) or its
-    children and concatenate the values in the given order. child_order is
-    expected to be a property order, see PROP_ORDER.
-
+    """child_order is expected to be a property order, see PROP_ORDER. Loop over child order, look for a child of
+    root with matching name and add its text (if any). Recurse through the grand children applying the sub order.
     """
     texts = ""
     for (child_name, sub_child_order) in child_order:
@@ -51,11 +49,15 @@ def recurse_through_children_in_order(root, child_order):
                     child_name + "=" + child[1].strip())  # stripping white space unfortunately not always automatic
 
         # sort list of values to resolve issue 10
-        logging.debug("sorting values %s", list_of_values)
+        # logging.debug("sorting values %s", list_of_values)
         list_of_values.sort()
-        logging.debug("sorted: %s", list_of_values)
-        texts += prefix + "".join(list_of_values)
+        if len(list_of_values) > 1:
+            logging.debug("sorted: %s", list_of_values)
 
+        if list_of_values and "".join(list_of_values):  # fixes #16
+            texts += prefix + "".join(list_of_values)
+        elif prefix:
+            logging.debug("Skipping empty element: %s", prefix)
     return texts
 
 
