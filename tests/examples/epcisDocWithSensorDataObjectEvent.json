@@ -27,7 +27,7 @@
             "sensorReport": [
               {
                 "type": "gs1:Temperature",
-                "value": 26.0,
+                "value": 26,
                 "uom": "CEL"
               },
               {
@@ -37,12 +37,12 @@
               },
               {
                 "type": "gs1:Speed",
-                "value": 160.0,
+                "value": 160,
                 "uom": "KMH"
               },
               {
                 "type": "gs1:Illuminance",
-                "value": 800.0,
+                "value": 800,
                 "uom": "LUX"
               }
             ]
@@ -67,12 +67,12 @@
               },
               {
                 "type": "gs1:Speed",
-                "value": 161.0,
+                "value": 161,
                 "uom": "KMH"
               },
               {
                 "type": "gs1:Illuminance",
-                "value": 801.0,
+                "value": 801,
                 "uom": "LUX"
               }
             ]
@@ -97,12 +97,12 @@
               },
               {
                 "type": "gs1:Speed",
-                "value": 162.0,
+                "value": 162,
                 "uom": "KMH"
               },
               {
                 "type": "gs1:Illuminance",
-                "value": 802.0,
+                "value": 802,
                 "uom": "LUX"
               }
             ]
