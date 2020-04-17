@@ -1,0 +1,35 @@
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2020-04-01T15:00:00.000+01:00" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd" 
+    xmlns:gs1="https://gs1.org/voc/" 
+    xmlns:example="http://ns.example.com/epcis/" 
+    xmlns:schema="http://schema.org/">
+    <EPCISBody>
+        <EventList>
+            <ObjectEvent>
+                <eventTime>2020-04-01T15:00:00.000+01:00</eventTime>
+                <eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+                <epcList>
+                    <epc>urn:epc:id:sgtin:4012345.011111.9876</epc>
+                </epcList>
+                <action>OBSERVE</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:inspecting</bizStep>
+                <readPoint>
+                    <id>urn:epc:id:sgln:4012345.00005.0</id>
+                </readPoint>
+                <extension>
+                    <extension>
+                        <sensorElementList>
+                            <sensorElement>
+                                <sensorMetaData deviceID="urn:epc:id:giai:4000001.111" deviceMetaData="https://id.gs1.org/giai/4000001111"/>
+                                <sensorReport type="gs1:Temperature" value="26" uom="CEL" sDev="0.1"/>
+                                <sensorReport type="gs1:Humidity" value="12.1" uom="A93"/>
+                                <sensorReport type="gs1:Molar_concentration" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>
+                                <sensorReport type="gs1:Molar_concentration" chemicalSubstance="urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
+                            </sensorElement>
+                        </sensorElementList>
+                    </extension>
+                </extension>
+            </ObjectEvent>
+        </EventList>
+    </EPCISBody>
+</epcis:EPCISDocument>
