@@ -158,8 +158,6 @@ Note that all key/value pairs MUST be added in the identical order as specified 
         <tr>
             <td>16</td>
             <td colspan=5>bizTransactionList – type - bizTransaction</td>
-            <td>-</td>
-            <td colspan=2>bizTransactionList – type - bizTransaction</td>
         </tr>
         <tr>
         <td/>
