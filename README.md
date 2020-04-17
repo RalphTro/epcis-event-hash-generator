@@ -50,7 +50,7 @@ For hashing strings, standard implementations of the relevant hash algorithms (s
 
 To calculate the pre-hash string, extract and concatenate EPCIS event key-value pairs exactly according to the following sequence (without any separator, i.e. an empty string between each successive element): First, ALL attribute names/values of ALL EPCIS standard fields (*except recordTime*), are concatenated as one string. Thereby, each value is assigned to its key through an equal sign ('='). Then, this string is appended by ALL user extensions comprising their key names (namespace followed by a pound sign ('#') and the respective local name), and, if present, the actual value, prefixed by an equal sign ('=').  
 
-Note that all key/value pairs MUST be added in the identical order as specified below (corresponding to the order in which they are specified in the EPCIS standard). Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML).
+Note that all key/value pairs MUST be added in the identical order as specified below. Data MUST NOT be added if any field is omitted in a given event or does not apply. Whitespace at the beginning and end of string values is to be cropped (by the definition of XML). Any quantitative values MUST NOT have any trailing zeros (i.e. a quantity of one must be expressed as '1', not '1.0').  
   
 <table>
     <thead>
