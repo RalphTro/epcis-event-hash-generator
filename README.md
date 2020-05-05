@@ -9,7 +9,7 @@ The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted 
 ![EPCIS event hash generator algorithm illustration](docs/epcisEventHashGenerator.jpg)
 
 
-## Usage (for the inconvenient)
+## Usage (TL;DR)
 The script may be used as a command line utility like this:
 ```
 python epcis_event_hash_generator/main.py -h
