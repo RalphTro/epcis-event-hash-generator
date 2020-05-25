@@ -66,7 +66,8 @@ ni:///{digest algorithm};{digest value}?ver={CBV version}
 i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), the digest value, one question mark ('?'), the characters 'v', 'e', 'r', one equal sign ('='), and the version of the EPCIS Event Hash ID algorithm that was used to generate the pre-hash string, indicated by the cbv version.
 14. The digest algorithm MUST contain one of the hash name string values as listed in the Named Information Hash Algorithm Registry (see https://www.iana.org/assignments/named-information/named-information.xhtml) 
 15. The cbv version MUST be indicated as follows: the three characters 'c', 'b', 'v', followed by one or several digits indicating the major release version, one dot character ('.') and one or more digits indicating the minor release version. In addition, it MAY be appended with one dot character ('.') and one or more digits indicating a revision of a given CBV standard release, if applicable (i.e. if a revision of the CBV standard specifies an updated version of the EPCIS Event Hash ID algorithm). 
- 
+
+### Canonical property order 
   
 <table>
     <thead>
@@ -85,145 +86,105 @@ i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('
             <td colspan=5>eventTime</td>
         </tr>
         <tr>
-            <td/>
-            <td colspan=5><i>All timestamps MUST be expressed at millisecond precision. If an EPCIS event lacks the latter, it MUST be padded with zeros, i.e. YYYY-MM-DDTHH:MM:SS.000{UTC offset}</i></td>
-        </tr>
-        <tr>
             <td>3</td>
             <td colspan=5>eventTimeZoneOffset</td>
         </tr>
         <tr>
             <td>4</td>
-            <td colspan=5>ErrorDeclaration – declarationTime</td>
+            <td colspan=5>errorDeclaration (declarationTime, reason, correctiveEventIDs – correctiveEventID)</td>
         </tr>
         <tr>
             <td>5</td>
-            <td colspan=5>ErrorDeclaration – reason</td>
+            <td colspan=5>epcList – epc</td>
         </tr>
         <tr>
             <td>6</td>
-            <td colspan=5>ErrorDeclaration – correctiveEventIDs</td>
+            <td colspan=5>parentID</td>
         </tr>
         <tr>
-            <td/>
-            <td colspan=5><i>All individual event IDs being part of the correctiveEventIDs element MUST be sequenced in lexicographical order</i></td>
-        </tr>
-      <tr>
             <td>7</td>
-            <td>epcList – epc</td>
-            <td>parentID</td>
-            <td>parentID</td>
-            <td>inputEPCList – epc</td>
-            <td>parentID</td>
-        </tr>
-        <tr>
-            <td/>
-            <td colspan=5><i>All EPC values being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
+            <td colspan=5>inputEPCList – epc</td>
         </tr>
         <tr>
             <td>8</td>
-            <td>quantityList - quantityElement (epcClass + quantity + uom)</td>
-            <td>childEPCs – epc</td>
-            <td>epcList – epc</td>
-            <td>inputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
-            <td>childEPCs – epc</td>
-        </tr>
-        <tr>
-            <td/>
-            <td colspan=5><i>All Quantity Elements being part of the respective lists MUST be sequenced in lexicographical order</i>             </td>
+            <td colspan=5>childEPCs – epc</td>
         </tr>
         <tr>
             <td>9</td>
-            <td/>
-            <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
-            <td>quantityList – quantityElement (epcClass + quantity + uom)</td>
-            <td>outputEPCList – epc</td></td>
-            <td>childQuantityList – quantityElement (epcClass + quantity + uom)</td>
+            <td colspan=5>quantityList – quantityElement (epcClass, quantity, uom)</td>
         </tr>
         <tr>
             <td>10</td>
-            <td/>
-            <td colspan=2>-</td>
-            <td>outputQuantityList – quantityElement (epcClass + quantity + uom)</td></td>
-            <td colspan=1>-</td>
+            <td colspan=5>childQuantityList – quantityElement (epcClass, quantity, uom)</td>
         </tr>
         <tr>
             <td>11</td>
-            <td>action</td>
-            <td>action</td>
-            <td>action</td>
-            <td>transformationID</td>
-            <td>action</td>
+            <td colspan=5>inputQuantityList – quantityElement (epcClass, quantity, uom)</td>
         </tr>
         <tr>
             <td>12</td>
-            <td colspan=5>bizStep</td>
+            <td colspan=5>outputEPCList – epc</td>
         </tr>
         <tr>
             <td>13</td>
-            <td colspan=5>disposition</td>
+            <td colspan=5>outputQuantityList – quantityElement (epcClass, quantity, uom)</td>
         </tr>
         <tr>
             <td>14</td>
-            <td colspan=5>readPoint - id</td>
+            <td colspan=5>action</td>
         </tr>
         <tr>
             <td>15</td>
-            <td colspan=5>bizLocation - id</td>
+            <td colspan=5>transformationID</td>
         </tr>
         <tr>
             <td>16</td>
-            <td colspan=5>bizTransactionList – type - bizTransaction</td>
+            <td colspan=5>bizStep</td>
         </tr>
         <tr>
-        <td/>
-        <td colspan=5><i>All individual bizTransaction IDs (along with their preceding type, if present) being part of the bizTransactionList MUST be sequenced in lexicographical order  </i></td>
-      </tr>
-        <tr>
             <td>17</td>
-            <td colspan=5>sourceList – type – source</td>
+            <td colspan=5>disposition</td>
         </tr>
         <tr>
             <td>18</td>
-            <td colspan=5>destinationList – type – destination</td>
-        </tr>
-        <tr>
-            <td/>
-            <td colspan=5><i>All individual source/destination IDs (along with their preceding type) being part of the respective lists MUST be sequenced in lexicographical order</td>
+            <td colspan=5>readPoint – id</td>
         </tr>
         <tr>
             <td>19</td>
-            <td colspan=5>sensorElement – sensorMetaData (time + startTime + endTime + deviceID + deviceMetaData + rawData + dataProcessingMethod + bizRules)</td>
+            <td colspan=5>bizLocation – id</td>
         </tr>
         <tr>
             <td>20</td>
-            <td colspan=5>sensorElement – sensorReport (type + deviceID + deviceMetaData + rawData + dataProcessingMethod + time + microorganism + chemicalSubstance + value + stringValue + booleanValue + hexBinaryValue + uriValue + minValue + maxValue + meanValue + sDev + percRank + percValue + uom)</td>
-        </tr>
-        <tr>
-            <td/>
-            <td colspan=5><i>All Sensor Elements MUST be sequenced in lexicographical order</i>             </td>
+            <td colspan=5>bizTransactionList – bizTransaction (type)</td>
         </tr>
         <tr>
             <td>21</td>
-            <td>ILMD</td>
-            <td colspan=2>-</td>
-            <td>ILMD</td>
-            <td>-</td>
-        </tr>      
-        <tr>
-            <td/>
-            <td colspan=5><i>All ILMD field values, irrespective of their level and field name, MUST be sequenced in lexicographical order</td>
+            <td colspan=5>sourceList – source (type)</td>
         </tr>
         <tr>
             <td>22</td>
-            <td colspan=5>User extensions</td>
+            <td colspan=5>destinationList – destination (type) </td>
         </tr>
         <tr>
-            <td/>
-            <td colspan=5><i>All user extension element names irrespective of their level MUST be prefixed with their namespace, followed by a pound sign ('#'). If they contain a value, the value MUST be prefixed with an equal sign ('='). <br>
-              (Example: https://ns.example.com/epcis#myField=abc123) <br>
-              Then, all fields belonging to the same level MUST be sequenced in lexicographical order depending on the contained values.
+            <td>23</td>
+            <td colspan=5>sensorElement (
+sensorMetaData (time, startTime, endTime, deviceID, deviceMetaData, rawData, dataProcessingMethod, bizRules), 
+sensorReport (type, deviceID, deviceMetaData, rawData, dataProcessingMethod, time, microorganism, chemicalSubstance, value, component, stringValue, booleanValue, hexBinaryValue, uriValue, minValue, maxValue, meanValue, sDev, percRank, percValue, uom)
+)
+</td>
         </tr>
+        <tr>
+            <td>24</td>
+            <td colspan=5>ilmd – {ILMD elements}</td>
+        </tr>
+        <tr>
+            <td>25</td>
+            <td colspan=5>{User extension elements}</td>
+        </tr>
+      
+      
+       
+       
     </tbody>
 </table>
 
