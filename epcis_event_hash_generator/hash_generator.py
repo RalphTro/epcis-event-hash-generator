@@ -33,7 +33,8 @@ from epcis_event_hash_generator import PROP_ORDER
 
 
 def fix_time_stamp_format(timestamp):
-    """Make sure that the timestamp is given at millisecond precision"""
+    """Make sure that the timestamp is given at millisecond precision
+    and in UTC."""
     logging.debug("correcting timestamp format for '{}'".format(timestamp))
     pattern = re.compile(
         "(?P<date>[0-9\\-]+)T(?P<time>[0-9:]+)(?P<subseconds>\\.[0-9]+)?(?P<zoneOffset>Z|([+\\-])\\d\\d:\\d\\d)?")
@@ -47,7 +48,7 @@ def fix_time_stamp_format(timestamp):
     if not match.group("subseconds"):
         fixed += ".000"
     else:
-        fixed += '{:0<4}'.format(match.group("subseconds"))
+        fixed += '{:0<4}'.format(match.group("subseconds")[0:4])
 
     if match.group("zoneOffset"):
         fixed += match.group("zoneOffset")
