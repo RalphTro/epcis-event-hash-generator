@@ -72,12 +72,21 @@ def recurse_through_children_in_order(root, child_order):
                 text = child[1].strip()
                 if child_name.lower().find("time") > 0 and child_name.lower().find("offset") < 0:
                     text = fix_time_stamp_format(text)
+                else:
+                    # remove leading/trailing zeros, leading "+", etc. from numbers
+                    try:
+                        numeric = float(text)
+                        if int(numeric) == numeric:  # remove trailing .0
+                            numeric = int(numeric)
+                        text = str(numeric)
+                    except ValueError:
+                        pass
 
                 logging.debug("Adding text '%s'", text)
                 list_of_values.append(
                     child_name + "=" + text)
 
-        # sort list of values to fix #10
+        # sort list of values to fix !10
         list_of_values.sort()
         if len(list_of_values) > 1:
             logging.debug("sorted: %s", list_of_values)
