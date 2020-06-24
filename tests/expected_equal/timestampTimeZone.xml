@@ -6,15 +6,6 @@
     <EPCISBody>
         <EventList>
             <ObjectEvent>
-                <eventTime>2019-10-21T14:58:56.000000+02:00</eventTime>
-                <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-                <action>ADD</action>
-                <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
-                <epcList>
-                    <epc>urn:epc:id:sscc:5200001.0111111146</epc>
-                </epcList>
-            </ObjectEvent>
-            <ObjectEvent>
                 <eventTime>2019-10-21T14:58:56.000+02:00</eventTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <action>ADD</action>
@@ -24,7 +15,7 @@
                 </epcList>
             </ObjectEvent>
             <ObjectEvent>
-                <eventTime>2019-10-21T14:58:56.0+02:00</eventTime>
+                <eventTime>2019-10-21T12:58:56.000Z</eventTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <action>ADD</action>
                 <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
@@ -33,7 +24,7 @@
                 </epcList>
             </ObjectEvent>
             <ObjectEvent>
-                <eventTime>2019-10-21T14:58:56+02:00</eventTime>
+                <eventTime>2019-10-21T15:58:56.000+03:00</eventTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <action>ADD</action>
                 <bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
