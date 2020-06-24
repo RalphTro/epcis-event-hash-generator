@@ -17,11 +17,10 @@ file for details.
 
 """
 
+import datetime
 import hashlib
 import logging
-import re
 
-import datetime
 import dateutil.parser
 
 try:  # import syntax differs depending on whether this is run as a module or as a script
@@ -38,14 +37,12 @@ def fix_time_stamp_format(timestamp):
     """Make sure that the timestamp is given at millisecond precision
     and in UTC."""
     logging.debug("correcting timestamp format for '{}'".format(timestamp))
-    pattern = re.compile(
-        "(?P<year>[0-9]+)-(?P<month>[0-9]+)-(?P<day>[0-9]+)T(?P<hour>[0-9]+):(?P<minute>[0-9]+):(?P<second>[0-9]+)(?P<subseconds>\\.[0-9]+)?(?P<zoneOffset>Z|([+\\-])\\d\\d:\\d\\d)?")
-    match = pattern.match(timestamp)
-    if not match:
-        logging.warning("'{}' is labelled as time but does not match the dateTime format", timestamp)
-        return timestamp
 
-    abstract_date_time = dateutil.parser.parse(timestamp)
+    try:
+        abstract_date_time = dateutil.parser.parse(timestamp)
+    except ValueError:
+        logging.warning("'{}' is labelled as time but does not match the ISO 8601 dateTime format", timestamp)
+        return timestamp
 
     # convert to UTC
     abstract_date_time = abstract_date_time.astimezone(datetime.timezone.utc)
@@ -73,14 +70,7 @@ def recurse_through_children_in_order(root, child_order):
                 if child_name.lower().find("time") > 0 and child_name.lower().find("offset") < 0:
                     text = fix_time_stamp_format(text)
                 else:
-                    # remove leading/trailing zeros, leading "+", etc. from numbers
-                    try:
-                        numeric = float(text)
-                        if int(numeric) == numeric:  # remove trailing .0
-                            numeric = int(numeric)
-                        text = str(numeric)
-                    except ValueError:
-                        pass
+                    text = format_if_numeric(text)
 
                 logging.debug("Adding text '%s'", text)
                 list_of_values.append(
@@ -96,6 +86,18 @@ def recurse_through_children_in_order(root, child_order):
         elif prefix:
             logging.debug("Skipping empty element: %s", prefix)
     return texts
+
+
+def format_if_numeric(text):
+    """remove leading/trailing zeros, leading "+", etc. from numbers"""
+    try:
+        numeric = float(text)
+        if int(numeric) == numeric:  # remove trailing .0
+            numeric = int(numeric)
+        text = str(numeric)
+    except ValueError:
+        pass
+    return text
 
 
 def generic_element_to_prehash_string(root):
