@@ -22,7 +22,7 @@ import logging
 import re
 
 import datetime
-
+import dateutil.parser
 
 try:  # import syntax differs depending on whether this is run as a module or as a script
     from .context import epcis_event_hash_generator
@@ -44,29 +44,13 @@ def fix_time_stamp_format(timestamp):
     if not match:
         logging.warning("'{}' is labelled as time but does not match the dateTime format", timestamp)
         return timestamp
-    microsecond = 0
-    if match.group("subseconds"):
-        microsecond = int(match.group("subseconds")[1:4]) * 1000
 
-    offset = datetime.timedelta()
-    if match.group("zoneOffset") and match.group("zoneOffset") != "Z":
-        offset = datetime.timedelta(
-            hours=int(match.group("zoneOffset")[0:3]),
-            minutes=int(match.group("zoneOffset")[4:])
-        )
+    abstract_date_time = dateutil.parser.parse(timestamp)
 
-    abstract_date_time = datetime.datetime(
-        int(match.group("year")),
-        int(match.group("month")),
-        int(match.group("day")),
-        int(match.group("hour")),
-        int(match.group("minute")),
-        int(match.group("second")),
-        microsecond,
-        datetime.timezone(offset)
-    )
-
-    fixed = abstract_date_time.replace(microsecond=3).isoformat()
+    # convert to UTC
+    abstract_date_time = abstract_date_time.astimezone(datetime.timezone.utc)
+    # normalise precision to ms and convert to ISO string using "Z" instead of +00:00
+    fixed = abstract_date_time.isoformat(timespec='milliseconds')[:-6] + "Z"
 
     logging.debug("corrected timestamp '{}'".format(fixed))
     return fixed
