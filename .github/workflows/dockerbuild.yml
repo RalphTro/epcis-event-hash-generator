@@ -15,5 +15,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: RalphTro/epcis-event-hash-generator/epcis-hash
+          repository: ralphtro/epcis-event-hash-generator/epcis-hash
           tag_with_ref: true
