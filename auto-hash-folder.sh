@@ -13,11 +13,14 @@ if [ ! -d "$1" ]; then
     exit 1
 fi
 
-PATH_TO_MAIN=${2:-""}
+WHATCH_DIR=${1%/}
 
-inotifywait -m $1 -e create -e moved_to |
+PATH_TO_MAIN=${2:-"epcis_event_hash_generator"}
+PATH_TO_MAIN=${PATH_TO_MAIN%/}
+
+inotifywait -m $WHATCH_DIR -e create -e moved_to |
     while read dir action file; do
-        file=$(realpath $1/$file)
+        file=$(realpath $WHATCH_DIR/$file)
         #echo "file=$file"
         filename=$(basename -- "$file")
         #echo "filename=$filename"
@@ -27,8 +30,8 @@ inotifywait -m $1 -e create -e moved_to |
 
         if [[ "$extension" == "json" ]] || [[ "$extension" == "xml" ]]; then
             echo -e "[...]\t Hashing $filename"
-            if python3 ${PATH_TO_MAIN}main.py -b $file; then
-                cat $(realpath $1/${filename}.hashes)
+            if python3 ${PATH_TO_MAIN}/main.py -b $file; then
+                cat $(realpath $WHATCH_DIR/${filename}.hashes)
                 echo -e "[OK]\t Hashes stored in ${filename}.hashes"
             else
                 echo -e "[ERR]\t Error Hashing $filename"
