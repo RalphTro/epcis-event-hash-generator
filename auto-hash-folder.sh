@@ -31,8 +31,18 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
         if [[ "$extension" == "json" ]] || [[ "$extension" == "xml" ]]; then
             echo -e "[...]\t Hashing $filename"
             if python3 ${PATH_TO_MAIN}/main.py -b $file; then
-                cat $(realpath $WHATCH_DIR/${filename}.hashes)
+                out_file_path=$(realpath $WHATCH_DIR/${filename}.hashes)
+                cat $out_file_path
                 echo -e "[OK]\t Hashes stored in ${filename}.hashes"
+
+                if [[ "$POST_BINARY_URL" != "" ]]; then
+                    echo -e "[...]\t Posting binary hashes to $POST_BINARY_URL"
+                    while read -r line; do
+                        echo -n "${line:14:64}" | xdd -r -p - | curl -i --data-binary "@-" $POST_BINARY_HEADERS $POST_BINARY_URL
+                    done <$out_file_path
+                    echo -e "[ok]\t Hashes posted."
+                fi
+
             else
                 echo -e "[ERR]\t Error Hashing $filename"
             fi
