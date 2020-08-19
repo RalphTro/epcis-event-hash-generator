@@ -37,11 +37,17 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
 
                 if [[ "$POST_BINARY_URL" != "" ]]; then
                     echo -e "[...]\t Posting binary hashes to $POST_BINARY_URL"
+                    EXIT_STATUS=0
                     while read -r line; do
-                        python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" | \
-                        curl -i --data-binary "@-" $POST_BINARY_HEADERS $POST_BINARY_URL
+                        python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" |
+                            curl -s -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_ATUH" "$POST_BINARY_URL" ||
+                            EXIT_STATUS=$?
                     done <$out_file_path
-                    echo -e "[done]\t posted."
+                    if [[ "$EXIT_STATUS" == "0" ]]; then
+                        echo -e "[done]\t posted."
+                    else
+                        echo -e "[ERR]\t some hash posting failed."
+                    fi
                 fi
 
             else
