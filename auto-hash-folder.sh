@@ -38,9 +38,10 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
                 if [[ "$POST_BINARY_URL" != "" ]]; then
                     echo -e "[...]\t Posting binary hashes to $POST_BINARY_URL"
                     while read -r line; do
-                        echo -n "${line:14:64}" | xdd -r -p - | curl -i --data-binary "@-" $POST_BINARY_HEADERS $POST_BINARY_URL
+                        python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" | \
+                        curl -i --data-binary "@-" $POST_BINARY_HEADERS $POST_BINARY_URL
                     done <$out_file_path
-                    echo -e "[ok]\t Hashes posted."
+                    echo -e "[done]\t posted."
                 fi
 
             else
