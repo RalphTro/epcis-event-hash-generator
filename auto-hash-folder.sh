@@ -13,6 +13,7 @@ if [ ! -d "$1" ]; then
     exit 1
 fi
 
+
 WHATCH_DIR=${1%/}
 
 PATH_TO_MAIN=${2:-"epcis_event_hash_generator"}
@@ -38,12 +39,14 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
                 if [[ "$POST_BINARY_URL" != "" ]]; then
                     echo -e "[...]\t Posting binary hashes to $POST_BINARY_URL"
                     EXIT_STATUS=0
+                    echo >post.log
                     while read -r line; do
+                        echo -e "\nPosting $line\n" >>post.log
                         python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" |
-                            curl -s -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_ATUH" "$POST_BINARY_URL" >post.log 2>&1 ||
+                            curl -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_AUTH" "$POST_BINARY_URL" >>post.log 2>&1 ||
                             EXIT_STATUS=$?
-                        cat post.log
                     done <$out_file_path
+                    cat post.log
                     if [[ "$EXIT_STATUS" == "0" ]]; then
                         echo -e "[done]\t posted."
                     else
