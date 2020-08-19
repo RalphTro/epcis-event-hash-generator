@@ -43,7 +43,7 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
                     while read -r line; do
                         echo -e "\nPosting $line\n" >>post.log
                         python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" |
-                            curl -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_AUTH" "$POST_BINARY_URL" >>post.log 2>&1 ||
+                            curl -v --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_AUTH" "$POST_BINARY_URL" >>post.log 2>&1 ||
                             EXIT_STATUS=$?
                     done <$out_file_path
                     cat post.log
