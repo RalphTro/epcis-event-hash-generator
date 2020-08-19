@@ -40,8 +40,9 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
                     EXIT_STATUS=0
                     while read -r line; do
                         python3 -c "import binascii; import sys; sys.stdout.buffer.write(binascii.unhexlify(\"${line:14:64}\"));" |
-                            curl -s -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_ATUH" "$POST_BINARY_URL" ||
+                            curl -s -i --data-binary "@-" --header "Content-Type: application/octet-stream" --header "X-Auth-Token: $POST_X_ATUH" "$POST_BINARY_URL" >post.log 2>&1 ||
                             EXIT_STATUS=$?
+                        cat post.log
                     done <$out_file_path
                     if [[ "$EXIT_STATUS" == "0" ]]; then
                         echo -e "[done]\t posted."
