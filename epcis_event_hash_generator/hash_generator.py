@@ -182,16 +182,16 @@ def epcis_hash(path, hashalg="sha256"):
     for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
             hash_string = 'ni:///sha-256;' + \
-                          hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         elif hashalg == 'sha3_256':
             hash_string = 'ni:///sha3_256;' + \
-                          hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         elif hashalg == 'sha384':
             hash_string = 'ni:///sha-384;' + \
-                          hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         elif hashalg == 'sha512':
             hash_string = 'ni:///sha-512;' + \
-                          hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest()
+                          hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         else:
             raise ValueError("Unsupported Hashing Algorithm: " + hash_string)
 
