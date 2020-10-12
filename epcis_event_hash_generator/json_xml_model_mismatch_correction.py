@@ -47,11 +47,6 @@ def _correct_xml_vs_js_structure_mismatch(py_obj):
     Some of the object substructure in XML EPCIS is just not present in JSON or unsystematically renamed
     """
 
-    # readpoint and bizLocation have a nested id in XML but not in JSON
-    if py_obj[0] == "readPoint" or py_obj[0] == "bizLocation":
-        assert not py_obj[2]
-        return py_obj[0], "", [("id", py_obj[1], [])]
-
     # bisTransaction, source and destination have a nested id in JSON but not in XML
     if py_obj[0] == "bizTransaction" or py_obj[0] == "source" or py_obj[0] == "destination":
         for element in [x for x in py_obj[2] if x[0] == py_obj[0]]:

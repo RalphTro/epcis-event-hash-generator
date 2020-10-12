@@ -15,7 +15,7 @@
         ],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "readPoint": "urn:epc:id:sgln:4012345.00022.0",
+        "readPoint": {"id": "urn:epc:id:sgln:4012345.00022.0"},
         "bizTransactionList": [
           {
             "type": "urn:epcglobal:cbv:btt:desadv",
@@ -44,7 +44,7 @@
         ],
         "action": "OBSERVE",
         "bizStep": "urn:epcglobal:cbv:bizstep:transporting",
-        "readPoint": "geo:47.506694,11.104301"
+        "readPoint": {"id": "geo:47.506694,11.104301"}
       }
     ]
   }
