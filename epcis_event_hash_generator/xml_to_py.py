@@ -72,11 +72,15 @@ def _read_epcis_document_xml(path):
     with open(path, 'r') as file:
         data = file.read()
 
-    data = data.replace('<extension>', '').replace('</extension>', '').replace(
-        '<baseExtension>', '').replace('</baseExtension>', '')
+    data = removeExtensionTags(data)
     logging.debug("removed extensions tags:\n%s", data)
 
     return ElementTree.fromstring(data)
+
+
+def removeExtensionTags(data):
+    return data.replace('<extension>', '').replace('</extension>', '').replace(
+        '<baseExtension>', '').replace('</baseExtension>', '')
 
 
 def _xml_to_py(root, sort=True):
@@ -107,15 +111,27 @@ def event_list_from_epcis_document_xml(path):
     """Read EPCIS XML document and generate the event List in the form of a simple python object
 
     """
+    with open(path, 'r') as file:
+        data = file.read()
+
+    return event_list_from_epcis_document_xml_str(data)
+
+
+def event_list_from_epcis_document_xml_str(xmlStr):
+    """
+    Read EPCIS XML document and generate the event List in the form of a simple python object
+    """
     try:
-        root = _read_epcis_document_xml(path)
-        logging.debug("Reading %s yields %s = %s", path, root, list(root))
+        data = removeExtensionTags(xmlStr)
+
+        root = ElementTree.fromstring(data)
+
         eventList = root.find("*EventList")
         if not eventList:
             raise ValueError("No EventList found")
     except (ValueError, OSError) as ex:
         logging.debug(ex)
-        logging.error("'%s' does not contain a valid EPCIS XML document with EventList.", path)
+        logging.error("Input string does not contain a valid EPCIS XML document with EventList.")
         return ("", "", [])
 
     # sort=False => preserve document order of events

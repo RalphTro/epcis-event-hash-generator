@@ -69,6 +69,7 @@ def namespace_replace(key):
 
     return key
 
+
 def collect_namespaces_from_jsonld_context(context):
     global _namespaces
 
@@ -81,6 +82,7 @@ def collect_namespaces_from_jsonld_context(context):
         else:
             for key in c.keys():
                 _namespaces[key] = c[key]
+
 
 def json_to_py(json_obj):
     """ Recursively convert a string/list/dict to a simple python object
@@ -132,6 +134,11 @@ def event_list_from_epcis_document_json(path):
     """
     with open(path, 'r') as file:
         data = file.read()
+
+    return event_list_from_epcis_document_json_str(data)
+
+
+def event_list_from_epcis_document_json_str(data):
 
     json_obj = json.loads(data)
 
