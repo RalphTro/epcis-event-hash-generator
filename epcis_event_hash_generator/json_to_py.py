@@ -69,6 +69,18 @@ def namespace_replace(key):
 
     return key
 
+def collect_namespaces_from_jsonld_context(context):
+    global _namespaces
+
+    if not(isinstance(context, str)):
+        if(isinstance(context, list)):
+            for c in context:
+                if not(isinstance(c, str)):
+                    for key in c.keys():
+                        _namespaces[key] = c[key]
+        else:
+            for key in c.keys():
+                _namespaces[key] = c[key]
 
 def json_to_py(json_obj):
     """ Recursively convert a string/list/dict to a simple python object
@@ -122,6 +134,9 @@ def event_list_from_epcis_document_json(path):
         data = file.read()
 
     json_obj = json.loads(data)
+
+    if not(json_obj.get("@context") is None):
+        collect_namespaces_from_jsonld_context(json_obj["@context"])
 
     event_list = json_obj["epcisBody"]["eventList"]
     events = []
