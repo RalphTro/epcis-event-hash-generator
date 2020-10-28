@@ -54,22 +54,33 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 1. For all EPCIS event types, data elements SHALL be extracted according to the *canonical property order* specified below.
 2. All elements SHALL be concatenated without separators between successive elements.
 3. If a field contains a value (i.e. is not a parent element), each value SHALL be assigned its key through an equal sign ('=').
-4. If an EPCIS event comprises ILMD or user extensions elements, the latter SHALL be appended to the string comprising their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('=').
-5. Data elements SHALL NOT be added if they are omitted in a given EPCIS event or do not apply.
-6. Whitespace characters at the beginning or end of values SHALL be truncated.
-7. Quantitative values SHALL NOT have trailing zeros. (For example, a quantity of one SHALL be expressed as '1', and SHALL NOT be expressed as '1.0'; 0.3434 SHALL be expressed as 0.3434, with any trailing zeros truncated.)
-8. Numeric values SHALL be expressed without single quotes.
-9. All timestamps SHALL be expressed in UTC; the zero UTC offset SHALL be expressed with the capital letter 'Z'. 
-10. All timestamps SHALL be expressed with millisecond precision. If an EPCIS event lacks the latter, the millisecond field SHALL be zero-filled (e.g., YYYY-MM-DDTHH:MM:SS.000Z).
-11. Strings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
-12. All child elements as part of a list (e.g. epc in epcList, bizTransaction in bizTransactionList, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
-13. If a child element of a list itself comprises one or more key-value pairs itself (e.g. quantityElement in quantityList, sensorReport in sensorElement), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character..
-14. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the value SHALL be prefixed with the type before the alphabetical ordering takes place. 
-15. The resulting pre-hash string SHALL be embedded in a 'ni' URI scheme as specified in RFC 6920, as follows:
+4. Data elements SHALL NOT be added if they are omitted in a given EPCIS event or do not apply.
+5. Whitespace characters at the beginning or end of values SHALL be truncated.
+6. Quantitative values SHALL NOT have trailing zeros. (For example, a quantity of one SHALL be expressed as '1', and SHALL NOT be expressed as '1.0'; 0.3434 SHALL be expressed as 0.3434, with any trailing zeros truncated.)
+7. Numeric values SHALL be expressed without single quotes.
+8. All timestamps SHALL be expressed in UTC; the zero UTC offset SHALL be expressed with the capital letter 'Z'. 
+9. All timestamps SHALL be expressed with millisecond precision. If an EPCIS event lacks the latter, the millisecond field SHALL be zero-filled (e.g., YYYY-MM-DDTHH:MM:SS.000Z).
+10. Strings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
+11. All child elements as part of a list (e.g. epc in epcList, bizTransaction in bizTransactionList, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
+12. If a child element of a list itself comprises one or more key-value pairs itself (e.g. quantityElement in quantityList, sensorReport in sensorElement), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character..
+13. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the value SHALL be prefixed with the type before the alphabetical ordering takes place. 
+14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ns.gs1.org’).
+Example:
+‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ns.gs1.org/cbv/BizStep-receiving’
+
+**NOTE: The namespace ‘ns.gs1.org’ is a PLACEHOLDER and still PENDING – please keep it configurable until CBV 2.0 is ratified.**
+
+15. If present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’) or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding canonical GS1 Digital Link URI (starting with ‘https://id.gs1.org’). Canonical GS1 Digital Link URIs are specified in [GS1 Digital Link: URI Syntax, release 1.2], section 4.11.
+16. If a GS1 Digital Link URI is present, it SHALL take the form of a constrained canonical GS1 Digital Link URI. Specifically: (I) A custom domain SHALL be replaced by ‘https://id.gs1.org’. (II) The query string SHALL be stripped off. (III) It SHALL only contain the most fine-granular level of identification, i.e. contain the following GS1 keys/key qualifiers only: `00 / 01 / 01 21 / 01 10 / 01 235 / 253 / 255 / 401 / 402 / 414 / 414 254 / 417 / 8003 / 8004 / 8006 / 8006 21 / 8006 10 / 8010 / 8010 8011 / 8017 / 8018`
+17. If an EPCIS event comprises ILMD elements, the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('='). The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
+18. If an EPCIS event comprises user extension elements at event level – irrespective whether they appear at top level or are nested – the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('=').
+The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
+19. If an EPCIS event comprises user extension elements as part of an EPCIS standard field with an extension point (namely `errorDeclaration`, `readPoint`, `bizLocation`, `sensorElement`, `sensorMetaData`, and `sensorReport`), the top-level user extension element(s) SHALL be prefixed with the corresponding EPCIS standard field name. Apart from that, the SHALL be added to the pre-hash string similarly as specified in the previous step.
+20. The resulting pre-hash string SHALL be embedded in a 'ni' URI scheme as specified in RFC 6920, as follows:
 ni:///{digest algorithm};{digest value}?ver={CBV version}
 i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), the digest value, one question mark ('?'), the characters 'v', 'e', 'r', one equal sign ('='), and the version of the EPCIS Event Hash ID algorithm that was used to generate the pre-hash string, indicated by the cbv version.
-16. The digest algorithm SHALL contain one of the hash name string values as listed in the Named Information Hash Algorithm Registry (see https://www.iana.org/assignments/named-information/named-information.xhtml)
-17. The cbv version SHALL be indicated as follows: the three characters 'c', 'b', 'v', followed by one or several digits indicating the major release version, one dot character ('.') and one or more digits indicating the minor release version. In addition, it MAY be appended with one dot character ('.') and one or more digits indicating a revision of a given CBV standard release, if applicable (i.e. if a revision of the CBV standard specifies an updated version of the EPCIS Event Hash ID algorithm).
+21. The digest algorithm SHALL contain one of the hash name string values as listed in the Named Information Hash Algorithm Registry (see https://www.iana.org/assignments/named-information/named-information.xhtml)
+22. The cbv version SHALL be indicated as follows: the three characters 'c', 'b', 'v', followed by one or several digits indicating the major release version, one dot character ('.') and one or more digits indicating the minor release version. In addition, it MAY be appended with one dot character ('.') and one or more digits indicating a revision of a given CBV standard release, if applicable (i.e. if a revision of the CBV standard specifies an updated version of the EPCIS Event Hash ID algorithm).
 
 ### Canonical property order 
 
