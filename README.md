@@ -70,121 +70,39 @@ i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('
 15. The cbv version MUST be indicated as follows: the three characters 'c', 'b', 'v', followed by one or several digits indicating the major release version, one dot character ('.') and one or more digits indicating the minor release version. In addition, it MAY be appended with one dot character ('.') and one or more digits indicating a revision of a given CBV standard release, if applicable (i.e. if a revision of the CBV standard specifies an updated version of the EPCIS Event Hash ID algorithm). 
 
 ### Canonical property order 
-  
-<table>
-    <thead>
-        <tr>
-            <th>Seq.</th>
-            <th colspan=5>ObjectEvent | AggregationEvent | TransactionEvent | TransformationEvent | AssociationEvent</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td colspan=5>eventType</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td colspan=5>eventTime</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td colspan=5>eventTimeZoneOffset</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td colspan=5>errorDeclaration (declarationTime, reason, correctiveEventIDs – correctiveEventID)</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td colspan=5>epcList – epc</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td colspan=5>parentID</td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td colspan=5>inputEPCList – epc</td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td colspan=5>childEPCs – epc</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td colspan=5>quantityList – quantityElement (epcClass, quantity, uom)</td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td colspan=5>childQuantityList – quantityElement (epcClass, quantity, uom)</td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td colspan=5>inputQuantityList – quantityElement (epcClass, quantity, uom)</td>
-        </tr>
-        <tr>
-            <td>12</td>
-            <td colspan=5>outputEPCList – epc</td>
-        </tr>
-        <tr>
-            <td>13</td>
-            <td colspan=5>outputQuantityList – quantityElement (epcClass, quantity, uom)</td>
-        </tr>
-        <tr>
-            <td>14</td>
-            <td colspan=5>action</td>
-        </tr>
-        <tr>
-            <td>15</td>
-            <td colspan=5>transformationID</td>
-        </tr>
-        <tr>
-            <td>16</td>
-            <td colspan=5>bizStep</td>
-        </tr>
-        <tr>
-            <td>17</td>
-            <td colspan=5>disposition</td>
-        </tr>
-        <tr>
-            <td>18</td>
-            <td colspan=5>readPoint – id</td>
-        </tr>
-        <tr>
-            <td>19</td>
-            <td colspan=5>bizLocation – id</td>
-        </tr>
-        <tr>
-            <td>20</td>
-            <td colspan=5>bizTransactionList – bizTransaction (type)</td>
-        </tr>
-        <tr>
-            <td>21</td>
-            <td colspan=5>sourceList – source (type)</td>
-        </tr>
-        <tr>
-            <td>22</td>
-            <td colspan=5>destinationList – destination (type) </td>
-        </tr>
-        <tr>
-            <td>23</td>
-            <td colspan=5>sensorElement (
-sensorMetaData (time, startTime, endTime, deviceID, deviceMetaData, rawData, dataProcessingMethod, bizRules), 
-sensorReport (type, deviceID, deviceMetaData, rawData, dataProcessingMethod, time, microorganism, chemicalSubstance, value, component, stringValue, booleanValue, hexBinaryValue, uriValue, minValue, maxValue, meanValue, sDev, percRank, percValue, uom)
-)
-</td>
-        </tr>
-        <tr>
-            <td>24</td>
-            <td colspan=5>ilmd – {ILMD elements}</td>
-        </tr>
-        <tr>
-            <td>25</td>
-            <td colspan=5>{User extension elements}</td>
-        </tr>
-    </tbody>
-</table>
+
+Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `TransactionEvent`, `TransformationEvent` and `AssociationEvent`.
+
+| Sequence | Data Element |
+| -------- | ------------ |
+| 1 | `eventType` |
+| 2 | `eventTime` |
+| 3 | `eventTimeZoneOffset` |
+| 4 | `errorDeclaration` (`declarationTime`, `reason`, `correctiveEventIDs` – `correctiveEventID`) |
+| 5 | `epcList` – `epc` |
+| 6 | `parentID` |
+| 7 | `inputEPCList` – `epc` |
+| 8 | `childEPCs` – `epc` |
+| 9 | `quantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 10 | `childQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 11 | `inputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 12 | `outputEPCList` – `epc` |
+| 13 | `outputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 14 | `action` |
+| 15 | `transformationID` |
+| 16 | `bizStep` |
+| 17 | `disposition` |
+| 18 | `readPoint` – `id` |
+| 19 | `bizLocation` – `id` |
+| 20 | `bizTransactionList` – `bizTransaction` (`business transaction type`, `business transaction identifier`) |
+| 21 | `sourceList` – `source` (`source type`, `source ID`) |
+| 22 | `destinationList` – `destination` (`destination type`, `destination ID`) |
+| 23 | `sensorElement` ( |
+|    | `sensorMetaData` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `bizRules`), |
+|    | `sensorReport` (`type`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
+|    | ) |
+| 24 | `ilmd` – `{ILMD elements}` |
+| 25 | `{User extension elements}`|
 
 For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
 
