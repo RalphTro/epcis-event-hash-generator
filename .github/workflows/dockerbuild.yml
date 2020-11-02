@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to GitHub Packages
+      - name: build and push simple watching container
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
@@ -18,13 +18,13 @@ jobs:
           repository: ralphtro/epcis-event-hash-generator/epcis-hash
           tag_with_ref: true
 
-      - name: Push to GitHub Packages
+      - name: build and push web service
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           dockerfile: Dockerfile.webapi
           registry: docker.pkg.github.com
-          repository: ralphtro/epcis-event-hash-generator/webapi
+          repository: ralphtro/epcis-event-hash-generator/webservice
           tag_with_ref: true
   
