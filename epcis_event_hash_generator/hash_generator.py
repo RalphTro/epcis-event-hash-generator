@@ -29,7 +29,9 @@ except ImportError:
     from context import epcis_event_hash_generator  # noqa: F401
 
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
+from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml_str as read_xml_str
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
+from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json_str as read_json_str
 from epcis_event_hash_generator import PROP_ORDER
 
 
@@ -147,6 +149,28 @@ def compute_prehash_from_file(path, enforce=None):
     else:
         logging.error("Filename '%s' ending not recognized.", path)
 
+    return compute_prehash_from_events(events)
+
+
+def compute_prehash_from_json_str(jsonStr):
+    """Read EPCIS document and generate pre-hashe strings.
+    Use enforce = "XML" or "JSON" to ignore file ending.
+    """
+
+    events = read_json_str(jsonStr)
+
+    return compute_prehash_from_events(events)
+
+
+def compute_prehash_from_xml_str(xmlStr):
+    """Read EPCIS document and generate pre-hashe strings.
+    Use enforce = "XML" or "JSON" to ignore file ending.
+    """
+    events = read_xml_str(xmlStr.decode("utf-8"))
+    return compute_prehash_from_events(events)
+
+
+def compute_prehash_from_events(events):
     logging.info("#events = %s", len(events[2]))
     for i in range(len(events[2])):
         logging.info("%s: %s\n", i, events[2][i])
@@ -165,8 +189,17 @@ def compute_prehash_from_file(path, enforce=None):
 
     # To see/check concatenated value string before hash algorithm is performed:
     logging.debug("prehash_string_list = {}".format(prehash_string_list))
-
     return prehash_string_list
+
+
+def epcis_hash_from_json(json, hashalg="sha256"):
+    prehash_string_list = compute_prehash_from_json_str(json)
+    return calculate_hash(prehash_string_list, hashalg)
+
+
+def epcis_hash_from_xml(xmlStr, hashalg="sha256"):
+    prehash_string_list = compute_prehash_from_xml_str(xmlStr)
+    return calculate_hash(prehash_string_list, hashalg)
 
 
 def epcis_hash(path, hashalg="sha256"):
@@ -177,7 +210,10 @@ def epcis_hash(path, hashalg="sha256"):
     """
     prehash_string_list = compute_prehash_from_file(path)
 
-    # Calculate hash values and prefix them according to RFC 6920
+    return calculate_hash(prehash_string_list, hashalg)
+
+
+def calculate_hash(prehash_string_list, hashalg="sha256"):
     hashValueList = []
     for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
