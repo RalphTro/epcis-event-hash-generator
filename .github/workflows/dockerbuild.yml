@@ -23,8 +23,9 @@ jobs:
       -
         name: Login to DockerHub
         uses: docker/login-action@v1 
-        with:
-          username: ${{ github.actor }}
+        with: 
+          registry: docker.pkg.github.com
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Build and Push to GitHub Packages
