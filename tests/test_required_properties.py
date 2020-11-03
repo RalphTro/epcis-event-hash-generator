@@ -24,7 +24,12 @@ def test_distinct():
         break
 
     assert all_hashes
-    assert len(all_hashes) == len(set(all_hashes))
+    duplicates = set()
+    for hash in all_hashes:
+        if all_hashes.count(hash)>1:
+            duplicates.add(hash)
+
+    assert len(duplicates)==0, "The following hashes appeared multiple times: " + str(duplicates)
 
 
 def test_equal():
