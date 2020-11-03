@@ -135,13 +135,19 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 24 | `ilmd` – `{ILMD elements}` |
 | 25 | `{User extension elements}`|
 
-For better understanding, the following illustration includes the data content of a simple EPCIS event (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), shows the corresponding pre-hash string as well as the canonical hash value of that event.
+For better understanding, the following illustrations include the data content of EPCIS events (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), show the corresponding pre-hash string as well as the canonical hash value of that event.
 
-![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration.jpg)
+Example 1:
 
-The following illustration provides a second example accommodating sensor data.
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.jpg)
 
-![Example 2 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration2v1.jpg)
+Example 2:
+
+![Example 2 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example2.jpg)
+
+Example 3:
+
+![Example 3 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example3.jpg)
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
 
