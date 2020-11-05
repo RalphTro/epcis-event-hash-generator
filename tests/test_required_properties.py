@@ -26,10 +26,10 @@ def test_distinct():
     assert all_hashes
     duplicates = set()
     for hash in all_hashes:
-        if all_hashes.count(hash)>1:
+        if all_hashes.count(hash) > 1:
             duplicates.add(hash)
 
-    assert len(duplicates)==0, "The following hashes appeared multiple times: " + str(duplicates)
+    assert len(duplicates) == 0, "The following hashes appeared multiple times: " + str(duplicates)
 
 
 def test_equal():
@@ -40,6 +40,6 @@ def test_equal():
         for filename in filenames:
             if filename.endswith("xml") or filename.endswith("json"):
                 assert len(set(epcis_hash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[
-                                   0])) == 1, "The events in {} have different hashes!".format(
+                    0])) == 1, "The events in {} have different hashes!".format(
                     TEST_FILE_PATH_SAME_EVENT + filename)
         break
