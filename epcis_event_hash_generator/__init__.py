@@ -45,9 +45,9 @@ PROP_ORDER = [
     ('disposition', None),
     ('readPoint', [('id', None)]),
     ('bizLocation', [('id', None)]),
-    ('bizTransactionList', [('type', None), ('bizTransaction', None)]),
-    ('sourceList', [('type', None), ('source', None)]),
-    ('destinationList', [('type', None), ('destination', None)]),
+    ('bizTransactionList', [('bizTransaction', [('type', None)])]),
+    ('sourceList', [('source', [('type', None)])]),
+    ('destinationList', [('destination', [('type', None)])]),
     ('sensorElementList', [('sensorElement',
                             [('sensorMetaData',
                               [
