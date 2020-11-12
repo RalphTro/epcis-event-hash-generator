@@ -56,10 +56,16 @@ def fix_time_stamp_format(timestamp):
 
 
 def recurse_through_children_in_order(root, child_order):
-    """child_order is expected to be a property order, see PROP_ORDER. Loop over child order, look for a child of
-    root with matching name and add its text (if any). Recurse through the grand children applying the sub order.
     """
-    texts = ""
+    Loop over child order, look for a child of root with matching key and build the pre-hash string (mostly key=value)
+    Recurse through the grand children applying the sub order.
+
+    `root`          is to be a simple python object, i.e. a triple of two strings (key/value) and a list of
+                    simple python objects (children).
+    `child_order`   is expected to be a property order, see PROP_ORDER.
+
+    All elements added to the returned
+    """
     for (child_name, sub_child_order) in child_order:
         list_of_values = []
         prefix = ""
@@ -78,16 +84,21 @@ def recurse_through_children_in_order(root, child_order):
                 list_of_values.append(
                     child_name + "=" + text)
 
+            if len(child[2]) == 0:
+                logging.debug("Finished processing %s", child)
+                root.remove(child)
+
         # sort list of values to fix !10
         list_of_values.sort()
         if len(list_of_values) > 1:
             logging.debug("sorted: %s", list_of_values)
 
+        pre_hash = ""
         if "".join(list_of_values):  # fixes #16
-            texts += prefix + "".join(list_of_values)
+            pre_hash = prefix + "".join(list_of_values)
         elif prefix:
-            logging.debug("Skipping empty element: %s", prefix)
-    return texts
+            logging.warning("Skipping empty element: %s", prefix)
+    return pre_hash
 
 
 def format_if_numeric(text):
@@ -123,12 +134,8 @@ def gather_elements_not_in_order(root, child_order):
     """
 
     # remove recordTime, if any
-    child_order_or_record_time = child_order + [("recordTime", None)]
-
-    for (child_name, _) in child_order_or_record_time:
-        covered_children = [x for x in root if x[0] == child_name]
-        logging.debug("Children '%s' covered by ordering: %s", child_name, covered_children)
-        for child in covered_children:
+    for child in root:
+        if child[0] == "recordTime":
             root.remove(child)
 
     logging.debug("Parsing remaining elements in: %s", root)

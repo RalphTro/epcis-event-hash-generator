@@ -11,7 +11,7 @@ from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_
 
 TEST_FILE_PATH = "examples/"
 
-IGNORED_KEYS = ["eventTime"]
+IGNORED_KEYS = ["eventTime", "recordTime", "declarationTime"]
 
 
 def _py_to_value_list(py_obj):
