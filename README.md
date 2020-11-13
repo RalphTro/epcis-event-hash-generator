@@ -125,9 +125,9 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 17 | `disposition` |
 | 18 | `readPoint` – `id` |
 | 19 | `bizLocation` – `id` |
-| 20 | `bizTransactionList` – `bizTransaction` (`business transaction type`, `business transaction identifier`) |
-| 21 | `sourceList` – `source` (`source type`, `source ID`) |
-| 22 | `destinationList` – `destination` (`destination type`, `destination ID`) |
+| 20 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
+| 21 | `sourceList` – `source` (`source ID`, `source type`) |
+| 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
 | 23 | `sensorElement` ( |
 |    | `sensorMetaData` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `bizRules`), |
 |    | `sensorReport` (`type`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
