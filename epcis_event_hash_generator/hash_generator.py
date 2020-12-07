@@ -192,8 +192,8 @@ def compute_prehash_from_events(events):
     for event in events[2]:
         logging.debug("prehashing event:\n%s", event)
         try:
-            prehash_string_list.append("eventType=" + event[0] + JOIN_BY +
-                                       recurse_through_children_in_order(event[2], PROP_ORDER)
+            prehash_string_list.append("eventType=" + event[0] + JOIN_BY
+                                       + recurse_through_children_in_order(event[2], PROP_ORDER)+ JOIN_BY
                                        + gather_elements_not_in_order(event[2], PROP_ORDER)
                                        )
         except Exception as ex:
