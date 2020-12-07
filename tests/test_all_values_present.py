@@ -5,21 +5,19 @@ except ImportError:
 
 from os import walk
 
-from epcis_event_hash_generator.hash_generator import epcis_hash
+from epcis_event_hash_generator.hash_generator import epcis_hash, format_if_numeric
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml
 
 TEST_FILE_PATH = "examples/"
-
-IGNORED_KEYS = ["eventTime", "recordTime", "declarationTime"]
 
 
 def _py_to_value_list(py_obj):
     """Transform a nested (Key, Value, Children) object tree into a list of (key, value) pairs"""
     key_values = []
     key, value, children = py_obj
-    if key not in IGNORED_KEYS and value != "":
-        key_values.append((key, value))
+    if "time" not in key.lower() and value != "":
+        key_values.append((key, format_if_numeric(value)))
     for child in children:
         key_values += _py_to_value_list(child)
     return key_values

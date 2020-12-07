@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+JOIN_BY = ""
+"""
+Join the substrings to the pre hash string using this deliminator. 
+By the specification in https://github.com/RalphTro/epcis-event-hash-generator this is to be the empty string, but using e.g. newline might be helpful for debugging.
+When using the command line utility, this can be changed via the -j flag.
+"""
+
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
