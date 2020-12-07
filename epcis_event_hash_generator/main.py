@@ -68,7 +68,8 @@ def command_line_parsing():
     parser.add_argument(
         "-j",
         "--join",
-        help="String used to join the pre hash string. Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
+        help="String used to join the pre hash string." +
+        " Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
         default="")
 
     args = parser.parse_args()

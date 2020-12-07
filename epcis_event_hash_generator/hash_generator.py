@@ -59,11 +59,33 @@ def fix_time_stamp_format(timestamp):
     return fixed
 
 
+def child_to_pre_hash_string(child, sub_child_order):
+    text = ""
+    grand_child_text = ""
+    if sub_child_order:
+        grand_child_text = recurse_through_children_in_order(child[2], sub_child_order)
+    if child[1]:
+        text = child[1].strip()
+        if child[0].lower().find("time") > 0 and child[0].lower().find("offset") < 0:
+            text = fix_time_stamp_format(text)
+        else:
+            text = format_if_numeric(text)
+
+        if text:
+            text = "=" + text
+            logging.debug("Adding text '%s'", text)
+            
+    if text or grand_child_text:
+        return child[0] + text + grand_child_text
+
+    return ""
+
+
 def recurse_through_children_in_order(child_list, child_order):
     """
     Loop over child order, look for a child of root with matching key and build the pre-hash string (mostly key=value)
     Recurse through the grand children applying the sub order.
-    All elements added to the returned pre hash string are removed from the tree below the root. 
+    All elements added to the returned pre hash string are removed from the tree below the root.
     After the recursion completes, only elements NOT added to the pre-hash string are left in the tree.
 
     `child_list`    is to be a list of simple python object, i.e. triples of two strings (key/value) and a list of
@@ -74,26 +96,13 @@ def recurse_through_children_in_order(child_list, child_order):
     pre_hash = ""
     logging.debug("Calculating pre hash for child list %s \nWith order %s", child_list, child_order)
     for (child_name, sub_child_order) in child_order:
-        list_of_values = []
         children = [x for x in child_list if x[0] == child_name]  # elements with the same name
+        list_of_values = []
+
         for child in children:
-            text = ""
-            grand_child_text = ""
-            if sub_child_order:
-                grand_child_text = recurse_through_children_in_order(child[2], sub_child_order)
-            if child[1]:
-                text = child[1].strip()
-                if child_name.lower().find("time") > 0 and child_name.lower().find("offset") < 0:
-                    text = fix_time_stamp_format(text)
-                else:
-                    text = format_if_numeric(text)
-
-                if text:
-                    text = "=" + text
-                logging.debug("Adding text '%s'", text)
-
-            if text or grand_child_text:
-                list_of_values.append(child_name + text + grand_child_text)
+            child_pre_hash = child_to_pre_hash_string(child, sub_child_order)
+            if child_pre_hash:
+                list_of_values.append(child_pre_hash)
             else:
                 logging.debug("Empty element ignored: %s", child)
 

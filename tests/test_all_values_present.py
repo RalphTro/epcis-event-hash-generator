@@ -39,11 +39,12 @@ def _check_values(filename):
     for (py_obj, prehash_string) in zip(events[2], prehash_string_list):
         key_values = _py_to_value_list(py_obj)
         for key, value in key_values:
-            assert prehash_string.find(
-                value) >= 0, "Value '{}' for key '{}' not contained in prehash string\n{}\n for file {}".format(value,
-                                                                                                                key,
-                                                                                                                prehash_string,
-                                                                                                                filename)
+            msg = "Value '{}' for key '{}' not contained in prehash string\n{}\n for file {}".format(value,
+                                                                                                     key,
+                                                                                                     prehash_string,
+                                                                                                     filename)
+            assert prehash_string.find(value) >= 0, msg
+
     return True
 
 
