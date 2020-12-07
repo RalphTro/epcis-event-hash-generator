@@ -74,7 +74,7 @@ def child_to_pre_hash_string(child, sub_child_order):
         if text:
             text = "=" + text
             logging.debug("Adding text '%s'", text)
-            
+
     if text or grand_child_text:
         return child[0] + text + grand_child_text
 
