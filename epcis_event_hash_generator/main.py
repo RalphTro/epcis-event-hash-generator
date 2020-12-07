@@ -65,6 +65,12 @@ def command_line_parsing():
         "--prehash",
         help="If given, also output the prehash string to stdout. Output to a .prehashes file, if combined with -b.",
         action="store_true")
+    parser.add_argument(
+        "-j",
+        "--join",
+        help="String used to join the pre hash string." +
+        " Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
+        default="")
 
     args = parser.parse_args()
 
@@ -91,9 +97,11 @@ def main():
 
     args = command_line_parsing()
 
+    logging.debug("Running cli tool with arguments %s", args)
+
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = hash_generator.epcis_hash(filename, args.algorithm)
+        (hashes, prehashes) = hash_generator.epcis_hash(filename, args.algorithm, args.join)
 
         # Output:
         if args.batch:

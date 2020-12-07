@@ -20,6 +20,7 @@ file for details.
 import datetime
 import hashlib
 import logging
+import traceback
 
 import dateutil.parser
 
@@ -33,6 +34,9 @@ from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json_str as read_json_str
 from epcis_event_hash_generator import PROP_ORDER
+from epcis_event_hash_generator import JOIN_BY as DEFAULT_JOIN_BY
+
+JOIN_BY = DEFAULT_JOIN_BY
 
 
 def fix_time_stamp_format(timestamp):
@@ -55,39 +59,68 @@ def fix_time_stamp_format(timestamp):
     return fixed
 
 
-def recurse_through_children_in_order(root, child_order):
-    """child_order is expected to be a property order, see PROP_ORDER. Loop over child order, look for a child of
-    root with matching name and add its text (if any). Recurse through the grand children applying the sub order.
+def child_to_pre_hash_string(child, sub_child_order):
+    text = ""
+    grand_child_text = ""
+    if sub_child_order:
+        grand_child_text = recurse_through_children_in_order(child[2], sub_child_order)
+    if child[1]:
+        text = child[1].strip()
+        if child[0].lower().find("time") > 0 and child[0].lower().find("offset") < 0:
+            text = fix_time_stamp_format(text)
+        else:
+            text = format_if_numeric(text)
+
+        if text:
+            text = "=" + text
+            logging.debug("Adding text '%s'", text)
+
+    if text or grand_child_text:
+        return child[0] + text + grand_child_text
+
+    return ""
+
+
+def recurse_through_children_in_order(child_list, child_order):
     """
-    texts = ""
+    Loop over child order, look for a child of root with matching key and build the pre-hash string (mostly key=value)
+    Recurse through the grand children applying the sub order.
+    All elements added to the returned pre hash string are removed from the tree below the root.
+    After the recursion completes, only elements NOT added to the pre-hash string are left in the tree.
+
+    `child_list`    is to be a list of simple python object, i.e. triples of two strings (key/value) and a list of
+                    simple python objects (grand children).
+    `child_order`   is expected to be a property order, see PROP_ORDER.
+
+    """
+    pre_hash = ""
+    logging.debug("Calculating pre hash for child list %s \nWith order %s", child_list, child_order)
     for (child_name, sub_child_order) in child_order:
+        children = [x for x in child_list if x[0] == child_name]  # elements with the same name
         list_of_values = []
-        prefix = ""
-        for child in [x for x in root if x[0] == child_name]:
-            if sub_child_order:
-                list_of_values.append(recurse_through_children_in_order(child[2], sub_child_order))
-                prefix = child_name
-            if child[1]:
-                text = child[1].strip()
-                if child_name.lower().find("time") > 0 and child_name.lower().find("offset") < 0:
-                    text = fix_time_stamp_format(text)
-                else:
-                    text = format_if_numeric(text)
 
-                logging.debug("Adding text '%s'", text)
-                list_of_values.append(
-                    child_name + "=" + text)
+        for child in children:
+            child_pre_hash = child_to_pre_hash_string(child, sub_child_order)
+            if child_pre_hash:
+                list_of_values.append(child_pre_hash)
+            else:
+                logging.debug("Empty element ignored: %s", child)
 
-        # sort list of values to fix !10
+            if len(child[2]) == 0:
+                logging.debug("Finished processing %s", child)
+                child_list.remove(child)
+
+        # sort list of values to fix #10
         list_of_values.sort()
-        if len(list_of_values) > 1:
-            logging.debug("sorted: %s", list_of_values)
 
         if "".join(list_of_values):  # fixes #16
-            texts += prefix + "".join(list_of_values)
-        elif prefix:
-            logging.debug("Skipping empty element: %s", prefix)
-    return texts
+            if pre_hash:
+                list_of_values.insert(0, pre_hash)  # yields correct Joining behavior
+            pre_hash = JOIN_BY.join(list_of_values)
+
+    logging.debug("child list pre hash is %s", pre_hash)
+
+    return pre_hash
 
 
 def format_if_numeric(text):
@@ -102,38 +135,32 @@ def format_if_numeric(text):
     return text
 
 
-def generic_element_to_prehash_string(root):
+def generic_child_list_to_prehash_string(children):
     list_of_values = []
 
-    logging.debug("Parsing remaining elements: %s", root)
-    if isinstance(root, str) and root:
-        list_of_values.append("=" + root.strip())
-    else:
-        for child in root:
-            list_of_values.append(child[0] + generic_element_to_prehash_string(
-                child[1]) + generic_element_to_prehash_string(child[2]))
+    logging.debug("Parsing remaining elements in: %s", children)
+
+    for child in children:
+        text = child[1].strip()
+        if text:
+            text = "=" + text
+        list_of_values.append(child[0] + text + generic_child_list_to_prehash_string(child[2]))
 
     list_of_values.sort()
-    return "".join(list_of_values)
+    return JOIN_BY.join(list_of_values)
 
 
-def gather_elements_not_in_order(root, child_order):
+def gather_elements_not_in_order(children, child_order):
     """
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
 
     # remove recordTime, if any
-    child_order_or_record_time = child_order + [("recordTime", None)]
-
-    for (child_name, _) in child_order_or_record_time:
-        covered_children = [x for x in root if x[0] == child_name]
-        logging.debug("Children '%s' covered by ordering: %s", child_name, covered_children)
-        for child in covered_children:
-            root.remove(child)
-
-    logging.debug("Parsing remaining elements in: %s", root)
-    if root:
-        return generic_element_to_prehash_string(root)
+    for child in children:
+        if child[0] == "recordTime":
+            children.remove(child)
+    if children:
+        return generic_child_list_to_prehash_string(children)
 
     return ""
 
@@ -179,12 +206,13 @@ def compute_prehash_from_events(events):
     for event in events[2]:
         logging.debug("prehashing event:\n%s", event)
         try:
-            prehash_string_list.append("eventType=" + event[0] +
-                                       recurse_through_children_in_order(event[2], PROP_ORDER)
+            prehash_string_list.append("eventType=" + event[0] + JOIN_BY
+                                       + recurse_through_children_in_order(event[2], PROP_ORDER) + JOIN_BY
                                        + gather_elements_not_in_order(event[2], PROP_ORDER)
                                        )
         except Exception as ex:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
+            logging.debug("".join(traceback.format_tb(ex.__traceback__)))
             pass
 
     # To see/check concatenated value string before hash algorithm is performed:
@@ -202,12 +230,16 @@ def epcis_hash_from_xml(xmlStr, hashalg="sha256"):
     return calculate_hash(prehash_string_list, hashalg)
 
 
-def epcis_hash(path, hashalg="sha256"):
+def epcis_hash(path, hashalg="sha256", join_by=DEFAULT_JOIN_BY):
     """Read all EPCIS Events from the EPCIS XML document at path.
     Compute a normalized form (pre-hash string) for each event and
     return an array of the event hashes computed from the pre-hash by
     hashalg.
     """
+    global JOIN_BY
+    join_by = join_by.replace(r"\n", "\n").replace(r"\t", "\t")
+    logging.debug("Setting JOIN_BY='%s'", join_by)
+    JOIN_BY = join_by
     prehash_string_list = compute_prehash_from_file(path)
 
     return calculate_hash(prehash_string_list, hashalg)
