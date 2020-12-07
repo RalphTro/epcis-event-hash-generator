@@ -81,7 +81,7 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 10. Strings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 11. All child elements as part of a list (e.g. epc in epcList, bizTransaction in bizTransactionList, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 12. If a child element of a list itself comprises one or more key-value pairs itself (e.g. quantityElement in quantityList, sensorReport in sensorElement), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character..
-13. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the actual key-value pair SHALL be prefixed with the type key-value pair (where the key is 'type' and the value the respective type attribute) before the alphabetical ordering takes place. 
+13. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the type key-value pair (where the key is 'type' and the value the respective type attribute) SHALL follow the actual key-value before the alphabetical ordering takes place. 
 14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ns.gs1.org’).
 Example:
 ‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ns.gs1.org/cbv/BizStep-receiving’
@@ -125,9 +125,9 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 17 | `disposition` |
 | 18 | `readPoint` – `id` |
 | 19 | `bizLocation` – `id` |
-| 20 | `bizTransactionList` – `bizTransaction` (`business transaction type`, `business transaction identifier`) |
-| 21 | `sourceList` – `source` (`source type`, `source ID`) |
-| 22 | `destinationList` – `destination` (`destination type`, `destination ID`) |
+| 20 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
+| 21 | `sourceList` – `source` (`source ID`, `source type`) |
+| 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
 | 23 | `sensorElement` ( |
 |    | `sensorMetaData` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `bizRules`), |
 |    | `sensorReport` (`type`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
