@@ -88,10 +88,12 @@ def recurse_through_children_in_order(child_list, child_order):
                 else:
                     text = format_if_numeric(text)
 
+                if text:
+                    text = "=" + text
                 logging.debug("Adding text '%s'", text)
 
             if text or grand_child_text:
-                list_of_values.append(child_name + "=" + text + grand_child_text)
+                list_of_values.append(child_name + text + grand_child_text)
             else:
                 logging.debug("Empty element ignored: %s", child)
 
@@ -130,7 +132,10 @@ def generic_child_list_to_prehash_string(children):
     logging.debug("Parsing remaining elements in: %s", children)
 
     for child in children:
-        list_of_values.append(child[0] + "=" + child[1].strip() + generic_child_list_to_prehash_string(child[2]))
+        text = child[1].strip()
+        if text:
+            text = "=" + text
+        list_of_values.append(child[0] + text + generic_child_list_to_prehash_string(child[2]))
 
     list_of_values.sort()
     return JOIN_BY.join(list_of_values)
@@ -193,7 +198,7 @@ def compute_prehash_from_events(events):
         logging.debug("prehashing event:\n%s", event)
         try:
             prehash_string_list.append("eventType=" + event[0] + JOIN_BY
-                                       + recurse_through_children_in_order(event[2], PROP_ORDER)+ JOIN_BY
+                                       + recurse_through_children_in_order(event[2], PROP_ORDER) + JOIN_BY
                                        + gather_elements_not_in_order(event[2], PROP_ORDER)
                                        )
         except Exception as ex:
