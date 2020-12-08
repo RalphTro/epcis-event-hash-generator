@@ -69,7 +69,7 @@ def child_to_pre_hash_string(child, sub_child_order):
         if child[0].lower().find("time") > 0 and child[0].lower().find("offset") < 0:
             text = fix_time_stamp_format(text)
         else:
-            text = format_if_numeric(text)
+            text = canonize_value(text)
 
         if text:
             text = "=" + text
@@ -123,8 +123,24 @@ def recurse_through_children_in_order(child_list, child_order):
     return pre_hash
 
 
-def format_if_numeric(text):
-    """remove leading/trailing zeros, leading "+", etc. from numbers"""
+def canonize_value(text):
+    """Run a value through all format canonizations"""
+    text = try_format_web_vocabulary(text)
+    text = try_format_numeric(text)
+    return text
+
+
+def try_format_web_vocabulary(text):
+    """Replace old CBV URNs by new web vocabulary equivalents."""
+    return text.replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
+                        ).replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
+                                  ).replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
+                                            ).replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
+                                                      ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
+
+
+def try_format_numeric(text):
+    """remove leading/trailing zeros, leading "+", etc. from numbers. Non numeric values are left untouched."""
     try:
         numeric = float(text)
         if int(numeric) == numeric:  # remove trailing .0

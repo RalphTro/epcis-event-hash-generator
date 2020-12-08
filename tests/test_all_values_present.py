@@ -5,7 +5,7 @@ except ImportError:
 
 from os import walk
 
-from epcis_event_hash_generator.hash_generator import epcis_hash, format_if_numeric
+from epcis_event_hash_generator.hash_generator import epcis_hash, canonize_value
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml
 
@@ -17,7 +17,7 @@ def _py_to_value_list(py_obj):
     key_values = []
     key, value, children = py_obj
     if "time" not in key.lower() and value != "":
-        key_values.append((key, format_if_numeric(value)))
+        key_values.append((key, canonize_value(value)))
     for child in children:
         key_values += _py_to_value_list(child)
     return key_values
