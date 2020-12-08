@@ -5,40 +5,42 @@
 ![Docker Release Build](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Docker%20Release%20Build/badge.svg)
 
 This is a proposal/reference implementation for a method to uniquely identify an EPCIS event or validate the integrity thereof. To this end, a syntax-/representation-agnostic approach based on hashing is developed.
-The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint of the latter. 
+The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint thereof. 
 
 ![EPCIS event hash generator algorithm illustration](docs/epcisEventHashGenerator.jpg)
 
 
-## Usage (TL;DR)
-The script may be used as a command line utility like this:
+## TL;DR
+
+The implementation provided here is a prototypical reference implementation meant for testing against other implementations, but **not meant for production**. If you discover that this implementation does not conform perfectly to the algorithm description or contains any other bugs, please file an issue at https://github.com/RalphTro/epcis-event-hash-generator/issues .
+
+### Command Line
+
+The Hashing Algorithm described below is implemented as a python script, including a command line utility which can be run directly after checking out this repository via
 ```
-python epcis_event_hash_generator/main.py -h
+git clone https://github.com/RalphTro/epcis-event-hash-generator.git
 ```
 
-Tests are run via
-```
-cd tests; pytest
-```
-where pytests needs to be intalles (`pip install pytest`).
-
-Build webapi docker image
+For usage information run
 
 ```
-docker build . -f Dockerfile.webapi -t event-hash-generator
+epcis_event_hash_generator/main.py -h
 ```
 
-Run container
+
+### Web Service
+
+The script also comes wrapped as a web service in a docker image for ease of integration into a testing environment.
+You may use 
+
+- [the latest release version of the web service container](https://github.com/RalphTro/epcis-event-hash-generator/packages/484860 ). See here for usage.
+
+You may also build the image directly from the code using e.g.
 
 ```
- docker run -p 5000:5000 event-hash-generator
+docker build . -f Dockerfile.webapi -t event-hash-generator:nightly
 ```
 
-Sample request (note: replace {..} with full json/json-ld event payload)
-
-```
-curl --location --request -POST 'http://localhost:5000/hash' --header 'Content-Type: application/json' --data-raw '{..}'
-```
 
 ## Introduction  
 There are situations in which organisations require to uniquely refer to a specific EPCIS event. For instance, companies may only want to store the <b>hash value of a given EPCIS event on a distributed shared ledger ('blockchain')</b> instead of any actual payload. Digitally signed and in conjunction with a unique timestamp, this is a powerful and effective way to prove the integrity of the underlying event data. Another use case consists to use such an approach to <b>populate the eventID field with values that are intrinsic to the EPCIS event</b> - if an organisation captures an event without an eventID (which is not required as of the standard) and sends that event to a business partner who needs to assign a unique ID, they can agree that the business partner populates the eventID field applying this methodology before storing the event on the server. If the organisation later wants to query for that specific event, it knows how the eventID was created, thus is able to query for it through the eventID value.
