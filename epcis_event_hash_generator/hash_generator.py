@@ -129,13 +129,14 @@ def canonize_value(text):
     text = try_format_numeric(text)
     return text
 
+
 def try_format_web_vocabulary(text):
     """Replace old CBV URNs by new web vocabulary equivalents."""
     return text.replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
-    ).replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
-    ).replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
-    ).replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
-    ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
+                        ).replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
+                                  ).replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
+                                            ).replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
+                                                      ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
 
 
 def try_format_numeric(text):
