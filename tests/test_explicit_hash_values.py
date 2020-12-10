@@ -14,7 +14,7 @@ def test_explicit_hash_values():
     num_tested = 0
     for (_, _, filenames) in walk(TEST_FILE_PATH):
         for filename in filenames:
-            if filename.endswith("xml") or filename.endswith("json"):
+            if filename.endswith("xml") or filename.endswith("json") or filename.endswith("jsonld"):
                 print("Testing file " + filename)
                 actualHashes = epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
                 assert len(actualHashes) > 0

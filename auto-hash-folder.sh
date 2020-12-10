@@ -1,7 +1,7 @@
 #!/bin/bash
 
 USAGE_MSG="
-This script whatches a folder for files with .json or .xml file ending appearing.
+This script whatches a folder for files with .json, .jsonld or .xml file ending appearing.
 As soon as a new file is found, the epcis event hash generator is run in batch mode
 in order to produce a sibbling file with the hashes of the events.
 
@@ -12,7 +12,6 @@ if [ ! -d "$1" ]; then
     echo "$USAGE_MSG"
     exit 1
 fi
-
 
 WHATCH_DIR=${1%/}
 
@@ -29,7 +28,7 @@ inotifywait -m $WHATCH_DIR -e create -e moved_to |
         #echo "extension=$extension"
         filename="${filename%.*}"
 
-        if [[ "$extension" == "json" ]] || [[ "$extension" == "xml" ]]; then
+        if [[ "$extension" == "json" ]] || [[ "$extension" == "jsonld" ]] || [[ "$extension" == "xml" ]]; then
             echo -e "[...]\t Hashing $filename"
             if python3 ${PATH_TO_MAIN}/main.py -b $file; then
                 out_file_path=$(realpath $WHATCH_DIR/${filename}.hashes)

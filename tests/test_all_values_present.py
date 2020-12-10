@@ -27,7 +27,7 @@ def _check_values(filename):
     if filename.endswith("xml"):
         print("Testing XML file " + filename)
         events = event_list_from_epcis_document_xml(filename)
-    elif filename.endswith("json"):
+    elif filename.endswith("json") or filename.endswith("jsonld"):
         print("Testing JSON file " + filename)
         events = event_list_from_epcis_document_json(filename)
     else:

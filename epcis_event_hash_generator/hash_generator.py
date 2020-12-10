@@ -183,11 +183,11 @@ def gather_elements_not_in_order(children, child_order):
 
 def compute_prehash_from_file(path, enforce=None):
     """Read EPCIS document and generate pre-hashe strings.
-    Use enforce = "XML" or "JSON" to ignore file ending.
+    Use enforce = "XML" or "JSON" to ignore file ending and use JSON/XML parser.
     """
     if enforce == "XML" or path.lower().endswith(".xml"):
         events = read_xml(path)
-    elif enforce == "JSON" or path.lower().endswith(".json"):
+    elif enforce == "JSON" or path.lower().endswith(".json") or path.lower().endswith(".jsonld"):
         events = read_json(path)
     else:
         logging.error("Filename '%s' ending not recognized.", path)
