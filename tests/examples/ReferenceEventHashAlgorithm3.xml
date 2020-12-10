@@ -1,39 +1,31 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2019-03-14T15:45:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:example="http://ns.example.com/epcis">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2020-12-10T15:45:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd" xmlns:example="https://ns.example.com/epcis">
 	<EPCISBody>
 		<EventList>
-			<AggregationEvent>
-				<eventTime>2019-03-14T15:30:00.000+01:00</eventTime>
-				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
-				<parentID>urn:epc:id:sscc:4012345.0111111111</parentID>
-				<childEPCs/>
-				<action>ADD</action>
-				<bizStep>urn:epcglobal:cbv:bizstep:packing</bizStep>
-				<disposition>urn:epcglobal:cbv:disp:in_progress</disposition>
-				<readPoint>
-					<id>urn:epc:id:sgln:4012345.00025.0</id>
-				</readPoint>
-				<extension>
-					<childQuantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4012345.011111.1234</epcClass>
-							<quantity>52</quantity>
-							<uom>KGM</uom>
-						</quantityElement>
-					</childQuantityList>
-				</extension>
-			</AggregationEvent>
 			<ObjectEvent>
-				<eventTime>2019-03-14T15:45:00.000+01:00</eventTime>
+				<eventTime>2020-03-04T11:00:30.000+01:00</eventTime>
 				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
 				<epcList>
-					<epc>urn:epc:id:sscc:4012345.0111111111</epc>
+					<epc>urn:epc:id:sgtin:0614141.011111.987</epc>
 				</epcList>
 				<action>OBSERVE</action>
-				<bizStep>urn:epcglobal:cbv:bizstep:shipping</bizStep>
+				<bizStep>urn:epcglobal:cbv:bizstep:departing</bizStep>
 				<disposition>urn:epcglobal:cbv:disp:in_transit</disposition>
 				<readPoint>
-					<id>urn:epc:id:sgln:4012345.00024.0</id>
+					<id>urn:epc:id:sgln:4012345.00011.0</id>
+					<example:myField1>AB-12</example:myField1>
 				</readPoint>
+				<bizTransactionList>
+					<bizTransaction type="urn:epcglobal:cbv:btt:po">urn:epc:id:gdti:4012345.11111.123</bizTransaction>
+				</bizTransactionList>
+				<extension>
+					<sourceList>
+						<source type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4012345.00000</source>
+					</sourceList>
+					<destinationList>
+						<destination type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:0614141.00000</destination>
+					</destinationList>
+				</extension>
+				<example:userExt>CD-34</example:userExt>
 			</ObjectEvent>
 		</EventList>
 	</EPCISBody>
