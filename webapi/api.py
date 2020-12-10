@@ -24,7 +24,7 @@ def hash():
 
     from epcis_event_hash_generator import hash_generator
 
-    if request.content_type == 'application/json':
+    if request.content_type == 'application/json' or request.content_type == 'application/ld+json':
         (hashes, prehashes) = hash_generator.epcis_hash_from_json(request.data)
         return ",".join(hashes)
     elif request.content_type == 'application/xml':
