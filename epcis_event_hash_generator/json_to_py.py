@@ -78,10 +78,10 @@ def collect_namespaces_from_jsonld_context(context):
             for c in context:
                 if not(isinstance(c, str)):
                     for key in c.keys():
-                        _namespaces[key] = c[key]
+                        _namespaces[key] = "{" + c[key] + "}"
         else:
             for key in c.keys():
-                _namespaces[key] = c[key]
+                _namespaces[key] = "{" + c[key] + "}"
 
 
 def json_to_py(json_obj):
