@@ -10,6 +10,13 @@ The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted 
 ![EPCIS event hash generator algorithm illustration](docs/epcisEventHashGenerator.jpg)
 
 
+## Status of the reference implementation
+
+The current (v1.4.0) set of examples and implementation of the json parser is based on an old version of the EPCIS 2.0 JSON schema, see https://github.com/RalphTro/epcis-event-hash-generator/issues/37 . Currently, only the XML hashing should be used. See
+https://github.com/gs1/EPCIS/blob/master/JSON/
+for the current (still draft) version of the JSON schema and for examples.
+
+
 ## TL;DR
 
 The implementation provided here is a prototypical reference implementation meant for testing against other implementations, but **not meant for production**. If you discover that this implementation does not conform perfectly to the algorithm description or contains any other bugs, please file an issue at https://github.com/RalphTro/epcis-event-hash-generator/issues .
