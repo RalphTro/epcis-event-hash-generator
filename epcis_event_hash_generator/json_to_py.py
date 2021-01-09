@@ -145,7 +145,12 @@ def event_list_from_epcis_document_json_str(data):
     if not(json_obj.get("@context") is None):
         collect_namespaces_from_jsonld_context(json_obj["@context"])
 
-    event_list = json_obj["epcisBody"]["eventList"]
+    if "eventList" in json_obj["epcisBody"]:
+        event_list = json_obj["epcisBody"]["eventList"]
+    else:
+        # epcisBody may contain single event
+        event_list = [json_obj["epcisBody"]["event"]]
+
     events = []
 
     # Correct JSON/XML data model mismatch
