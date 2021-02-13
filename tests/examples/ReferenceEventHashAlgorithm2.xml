@@ -20,7 +20,7 @@
                     <extension>
                         <sensorElementList>
                             <sensorElement>
-                                <sensorMetaData deviceID="urn:epc:id:giai:4000001.111" deviceMetaData="https://id.gs1.org/giai/4000001111"/>
+                                <sensorMetadata deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111"/>
                                 <sensorReport type="gs1:Temperature" value="26" uom="CEL" sDev="0.1"/>
                                 <sensorReport type="gs1:Humidity" value="12.1" uom="A93"/>
                                 <sensorReport type="gs1:Molar_concentration" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>

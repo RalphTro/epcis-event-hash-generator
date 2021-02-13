@@ -18,9 +18,9 @@
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00005.0"},
         "sensorElementList": [
           {
-            "sensorMetaData": {
+            "sensorMetadata": {
               "deviceID": "urn:epc:id:giai:4000001.111",
-              "deviceMetaData": "https://id.gs1.org/giai/4000001111"
+              "deviceMetadata": "https://id.gs1.org/giai/4000001111"
             },
             "sensorReport": [
               {
