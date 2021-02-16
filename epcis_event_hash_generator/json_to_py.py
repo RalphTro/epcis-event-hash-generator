@@ -101,7 +101,7 @@ def json_to_py(json_obj):
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        for (key, val) in [x for x in json_obj.items() if x[0] not in ["isA", "#text"]]:
+        for (key, val) in [x for x in json_obj.items() if x[0] not in ["isA", "#text", "rdfs:comment", "comment"]]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"
                 logging.debug("Namespaces: %s", _namespaces)
