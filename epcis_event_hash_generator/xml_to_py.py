@@ -87,6 +87,14 @@ def _xml_to_py(root, sort=True):
     """ Perform the conversion from ElementTree to a simple python object.
     """
     children = []
+
+    # remove all elements from XML tree which do shouldn't take part in hash calculation
+    to_be_ignored = ["eventID"]
+    for el in to_be_ignored:
+        to_be_removed = root.find(el)
+        if to_be_removed is not None:
+            root.remove(to_be_removed)
+
     # add all XML Attributes
     children += [(x, y, []) for (x, y) in root.items()]
 
