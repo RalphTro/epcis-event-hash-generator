@@ -102,7 +102,7 @@ Example:
 17. If an EPCIS event comprises ILMD elements, the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('='). The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
 18. If an EPCIS event comprises user extension elements at event level – irrespective whether they appear at top level or are nested – the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('=').
 The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
-19. If an EPCIS event comprises user extension elements as part of an EPCIS standard field with an extension point (namely `errorDeclaration`, `readPoint`, `bizLocation`, `sensorElement`, `sensorMetaData`, and `sensorReport`), the top-level user extension element(s) SHALL be prefixed with the corresponding EPCIS standard field name. Apart from that, the SHALL be added to the pre-hash string similarly as specified in the previous step.
+19. If an EPCIS event comprises user extension elements as part of an EPCIS standard field with an extension point (namely `errorDeclaration`, `readPoint`, `bizLocation`, `sensorElement`, `sensorMetadata`, and `sensorReport`), the top-level user extension element(s) SHALL be prefixed with the corresponding EPCIS standard field name. Apart from that, the SHALL be added to the pre-hash string similarly as specified in the previous step.
 20. The resulting pre-hash string SHALL be embedded in a 'ni' URI scheme as specified in RFC 6920, as follows:
 ni:///{digest algorithm};{digest value}?ver={CBV version}
 i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), the digest value, one question mark ('?'), the characters 'v', 'e', 'r', one equal sign ('='), and the version of the EPCIS Event Hash ID algorithm that was used to generate the pre-hash string, indicated by the cbv version.
@@ -138,8 +138,8 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 21 | `sourceList` – `source` (`source ID`, `source type`) |
 | 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
 | 23 | `sensorElement` ( |
-|    | `sensorMetaData` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `bizRules`), |
-|    | `sensorReport` (`type`, `deviceID`, `deviceMetaData`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
+|    | `sensorMetadata` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `bizRules`), |
+|    | `sensorReport` (`type`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
 |    | ) |
 | 24 | `ilmd` – `{ILMD elements}` |
 | 25 | `{User extension elements}`|

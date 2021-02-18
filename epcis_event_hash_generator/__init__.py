@@ -57,22 +57,22 @@ PROP_ORDER = [
     ('sourceList', [('source', [('type', None)])]),
     ('destinationList', [('destination', [('type', None)])]),
     ('sensorElementList', [('sensorElement',
-                            [('sensorMetaData',
+                            [('sensorMetadata',
                               [
                                   ('time', None),
                                   ('startTime', None),
                                   ('endTime', None),
                                   ('deviceID', None),
-                                  ('deviceMetaData', None),
+                                  ('deviceMetadata', None),
                                   ('rawData', None),
                                   ('dataProcessingMethod', None),
                                   ('bizRules', None)
-                              ]),  # end sensorMetaData
+                              ]),  # end sensorMetadata
                              ('sensorReport',
                               [
                                   ('type', None),
                                   ('deviceID', None),
-                                  ('deviceMetaData', None),
+                                  ('deviceMetadata', None),
                                   ('rawData', None),
                                   ('dataProcessingMethod', None),
                                   ('microorganism', None),
