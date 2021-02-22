@@ -5,7 +5,7 @@
 
 .. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>, Sebastian Schmittner <schmittner@eecc.info>
 
-Copyright 2019-2020 Ralph Troeger, Sebastian Schmittner
+Copyright 2019-2021 Ralph Troeger, Sebastian Schmittner
 
 This program is free software: you can redistribute it and/or modify
 it under the terms given in the LICENSE file.
@@ -182,7 +182,7 @@ def gather_elements_not_in_order(children, child_order):
 
 
 def compute_prehash_from_file(path, enforce=None):
-    """Read EPCIS document and generate pre-hashe strings.
+    """Read EPCIS document and generate pre-hash strings.
     Use enforce = "XML" or "JSON" to ignore file ending and use JSON/XML parser.
     """
     if enforce == "XML" or path.lower().endswith(".xml"):
@@ -196,7 +196,7 @@ def compute_prehash_from_file(path, enforce=None):
 
 
 def compute_prehash_from_json_str(jsonStr):
-    """Read EPCIS document and generate pre-hashe strings.
+    """Read EPCIS document and generate pre-hash strings.
     Use enforce = "XML" or "JSON" to ignore file ending.
     """
 
@@ -206,7 +206,7 @@ def compute_prehash_from_json_str(jsonStr):
 
 
 def compute_prehash_from_xml_str(xmlStr):
-    """Read EPCIS document and generate pre-hashe strings.
+    """Read EPCIS document and generate pre-hash strings.
     Use enforce = "XML" or "JSON" to ignore file ending.
     """
     events = read_xml_str(xmlStr.decode("utf-8"))
