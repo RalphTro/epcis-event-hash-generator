@@ -31,7 +31,7 @@ git clone https://github.com/RalphTro/epcis-event-hash-generator.git
 For usage information run
 
 ```
-epcis_event_hash_generator/main.py -h
+epcis_event_hash_generator/__main__.py -h
 ```
 
 
