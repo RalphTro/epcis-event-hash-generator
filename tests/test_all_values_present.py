@@ -13,10 +13,13 @@ TEST_FILE_PATH = "examples/"
 
 
 def _py_to_value_list(py_obj):
-    """Transform a nested (Key, Value, Children) object tree into a list of (key, value) pairs"""
+    """
+    Transform a nested (Key, Value, Children) object tree into a list of (key, value) pairs.
+    Ignoring times and eventID
+    """
     key_values = []
     key, value, children = py_obj
-    if "time" not in key.lower() and value != "":
+    if "time" not in key.lower() and value != "" and key != "eventID":
         key_values.append((key, canonize_value(value)))
     for child in children:
         key_values += _py_to_value_list(child)
