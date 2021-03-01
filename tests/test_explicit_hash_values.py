@@ -23,4 +23,4 @@ def test_explicit_hash_values():
                 assert actualHashes == expectedHashes, "Hash for {} is not as expected!".format(filename)
                 num_tested += 1
         break
-    assert num_tested > 0
+    assert num_tested > 20

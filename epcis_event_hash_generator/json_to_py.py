@@ -101,7 +101,7 @@ def json_to_py(json_obj):
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        to_be_ignored = ["isA", "#text", "rdfs:comment", "comment", "eventID"]
+        to_be_ignored = ["isA", "#text", "rdfs:comment", "comment"]
         for (key, val) in [x for x in json_obj.items() if x[0] not in to_be_ignored]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"

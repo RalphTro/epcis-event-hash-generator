@@ -132,11 +132,15 @@ def canonize_value(text):
 
 def try_format_web_vocabulary(text):
     """Replace old CBV URNs by new web vocabulary equivalents."""
-    return text.replace('urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
-                        ).replace('urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
-                                  ).replace('urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
-                                            ).replace('urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
-                                                      ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
+    return text.replace(
+        'urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
+    ).replace(
+        'urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
+    ).replace(
+        'urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
+    ).replace(
+        'urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
+    ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
 
 
 def try_format_numeric(text):
@@ -171,9 +175,11 @@ def gather_elements_not_in_order(children, child_order):
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
 
-    # remove recordTime, if any
+    # remove fields that are to be ignored in the hash:
+    # remove all elements from XML tree which do shouldn't take part in hash calculation
+    to_be_ignored = ["recordTime", "eventID"]
     for child in children:
-        if child[0] == "recordTime":
+        if child[0] in to_be_ignored:
             children.remove(child)
     if children:
         return generic_child_list_to_prehash_string(children)
