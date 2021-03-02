@@ -31,7 +31,9 @@
                     "urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7'SDB",
                     "urn:epc:id:pgln:4000001.00000",
                     "urn:epc:id:pgln:999999999999.",
-                    "urn:epc:class:lgtin:4012345.012345.Lot987"
+                    "urn:epc:class:lgtin:4012345.012345.Lot987",
+                    "https://id.gs1.org/gtin/09780345418913",
+                    "https://example.com/gtin/09780345418913/21/765tz?abc=211121"
                 ],
                 "action": "OBSERVE",
                 "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
