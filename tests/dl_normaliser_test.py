@@ -123,3 +123,7 @@ def test_ordinary_web_uri():
 def test_incorrect_syntax():
     assert normaliser('http://example.de/01/97803') is None
     assert normaliser('https://id.gs1.org/8006/04012345123456/22/ABCD/10/XYZ') is None
+    # the following must not throw
+    assert normaliser('42') is None
+    assert normaliser(42) is None
+    assert normaliser('Hello World!') is None

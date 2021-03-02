@@ -27,7 +27,7 @@ file for details.
 
 from re import match
 from gtin import GTIN
-
+import logging
 
 def webURIPercentEncoder(input):
     """
@@ -83,7 +83,16 @@ def normaliser(uri):
         Constrained, canonicalised GS1 Digital Link URI equivalent.
     None
     """
-    partition = uri.index('.')
+    if not isinstance(uri, str):
+        logging.warning("dl normaliser called with non-string argument")
+        return None
+
+    try:
+        partition = uri.index('.')
+    except ValueError:
+        logging.debug("No '.' in %s. Not a normalisable uri.", uri)
+        return None
+
     # EPC URIs
     if match(
             r'^urn:epc:id:sgtin:((\d{6}\.\d{7})|(\d{7}\.\d{6})|(\d{8}\.\d{5})|(\d{9}\.\d{4})|(\d{10}\.\d{3})|(\d{11}\.\d{2})|(\d{12}\.\d{1}))\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,20}$',
