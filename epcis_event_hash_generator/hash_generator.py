@@ -128,7 +128,8 @@ def canonize_value(text):
     """Run a value through all format canonizations"""
     text = try_format_web_vocabulary(text)
     text = try_format_numeric(text)
-    if converted := dl_normaliser(text):
+    converted = dl_normaliser(text)
+    if converted:
         logging.debug("Converted %s to %s", text, converted)
         return converted
     return text
