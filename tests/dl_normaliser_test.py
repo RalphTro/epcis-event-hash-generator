@@ -27,7 +27,7 @@ def test_good_epc_conversion():
     assert normaliser('urn:epc:id:gsin:4012345.222333444') == "https://id.gs1.org/402/40123452223334442"
     assert normaliser('urn:epc:id:itip:4012345.011111.01.02.987') == "https://id.gs1.org/8006/040123451111180102/21/987"
     assert normaliser(
-        'urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7\'SDB') == "https://id.gs1.org/01/01234567987651/235/51qIgY%29%3C%26Jp3%2Aj7'SDB"
+        'urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7SDB') == "https://id.gs1.org/01/01234567987651/235/51qIgY%29%3C%26Jp3%2Aj7SDB"
     assert normaliser('urn:epc:id:pgln:4000001.00000') == "https://id.gs1.org/417/4000001000005"
     assert normaliser('urn:epc:id:pgln:999999999999.') == "https://id.gs1.org/417/9999999999994"
     assert normaliser('urn:epc:class:lgtin:4012345.012345.Lot987') == "https://id.gs1.org/01/04012345123456/10/Lot987"
