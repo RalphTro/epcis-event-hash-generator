@@ -29,7 +29,8 @@ from re import match
 from gtin import GTIN
 import logging
 
-def webURIPercentEncoder(input):
+
+def __web_uri_percent_encoder(input):
     """
     Function percent-encodes URL-unsafe characters in GS1 Digital Link URIs.
 
@@ -101,7 +102,7 @@ def normaliser(uri):
         itemref = uri[(partition + 1):(partition + 1 + (13 - len(gs1companyprefix)))]
         rawGTIN = itemref[0:1] + gs1companyprefix + itemref[1:]
         serial = uri[32:]
-        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/21/' + webURIPercentEncoder(serial))
+        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/21/' + __web_uri_percent_encoder(serial))
 
     if match(
             r'^urn:epc:id:sscc:((\d{6}\.\d{11}$)|(\d{7}\.\d{10}$)|(\d{8}\.\d{9}$)|(\d{9}\.\d{8}$)|(\d{10}\.\d{7}$)|(\d{11}\.\d{6}$)|(\d{12}\.\d{5}$))',
@@ -122,7 +123,7 @@ def normaliser(uri):
         if extension == '0':
             return ('https://id.gs1.org/414/' + str(GTIN(raw=rawGLN)))
         else:
-            return ('https://id.gs1.org/414/' + str(GTIN(raw=rawGLN)) + '/254/' + webURIPercentEncoder(extension))
+            return ('https://id.gs1.org/414/' + str(GTIN(raw=rawGLN)) + '/254/' + __web_uri_percent_encoder(extension))
 
     if match(
             r'^urn:epc:id:grai:(([\d]{6}\.[\d]{6})|([\d]{7}\.[\d]{5})|([\d]{8}\.[\d]{4})|([\d]{9}\.[\d]{3})|([\d]{10}\.[\d]{2})|([\d]{11}\.[\d]{1})|([\d]{12}\.\.))\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,16}$',
@@ -131,14 +132,14 @@ def normaliser(uri):
         assetref = uri[(partition + 1):(partition + 1 + (12 - len(gs1companyprefix)))]
         rawGRAI = '0' + gs1companyprefix + assetref
         serial = uri[30:]
-        return ('https://id.gs1.org/8003/' + str(GTIN(raw=rawGRAI)) + webURIPercentEncoder(serial))
+        return ('https://id.gs1.org/8003/' + str(GTIN(raw=rawGRAI)) + __web_uri_percent_encoder(serial))
 
     if match(
             r'^urn:epc:id:giai:(([\d]{6}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,24})|([\d]{7}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,23})|([\d]{8}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,22})|([\d]{9}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,21})|([\d]{10}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,20})|([\d]{11}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,19})|([\d]{12}\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,18}))$',
             uri) is not None:
         gs1companyprefix = uri[16:partition]
         assetref = uri[(partition + 1):]
-        return ('https://id.gs1.org/8004/' + gs1companyprefix + webURIPercentEncoder(assetref))
+        return ('https://id.gs1.org/8004/' + gs1companyprefix + __web_uri_percent_encoder(assetref))
 
     if match(
             r'^urn:epc:id:gsrn:(([\d]{6}\.[\d]{11}$)|([\d]{7}\.[\d]{10}$)|([\d]{8}\.[\d]{9}$)|([\d]{9}\.[\d]{8}$)|([\d]{10}\.[\d]{7}$)|([\d]{11}\.[\d]{6}$)|([\d]{12}\.[\d]{5}$))',
@@ -164,7 +165,7 @@ def normaliser(uri):
                                             (12 - len(gs1companyprefix)))]
         rawGDTI = gs1companyprefix + documenttype
         serial = uri[30:]
-        return ('https://id.gs1.org/253/' + str(GTIN(raw=rawGDTI)) + webURIPercentEncoder(serial))
+        return ('https://id.gs1.org/253/' + str(GTIN(raw=rawGDTI)) + __web_uri_percent_encoder(serial))
 
     if match(
             r'^urn:epc:id:cpi:((\d{6}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,24})|(\d{7}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,23})|(\d{8}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,22})|(\d{9}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,21})|(\d{10}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,20})|(\d{11}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,19})|(\d{12}\.(\%2[3dfDF]|\%3[0-9]|\%4[1-9A-Fa-f]|\%5[0-9Aa]|[0-9A-Z-]){1,18}))\.[\d]{1,12}$',
@@ -174,7 +175,7 @@ def normaliser(uri):
         cpref = uri[(partition + 1):(separator)]
         rawCPI = gs1companyprefix + cpref
         serial = uri[(separator + 1):]
-        return ('https://id.gs1.org/8010/' + webURIPercentEncoder(rawCPI) + '/8011/' + serial)
+        return ('https://id.gs1.org/8010/' + __web_uri_percent_encoder(rawCPI) + '/8011/' + serial)
 
     if match(
             r'^urn:epc:id:sgcn:(([\d]{6}\.[\d]{6})|([\d]{7}\.[\d]{5})|([\d]{8}\.[\d]{4})|([\d]{9}\.[\d]{3})|([\d]{10}\.[\d]{2})|([\d]{11}\.[\d]{1})|([\d]{12}\.))\.[\d]{1,12}$',
@@ -190,7 +191,7 @@ def normaliser(uri):
             uri) is not None:
         gs1companyprefix = uri[16:partition]
         consignmentref = uri[(partition + 1):]
-        return ('https://id.gs1.org/401/' + gs1companyprefix + webURIPercentEncoder(consignmentref))
+        return ('https://id.gs1.org/401/' + gs1companyprefix + __web_uri_percent_encoder(consignmentref))
 
     if match(
             r'^urn:epc:id:gsin:(([\d]{6}\.[\d]{10}$)|([\d]{7}\.[\d]{9}$)|([\d]{8}\.[\d]{8}$)|([\d]{9}\.[\d]{7}$)|([\d]{10}\.[\d]{6}$)|([\d]{11}\.[\d]{5}$)|([\d]{12}\.[\d]{4}$))',
@@ -210,7 +211,7 @@ def normaliser(uri):
         total = uri[34:36]
         serial = uri[37:]
         return ('https://id.gs1.org/8006/' + str(GTIN(raw=rawGTIN)) +
-                piece + total + '/21/' + webURIPercentEncoder(serial))
+                piece + total + '/21/' + __web_uri_percent_encoder(serial))
 
     if match(
             r'^urn:epc:id:upui:((\d{6}\.\d{7})|(\d{7}\.\d{6})|(\d{8}\.\d{5})|(\d{9}\.\d{4})|(\d{10}\.\d{3})|(\d{11}\.\d{2})|(\d{12}\.\d{1}))\.(\%2[125-9A-Fa-f]|\%3[0-9A-Fa-f]|\%4[1-9A-Fa-f]|\%5[0-9AaFf]|\%6[1-9A-Fa-f]|\%7[0-9Aa]|[!\')(*+,.0-9:;=A-Za-z_-]){1,28}$',
@@ -219,7 +220,7 @@ def normaliser(uri):
         itemref = uri[(partition + 1):(partition + 1 + (13 - len(gs1companyprefix)))]
         rawGTIN = itemref[0:1] + gs1companyprefix + itemref[1:]
         serial = uri[31:]
-        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/235/' + webURIPercentEncoder(serial))
+        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/235/' + __web_uri_percent_encoder(serial))
 
     if match(
             r'^urn:epc:id:pgln:(([\d]{6}\.[\d]{6})|([\d]{7}\.[\d]{5})|([\d]{8}\.[\d]{4})|([\d]{9}\.[\d]{3})|([\d]{10}\.[\d]{2})|([\d]{11}\.[\d]{1})|([\d]{12}\.))$',
@@ -237,7 +238,7 @@ def normaliser(uri):
         itemref = uri[(partition + 1):(partition + 1 + (13 - len(gs1companyprefix)))]
         rawGTIN = itemref[0:1] + gs1companyprefix + itemref[1:]
         lot = uri[35:]
-        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/10/' + webURIPercentEncoder(lot))
+        return ('https://id.gs1.org/01/' + str(GTIN(raw=rawGTIN)) + '/10/' + __web_uri_percent_encoder(lot))
 
     # EPC ID Pattern URIs
     if match(
@@ -280,7 +281,7 @@ def normaliser(uri):
         separator = uri.rfind('.')
         cpref = uri[(partition + 1):(separator)]
         rawCPI = gs1companyprefix + cpref
-        return ('https://id.gs1.org/8010/' + webURIPercentEncoder(rawCPI))
+        return ('https://id.gs1.org/8010/' + __web_uri_percent_encoder(rawCPI))
 
     if match(
             r'^urn:epc:idpat:itip:(([\d]{6}\.[\d]{7})|([\d]{7}\.[\d]{6})|([\d]{8}\.[\d]{5})|([\d]{9}\.[\d]{4})|([\d]{10}\.[\d]{3})|([\d]{11}\.[\d]{2})|([\d]{12}\.[\d]{1}))\.[\d]{2}\.[\d]{2}\.\*$',
