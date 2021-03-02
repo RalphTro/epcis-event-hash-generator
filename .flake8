@@ -5,3 +5,6 @@ exclude =
     context.py
 max-complexity = 10
 max-line-length = 120
+per-file-ignores =
+    tests/dl_normaliser_test.py:E501
+    epcis_event_hash_generator/dl_normaliser.py:E501,C901
