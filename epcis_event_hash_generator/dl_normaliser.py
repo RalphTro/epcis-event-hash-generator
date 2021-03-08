@@ -440,6 +440,6 @@ def normaliser(uri):
         match(r'https:\/\/id.gs1.org\/8010\/([\x23\x2D\x2F\x30-\x39\x41-\x5A]{0,30})$', uri) or
         match(r'https:\/\/id.gs1.org\/8017\/(\d{18})$', uri) or
         match(r'https:\/\/id.gs1.org\/8018\/(\d{18})$', uri)
-    ) is not None: # noqa E124
+    ) is not None:  # noqa E124
         return (uri)
     return None

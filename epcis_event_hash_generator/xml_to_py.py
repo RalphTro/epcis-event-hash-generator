@@ -1,4 +1,5 @@
-"""Convert an EventList contained in an EPCIS 2.0 document in XML format into a simple python object.
+"""Convert an EventList contained in an EPCIS 2.0 document in XML format into a simple python object
+via the main method event_list_from_epcis_document_str.
 
 A simple object here may be a
 - string
@@ -66,19 +67,10 @@ import logging
 import xml.etree.ElementTree as ElementTree
 
 
-def _read_epcis_document_xml(path):
-    """Read XML file, remove useless EPCIS extension tags and return the parsed root of the ElementTree.
+def _remove_extension_tags(data):
     """
-    with open(path, 'r') as file:
-        data = file.read()
-
-    data = removeExtensionTags(data)
-    logging.debug("removed extensions tags:\n%s", data)
-
-    return ElementTree.fromstring(data)
-
-
-def removeExtensionTags(data):
+    Remove useless EPCIS extension tags from a string
+    """
     return data.replace('<extension>', '').replace('</extension>', '').replace(
         '<baseExtension>', '').replace('</baseExtension>', '')
 
@@ -108,22 +100,12 @@ def _xml_to_py(root, sort=True):
     return obj
 
 
-def event_list_from_epcis_document_xml(path):
-    """Read EPCIS XML document and generate the event List in the form of a simple python object
-
-    """
-    with open(path, 'r') as file:
-        data = file.read()
-
-    return event_list_from_epcis_document_xml_str(data)
-
-
-def event_list_from_epcis_document_xml_str(xmlStr):
+def event_list_from_epcis_document_str(xmlStr):
     """
     Read EPCIS XML document and generate the event List in the form of a simple python object
     """
     try:
-        data = removeExtensionTags(xmlStr)
+        data = _remove_extension_tags(xmlStr)
 
         root = ElementTree.fromstring(data)
 
@@ -131,7 +113,7 @@ def event_list_from_epcis_document_xml_str(xmlStr):
         if not eventList:
             raise ValueError("No EventList found")
     except (ValueError, OSError) as ex:
-        logging.debug(ex)
+        logging.error(ex)
         logging.error("Input string does not contain a valid EPCIS XML document with EventList.")
         return ("", "", [])
 

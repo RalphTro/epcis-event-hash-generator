@@ -30,17 +30,13 @@ except ImportError:
     from context import epcis_event_hash_generator  # noqa: F401
 
 from epcis_event_hash_generator.dl_normaliser import normaliser as dl_normaliser
-from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
-from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml_str as read_xml_str
-from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
-from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json_str as read_json_str
 from epcis_event_hash_generator import PROP_ORDER
 from epcis_event_hash_generator import JOIN_BY as DEFAULT_JOIN_BY
 
 JOIN_BY = DEFAULT_JOIN_BY
 
 
-def fix_time_stamp_format(timestamp):
+def _fix_time_stamp_format(timestamp):
     """Make sure that the timestamp is given at millisecond precision
     and in UTC."""
     logging.debug("correcting timestamp format for '{}'".format(timestamp))
@@ -60,17 +56,17 @@ def fix_time_stamp_format(timestamp):
     return fixed
 
 
-def child_to_pre_hash_string(child, sub_child_order):
+def _child_to_pre_hash_string(child, sub_child_order):
     text = ""
     grand_child_text = ""
     if sub_child_order:
-        grand_child_text = recurse_through_children_in_order(child[2], sub_child_order)
+        grand_child_text = _recurse_through_children_in_order(child[2], sub_child_order)
     if child[1]:
         text = child[1].strip()
         if child[0].lower().find("time") > 0 and child[0].lower().find("offset") < 0:
-            text = fix_time_stamp_format(text)
+            text = _fix_time_stamp_format(text)
         else:
-            text = canonize_value(text)
+            text = _canonize_value(text)
 
         if text:
             text = "=" + text
@@ -82,7 +78,7 @@ def child_to_pre_hash_string(child, sub_child_order):
     return ""
 
 
-def recurse_through_children_in_order(child_list, child_order):
+def _recurse_through_children_in_order(child_list, child_order):
     """
     Loop over child order, look for a child of root with matching key and build the pre-hash string (mostly key=value)
     Recurse through the grand children applying the sub order.
@@ -101,7 +97,7 @@ def recurse_through_children_in_order(child_list, child_order):
         list_of_values = []
 
         for child in children:
-            child_pre_hash = child_to_pre_hash_string(child, sub_child_order)
+            child_pre_hash = _child_to_pre_hash_string(child, sub_child_order)
             if child_pre_hash:
                 list_of_values.append(child_pre_hash)
             else:
@@ -124,10 +120,10 @@ def recurse_through_children_in_order(child_list, child_order):
     return pre_hash
 
 
-def canonize_value(text):
+def _canonize_value(text):
     """Run a value through all format canonizations"""
-    text = try_format_web_vocabulary(text)
-    text = try_format_numeric(text)
+    text = _try_format_web_vocabulary(text)
+    text = _try_format_numeric(text)
     converted = dl_normaliser(text)
     if converted:
         logging.debug("Converted %s to %s", text, converted)
@@ -135,7 +131,7 @@ def canonize_value(text):
     return text
 
 
-def try_format_web_vocabulary(text):
+def _try_format_web_vocabulary(text):
     """Replace old CBV URNs by new web vocabulary equivalents."""
     return text.replace(
         'urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
@@ -148,7 +144,7 @@ def try_format_web_vocabulary(text):
     ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
 
 
-def try_format_numeric(text):
+def _try_format_numeric(text):
     """remove leading/trailing zeros, leading "+", etc. from numbers. Non numeric values are left untouched."""
     try:
         numeric = float(text)
@@ -160,7 +156,7 @@ def try_format_numeric(text):
     return text
 
 
-def generic_child_list_to_prehash_string(children):
+def _generic_child_list_to_prehash_string(children):
     list_of_values = []
 
     logging.debug("Parsing remaining elements in: %s", children)
@@ -168,15 +164,15 @@ def generic_child_list_to_prehash_string(children):
     for child in children:
         text = child[1].strip()
         if text:
-            text = canonize_value(text)
+            text = _canonize_value(text)
             text = "=" + text
-        list_of_values.append(child[0] + text + generic_child_list_to_prehash_string(child[2]))
+        list_of_values.append(child[0] + text + _generic_child_list_to_prehash_string(child[2]))
 
     list_of_values.sort()
     return JOIN_BY.join(list_of_values)
 
 
-def gather_elements_not_in_order(children, child_order):
+def _gather_elements_not_in_order(children, child_order):
     """
     Collects vendor extensions not covered by the defined child order. Consumes the root.
     """
@@ -188,45 +184,22 @@ def gather_elements_not_in_order(children, child_order):
         if child[0] in to_be_ignored:
             children.remove(child)
     if children:
-        return generic_child_list_to_prehash_string(children)
+        return _generic_child_list_to_prehash_string(children)
 
     return ""
 
 
-def compute_prehash_from_file(path, enforce=None):
-    """Read EPCIS document and generate pre-hash strings.
-    Use enforce = "XML" or "JSON" to ignore file ending and use JSON/XML parser.
+def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
     """
-    if enforce == "XML" or path.lower().endswith(".xml"):
-        events = read_xml(path)
-    elif enforce == "JSON" or path.lower().endswith(".json") or path.lower().endswith(".jsonld"):
-        events = read_json(path)
-    else:
-        logging.error("Filename '%s' ending not recognized.", path)
-        return None
-
-    return compute_prehash_from_events(events)
-
-
-def compute_prehash_from_json_str(jsonStr):
-    """Read EPCIS document and generate pre-hash strings.
-    Use enforce = "XML" or "JSON" to ignore file ending.
+    Compute a normalized form (pre-hash string) for each event.
+    This is the main functionality of the hash generator.
     """
 
-    events = read_json_str(jsonStr)
+    global JOIN_BY
+    join_by = join_by.replace(r"\n", "\n").replace(r"\t", "\t")
+    logging.debug("Setting JOIN_BY='%s'", join_by)
+    JOIN_BY = join_by
 
-    return compute_prehash_from_events(events)
-
-
-def compute_prehash_from_xml_str(xmlStr):
-    """Read EPCIS document and generate pre-hash strings.
-    Use enforce = "XML" or "JSON" to ignore file ending.
-    """
-    events = read_xml_str(xmlStr.decode("utf-8"))
-    return compute_prehash_from_events(events)
-
-
-def compute_prehash_from_events(events):
     logging.info("#events = %s", len(events[2]))
     for i in range(len(events[2])):
         logging.info("%s: %s\n", i, events[2][i])
@@ -236,8 +209,8 @@ def compute_prehash_from_events(events):
         logging.debug("prehashing event:\n%s", event)
         try:
             prehash_string_list.append("eventType=" + event[0] + JOIN_BY
-                                       + recurse_through_children_in_order(event[2], PROP_ORDER) + JOIN_BY
-                                       + gather_elements_not_in_order(event[2], PROP_ORDER)
+                                       + _recurse_through_children_in_order(event[2], PROP_ORDER) + JOIN_BY
+                                       + _gather_elements_not_in_order(event[2], PROP_ORDER)
                                        )
         except Exception as ex:
             logging.error("could not parse event:\n%s\n\nerror: %s", event, ex)
@@ -249,32 +222,9 @@ def compute_prehash_from_events(events):
     return prehash_string_list
 
 
-def epcis_hash_from_json(json, hashalg="sha256"):
-    prehash_string_list = compute_prehash_from_json_str(json)
-    return calculate_hash(prehash_string_list, hashalg)
-
-
-def epcis_hash_from_xml(xmlStr, hashalg="sha256"):
-    prehash_string_list = compute_prehash_from_xml_str(xmlStr)
-    return calculate_hash(prehash_string_list, hashalg)
-
-
-def epcis_hash(path, hashalg="sha256", join_by=DEFAULT_JOIN_BY):
-    """Read all EPCIS Events from the EPCIS XML document at path.
-    Compute a normalized form (pre-hash string) for each event and
-    return an array of the event hashes computed from the pre-hash by
-    hashalg.
+def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
+    """Hash all strings in the list with the given algorithm. Returned in the appropriate NI format.
     """
-    global JOIN_BY
-    join_by = join_by.replace(r"\n", "\n").replace(r"\t", "\t")
-    logging.debug("Setting JOIN_BY='%s'", join_by)
-    JOIN_BY = join_by
-    prehash_string_list = compute_prehash_from_file(path)
-
-    return calculate_hash(prehash_string_list, hashalg)
-
-
-def calculate_hash(prehash_string_list, hashalg="sha256"):
     hashValueList = []
     for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
@@ -294,4 +244,12 @@ def calculate_hash(prehash_string_list, hashalg="sha256"):
 
         hashValueList.append(hash_string)
 
-    return hashValueList, prehash_string_list
+    return hashValueList
+
+
+def epcis_hashes_from_events(events):
+    """Calculate the list of hashes from the given events list
+    + hashing algorithm through the pre hash string using default parameters.
+    """
+    prehash_string_list = derive_prehashes_from_events(events)
+    return calculate_hashes_from_pre_hashes(prehash_string_list)

@@ -22,16 +22,17 @@ def health():
 @app.route('/hash', methods=['POST'])
 def hash():
 
-    from epcis_event_hash_generator import hash_generator
+    from epcis_event_hash_generator import hash_generator, json_to_py, xml_to_py
 
     if request.content_type == 'application/json' or request.content_type == 'application/ld+json':
-        (hashes, prehashes) = hash_generator.epcis_hash_from_json(request.data)
-        return ",".join(hashes)
+        events = json_to_py.event_list_from_epcis_document_str(request.data.decode("utf-8"))
     elif request.content_type == 'application/xml':
-        (hashes, prehashes) = hash_generator.epcis_hash_from_xml(request.data)
-        return ",".join(hashes)
+        events = xml_to_py.event_list_from_epcis_document_str(request.data.decode("utf-8"))
     else:
         return abort(404, "Invalid content_type in request")
+
+    hashes = hash_generator.epcis_hashes_from_events(events)
+    return ",".join(hashes)
 
 
 app.run(host='0.0.0.0')

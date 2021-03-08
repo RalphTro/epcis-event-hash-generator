@@ -1,4 +1,5 @@
-"""Convert an EventList contained in an EPCIS 2.0 document in JSON LD format into a simple python object.
+"""Convert an EventList contained in an EPCIS 2.0 document in JSON LD format into a simple python object
+via the main method event_list_from_epcis_document_str.
 
 See the description of xml_to_py for more details about what 'simple' means here.
 
@@ -59,7 +60,7 @@ from epcis_event_hash_generator import json_xml_model_mismatch_correction
 _namespaces = {}  # global dictionary gathered during parsing
 
 
-def namespace_replace(key):
+def _namespace_replace(key):
     """If the key contains a namespace (followed by ":"), replace it with
     the {naemspace_url} from the _namespaces dict.
     """
@@ -70,7 +71,7 @@ def namespace_replace(key):
     return key
 
 
-def collect_namespaces_from_jsonld_context(context):
+def _collect_namespaces_from_jsonld_context(context):
     global _namespaces
 
     if not(isinstance(context, str)):
@@ -84,7 +85,7 @@ def collect_namespaces_from_jsonld_context(context):
                 _namespaces[key] = "{" + c[key] + "}"
 
 
-def json_to_py(json_obj):
+def _json_to_py(json_obj):
     """ Recursively convert a string/list/dict to a simple python object
     """
     global _namespaces
@@ -93,7 +94,7 @@ def json_to_py(json_obj):
 
     if isinstance(json_obj, list):
         for child in json_obj:
-            py_obj[2].append(json_to_py(child))
+            py_obj[2].append(_json_to_py(child))
     elif isinstance(json_obj, dict):
         if "isA" in json_obj:
             py_obj = (json_obj["isA"], "", [])
@@ -107,12 +108,12 @@ def json_to_py(json_obj):
                 _namespaces[key[7:]] = "{" + val + "}"
                 logging.debug("Namespaces: %s", _namespaces)
 
-                py_obj = (namespace_replace(py_obj[0]), py_obj[1], py_obj[2])
+                py_obj = (_namespace_replace(py_obj[0]), py_obj[1], py_obj[2])
             else:
                 # first find namespaces in child, then replace in key!
-                child = json_to_py(val)
+                child = _json_to_py(val)
 
-                key = namespace_replace(key)
+                key = _namespace_replace(key)
 
                 if isinstance(val, list):
                     for element in child[2]:
@@ -129,22 +130,16 @@ def json_to_py(json_obj):
     return py_obj
 
 
-def event_list_from_epcis_document_json(path):
-    """Read EPCIS JSON document and generate the event List in the form of a simple python object
-
+def event_list_from_epcis_document_str(data):
     """
-    with open(path, 'r') as file:
-        data = file.read()
-
-    return event_list_from_epcis_document_json_str(data)
-
-
-def event_list_from_epcis_document_json_str(data):
+    Parse the JSON str data and convert to a simple python object.
+    Apply the format corrections to match what we get from the respective xml representation.
+    """
 
     json_obj = json.loads(data)
 
     if not(json_obj.get("@context") is None):
-        collect_namespaces_from_jsonld_context(json_obj["@context"])
+        _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
     if "eventList" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["eventList"]
@@ -156,6 +151,6 @@ def event_list_from_epcis_document_json_str(data):
 
     # Correct JSON/XML data model mismatch
     for event in event_list:
-        events.append(json_xml_model_mismatch_correction.deep_structure_correction(json_to_py(event)))
+        events.append(json_xml_model_mismatch_correction.deep_structure_correction(_json_to_py(event)))
 
     return ("EventList", "", events)

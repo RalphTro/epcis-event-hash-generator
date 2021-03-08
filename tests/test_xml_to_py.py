@@ -5,7 +5,8 @@ except ImportError:
 
 import xml.etree.ElementTree as ElementTree
 
-from epcis_event_hash_generator import xml_to_py
+from epcis_event_hash_generator.events_from_file_reader import event_list_from_file
+from epcis_event_hash_generator.xml_to_py import _xml_to_py
 
 
 def test_docstring_example():
@@ -24,13 +25,13 @@ def test_docstring_example():
                                ("c", "", [("d", "Hello", []), ("d", "World", [("x", "y", [])]), ("e", "f", [])])]),
                     ("d", "2", [])]
 
-    actual_obj = xml_to_py._xml_to_py(ElementTree.fromstring(xml))
+    actual_obj = _xml_to_py(ElementTree.fromstring(xml))
 
     assert expected_obj == actual_obj[2]
 
 
 def test_epcsi_reference_example():
-    actual_obj = xml_to_py.event_list_from_epcis_document_xml("examples/ReferenceEventHashAlgorithm.xml")
+    actual_obj = event_list_from_file("examples/ReferenceEventHashAlgorithm.xml")
 
     print(actual_obj)
 
