@@ -29,6 +29,7 @@ try:  # import syntax differs depending on whether this is run as a module or as
 except ImportError:
     from context import epcis_event_hash_generator  # noqa: F401
 
+from epcis_event_hash_generator.dl_normaliser import normaliser as dl_normaliser
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml as read_xml
 from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_xml_str as read_xml_str
 from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_json as read_json
@@ -127,6 +128,10 @@ def canonize_value(text):
     """Run a value through all format canonizations"""
     text = try_format_web_vocabulary(text)
     text = try_format_numeric(text)
+    converted = dl_normaliser(text)
+    if converted:
+        logging.debug("Converted %s to %s", text, converted)
+        return converted
     return text
 
 
@@ -163,6 +168,7 @@ def generic_child_list_to_prehash_string(children):
     for child in children:
         text = child[1].strip()
         if text:
+            text = canonize_value(text)
             text = "=" + text
         list_of_values.append(child[0] + text + generic_child_list_to_prehash_string(child[2]))
 
@@ -197,6 +203,7 @@ def compute_prehash_from_file(path, enforce=None):
         events = read_json(path)
     else:
         logging.error("Filename '%s' ending not recognized.", path)
+        return None
 
     return compute_prehash_from_events(events)
 
@@ -287,4 +294,4 @@ def calculate_hash(prehash_string_list, hashalg="sha256"):
 
         hashValueList.append(hash_string)
 
-    return (hashValueList, prehash_string_list)
+    return hashValueList, prehash_string_list
