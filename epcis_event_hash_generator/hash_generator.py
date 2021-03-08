@@ -30,9 +30,6 @@ except ImportError:
     from context import epcis_event_hash_generator  # noqa: F401
 
 from epcis_event_hash_generator.dl_normaliser import normaliser as dl_normaliser
-from epcis_event_hash_generator.events_from_file_reader import event_list_from_file
-from epcis_event_hash_generator.xml_to_py import event_list_from_epcis_document_str as read_xml_str
-from epcis_event_hash_generator.json_to_py import event_list_from_epcis_document_str as read_json_str
 from epcis_event_hash_generator import PROP_ORDER
 from epcis_event_hash_generator import JOIN_BY as DEFAULT_JOIN_BY
 
@@ -251,10 +248,8 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
 
 
 def epcis_hashes_from_events(events):
-    """Calculate the list of hashes from the given events list 
+    """Calculate the list of hashes from the given events list
     + hashing algorithm through the pre hash string using default parameters.
     """
     prehash_string_list = derive_prehashes_from_events(events)
     return calculate_hashes_from_pre_hashes(prehash_string_list)
-
-

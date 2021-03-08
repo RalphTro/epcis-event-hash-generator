@@ -30,7 +30,7 @@ def hash():
         events = xml_to_py.event_list_from_epcis_document_str(request.data.decode("utf-8"))
     else:
         return abort(404, "Invalid content_type in request")
-    
+
     hashes = hash_generator.epcis_hashes_from_events(events)
     return ",".join(hashes)
 

@@ -1,4 +1,5 @@
-""" Read EPCIS events from a JSON(-LD) or XML file and convert them into a simple puthon object via the apropriate conversion module. See json_to_py / xml_to_py for details.
+""" Read EPCIS events from a JSON(-LD) or XML file and convert them into a simple puthon object
+via the apropriate conversion module. See json_to_py / xml_to_py for details.
 
 .. module:: events_from_file_reader
 

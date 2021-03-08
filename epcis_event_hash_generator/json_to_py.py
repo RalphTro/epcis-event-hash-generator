@@ -132,7 +132,8 @@ def _json_to_py(json_obj):
 
 def event_list_from_epcis_document_str(data):
     """
-    Parse the JSON str data and convert to a simple python object. Apply the format corrections to match what we get from the respective xml representation.
+    Parse the JSON str data and convert to a simple python object.
+    Apply the format corrections to match what we get from the respective xml representation.
     """
 
     json_obj = json.loads(data)

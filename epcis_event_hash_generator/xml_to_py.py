@@ -69,7 +69,7 @@ import xml.etree.ElementTree as ElementTree
 
 def _remove_extension_tags(data):
     """
-    Remove useless EPCIS extension tags from a string 
+    Remove useless EPCIS extension tags from a string
     """
     return data.replace('<extension>', '').replace('</extension>', '').replace(
         '<baseExtension>', '').replace('</baseExtension>', '')
