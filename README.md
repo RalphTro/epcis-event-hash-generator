@@ -12,9 +12,10 @@ The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted 
 
 ## Status of the reference implementation
 
-The current (v1.4.0) set of examples and implementation of the json parser is based on an old version of the EPCIS 2.0 JSON schema, see https://github.com/RalphTro/epcis-event-hash-generator/issues/37 . Currently, only the XML hashing should be used. See
+The current (v1.6.0 at the time of writing) set of examples and implementation of the json parser is based on an old version of the EPCIS 2.0 JSON schema, see https://github.com/RalphTro/epcis-event-hash-generator/issues/37 . Currently, only the XML hashing should be used. See
 https://github.com/gs1/EPCIS/blob/master/JSON/
 for the current (still draft) version of the JSON schema and for examples.
+
 
 
 ## TL;DR
@@ -23,15 +24,17 @@ The implementation provided here is a prototypical reference implementation mean
 
 ### Command Line
 
-The Hashing Algorithm described below is implemented as a python script, including a command line utility which can be run directly after checking out this repository via
+The Hashing Algorithm described below is implemented as a python script, including a command line utility which can be run directly.
+
+The package is release on PyPI at https://pypi.org/project/epcis-event-hash-generator/ hence it can be installed via
 ```
-git clone https://github.com/RalphTro/epcis-event-hash-generator.git
+python3 -m pip install epcis_event_hash_generator
 ```
 
 For usage information run
 
 ```
-epcis_event_hash_generator/__main__.py -h
+python3 -m epcis_event_hash_generator -h
 ```
 
 
@@ -41,12 +44,6 @@ The script also comes wrapped as a web service in a docker image for ease of int
 You may use 
 
 - [the latest release version of the web service container](https://github.com/RalphTro/epcis-event-hash-generator/packages/484860 ). See here for usage.
-
-You may also build the image directly from the code using e.g.
-
-```
-docker build . -f Dockerfile.webapi -t event-hash-generator:nightly
-```
 
 
 ## Introduction  
