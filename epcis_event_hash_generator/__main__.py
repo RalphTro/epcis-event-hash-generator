@@ -30,7 +30,22 @@ import logging
 import os
 import sys
 
-from epcis_event_hash_generator import hash_generator
+from epcis_event_hash_generator import hash_generator, events_from_file_reader
+
+
+def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by=""):
+    """
+    This method exemplifies how to read all EPCIS Events from the EPCIS document in the file at path.
+    The file is parsed extracting the events data. The pre hash string is computed for each event.
+    Those pre hash strings are then hashed and both, the pre hashes and hashes, are returned.
+    """
+
+    events = events_from_file_reader.event_list_from_file(path, enforce)
+
+    prehashes = hash_generator.derive_prehashes_from_events(events, join_by)
+    hashes = hash_generator.calculate_hashes_from_pre_hashes(prehashes, hashalg)
+
+    return hashes, prehashes
 
 
 def command_line_parsing():
@@ -71,6 +86,13 @@ def command_line_parsing():
         help="String used to join the pre hash string." +
         " Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
         default="")
+    parser.add_argument(
+        "-e",
+        "--enforce_format",
+        help="Enforce parsing the given files all as JSON or XML if given."
+        + " Defaults to guessing the format from the file ending.",
+        choices=["XML", "JSON", ""],
+        default="")
 
     args = parser.parse_args()
 
@@ -101,7 +123,8 @@ def main():
 
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
-        (hashes, prehashes) = hash_generator.epcis_hash(filename, args.algorithm, args.join)
+        (hashes, prehashes) = epcis_hash_from_file(
+            filename, args.algorithm, args.join, args.enforce_format)
 
         # Output:
         if args.batch:

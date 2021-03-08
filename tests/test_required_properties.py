@@ -5,7 +5,7 @@ except ImportError:
 
 from os import walk
 
-from epcis_event_hash_generator.hash_generator import epcis_hash
+from epcis_event_hash_generator.__main__ import epcis_hash_from_file
 
 TEST_FILE_PATH = "examples/"
 TEST_FILE_PATH_SAME_EVENT = "expected_equal/"
@@ -20,7 +20,7 @@ def test_distinct():
     for (_, _, filenames) in walk(TEST_FILE_PATH):
         for filename in filenames:
             if filename.endswith("xml"):
-                all_hashes += epcis_hash(TEST_FILE_PATH + filename, "sha256")[0]
+                all_hashes += epcis_hash_from_file(TEST_FILE_PATH + filename, "sha256")[0]
         break
 
     assert all_hashes
@@ -39,7 +39,7 @@ def test_equal():
     for (_, _, filenames) in walk(TEST_FILE_PATH_SAME_EVENT):
         for filename in filenames:
             if filename.endswith("xml") or filename.endswith("json") or filename.endswith("jsonld"):
-                assert len(set(epcis_hash(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[
+                assert len(set(epcis_hash_from_file(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[
                     0])) == 1, "The events in {} have different hashes!".format(
                     TEST_FILE_PATH_SAME_EVENT + filename)
         break
