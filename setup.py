@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="epcis-event-hash-generator",
     keywords="epcis GS1 hashing traceability",
-    version="1.5.0",
+    version="1.6.0",
     author="Sebastian Schmittner",
     author_email="sebastian.schmittner@eecc.de",
     license="MIT",
