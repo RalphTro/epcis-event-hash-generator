@@ -21,10 +21,10 @@
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111"/>
-                                <sensorReport type="gs1:Temperature" value="26" uom="CEL" sDev="0.1"/>
-                                <sensorReport type="gs1:Humidity" value="12.1" uom="A93"/>
-                                <sensorReport type="gs1:Molar_concentration" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>
-                                <sensorReport type="gs1:Molar_concentration" chemicalSubstance="urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
+                                <sensorReport type="gs1:MT-Temperature" value="26" uom="CEL" sDev="0.1"/>
+                                <sensorReport type="gs1:MT-Humidity" value="12.1" uom="A93"/>
+                                <sensorReport type="gs1:MT-Molar_concentration" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>
+                                <sensorReport type="gs1:MT-Molar_concentration" chemicalSubstance="urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
                             </sensorElement>
                         </sensorElementList>
                     </extension>
