@@ -240,16 +240,16 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
             hash_string = 'ni:///sha-512;' + \
                           hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         else:
-            raise ValueError("Unsupported Hashing Algorithm: " + hash_string)
+            raise ValueError("Unsupported Hashing Algorithm: " + hashalg)
 
         hashValueList.append(hash_string)
 
     return hashValueList
 
 
-def epcis_hashes_from_events(events):
+def epcis_hashes_from_events(events, hashalg="sha256"):
     """Calculate the list of hashes from the given events list
     + hashing algorithm through the pre hash string using default parameters.
     """
     prehash_string_list = derive_prehashes_from_events(events)
-    return calculate_hashes_from_pre_hashes(prehash_string_list)
+    return calculate_hashes_from_pre_hashes(prehash_string_list, hashalg)
