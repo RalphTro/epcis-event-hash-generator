@@ -19,6 +19,7 @@ file for details.
 
 import datetime
 import hashlib
+import copy
 import logging
 import traceback
 
@@ -194,6 +195,8 @@ def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
     Compute a normalized form (pre-hash string) for each event.
     This is the main functionality of the hash generator.
     """
+
+    events = copy.deepcopy(events) # do not change parameter!
 
     global JOIN_BY
     join_by = join_by.replace(r"\n", "\n").replace(r"\t", "\t")
