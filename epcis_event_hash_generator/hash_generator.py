@@ -196,7 +196,7 @@ def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
     This is the main functionality of the hash generator.
     """
 
-    events = copy.deepcopy(events) # do not change parameter!
+    events = copy.deepcopy(events)  # do not change parameter!
 
     global JOIN_BY
     join_by = join_by.replace(r"\n", "\n").replace(r"\t", "\t")
