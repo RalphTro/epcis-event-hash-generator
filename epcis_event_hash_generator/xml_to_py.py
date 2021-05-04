@@ -65,6 +65,7 @@ file for details.
 
 import logging
 import xml.etree.ElementTree as ElementTree
+from typing import Tuple
 
 
 def _remove_extension_tags(data):
@@ -100,7 +101,7 @@ def _xml_to_py(root, sort=True):
     return obj
 
 
-def event_list_from_epcis_document_str(xmlStr):
+def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
     """
     Read EPCIS XML document and generate the event List in the form of a simple python object
     """

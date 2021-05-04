@@ -45,7 +45,7 @@ def _fix_time_stamp_format(timestamp):
     try:
         abstract_date_time = dateutil.parser.parse(timestamp)
     except ValueError:
-        logging.warning("'{}' is labelled as time but does not match the ISO 8601 dateTime format", timestamp)
+        logging.warning("'%s' is labelled as time but does not match the ISO 8601 dateTime format", timestamp)
         return timestamp
 
     # convert to UTC

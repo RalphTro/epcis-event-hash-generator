@@ -138,6 +138,15 @@ def event_list_from_epcis_document_str(data):
 
     json_obj = json.loads(data)
 
+    return event_list_from_epcis_document_json(json_obj)
+
+
+def event_list_from_epcis_document_json(json_obj):
+    """
+    Convert the json_obj to a simple python object.
+    Apply the format corrections to match what we get from the respective xml representation.
+    """
+
     if not(json_obj.get("@context") is None):
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
