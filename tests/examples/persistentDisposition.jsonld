@@ -2,7 +2,7 @@
     "@context": "https://id.gs1.org/epcis-context.jsonld",
     "isA": "EPCISDocument",
     "creationDate": "2020-04-01T15:00:00+01:00",
-    "schemaVersion": 2,
+    "schemaVersion": "2.0",
     "format": "application/ld+json",
     "epcisBody": {
       "eventList": [
