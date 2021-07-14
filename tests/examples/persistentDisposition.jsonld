@@ -1,0 +1,49 @@
+{
+    "@context": "https://id.gs1.org/epcis-context.jsonld",
+    "isA": "EPCISDocument",
+    "creationDate": "2020-04-01T15:00:00+01:00",
+    "schemaVersion": 2,
+    "format": "application/ld+json",
+    "epcisBody": {
+      "eventList": [
+        {
+          "isA": "ObjectEvent",
+          "eventTime": "2021-04-01T15:00:00+01:00",
+          "eventTimeZoneOffset": "+01:00",
+          "epcList": [
+            "urn:epc:id:sgtin:4012345.011111.1",
+            "urn:epc:id:sgtin:4012345.011111.2"
+          ],
+          "action": "OBSERVE",
+          "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
+          "disposition": "urn:epcglobal:cbv:disp:in_transit",
+          "readPoint": {
+            "id": "urn:epc:id:sgln:4012345.00005.0"
+          },
+          "persistentDisposition": {
+            "set": [
+              "urn:epcglobal:cbv:disp:recalled"
+            ]
+          }
+        },
+        {
+          "isA": "ObjectEvent",
+          "eventTime": "2021-04-01T15:00:00+01:00",
+          "eventTimeZoneOffset": "+01:00",
+          "epcList": [
+            "urn:epc:id:sgtin:4012345.011111.2"
+          ],
+          "action": "OBSERVE",
+          "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
+          "readPoint": {
+            "id": "urn:epc:id:sgln:4012345.00005.0"
+          },
+          "persistentDisposition": {
+            "unset": [
+              "urn:epcglobal:cbv:disp:recalled"
+            ]
+          }
+        }
+      ]
+    }
+  }
