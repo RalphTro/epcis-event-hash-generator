@@ -129,7 +129,7 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 15 | `transformationID` |
 | 16 | `bizStep` |
 | 17 | `disposition` |
-| 18 | `persistentDisposition` |
+| 18 | `persistentDisposition` - (`set`, `unset`) |
 | 19 | `readPoint` – `id` |
 | 20 | `bizLocation` – `id` |
 | 21 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
