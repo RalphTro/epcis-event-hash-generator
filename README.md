@@ -129,17 +129,18 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 15 | `transformationID` |
 | 16 | `bizStep` |
 | 17 | `disposition` |
-| 18 | `readPoint` – `id` |
-| 19 | `bizLocation` – `id` |
-| 20 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
-| 21 | `sourceList` – `source` (`source ID`, `source type`) |
-| 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
-| 23 | `sensorElement` ( |
+| 18 | `persistentDisposition` - (`set`, `unset`) |
+| 19 | `readPoint` – `id` |
+| 20 | `bizLocation` – `id` |
+| 21 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
+| 22 | `sourceList` – `source` (`source ID`, `source type`) |
+| 23 | `destinationList` – `destination` (`destination ID`, `destination type`) |
+| 24 | `sensorElement` ( |
 |    | `sensorMetadata` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `bizRules`), |
 |    | `sensorReport` (`type`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
 |    | ) |
-| 24 | `ilmd` – `{ILMD elements}` |
-| 25 | `{User extension elements}`|
+| 25 | `ilmd` – `{ILMD elements}` |
+| 26 | `{User extension elements}`|
 
 For better understanding, the following illustrations include the data content of EPCIS events (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), show the corresponding pre-hash string as well as the canonical hash value of that event.
 
