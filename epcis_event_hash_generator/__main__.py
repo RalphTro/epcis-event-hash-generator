@@ -124,7 +124,7 @@ def main():
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
         (hashes, prehashes) = epcis_hash_from_file(
-            filename, args.algorithm, args.join, args.enforce_format)
+            path=filename, hashalg=args.algorithm, join_by=args.join, enforce=args.enforce_format)
 
         # Output:
         if args.batch:
