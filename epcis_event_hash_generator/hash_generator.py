@@ -58,6 +58,7 @@ def _fix_time_stamp_format(timestamp):
 
 
 def _child_to_pre_hash_string(child, sub_child_order):
+    logging.debug("Processing '%s'", child)
     text = ""
     grand_child_text = ""
     if sub_child_order:
@@ -71,10 +72,11 @@ def _child_to_pre_hash_string(child, sub_child_order):
 
         if text:
             text = "=" + text
-            logging.debug("Adding text '%s'", text)
 
     if text or grand_child_text:
-        return child[0] + text + grand_child_text
+        re = child[0] + text + grand_child_text
+        logging.debug("pre hash string element: '%s'", text)
+        return re
 
     return ""
 
@@ -129,6 +131,7 @@ def _canonize_value(text):
     if converted:
         logging.debug("Converted %s to %s", text, converted)
         return converted
+    logging.debug("No canonical form for '%s'", text)
     return text
 
 
