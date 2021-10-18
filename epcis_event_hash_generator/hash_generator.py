@@ -65,7 +65,7 @@ def _child_to_pre_hash_string(child, sub_child_order):
         grand_child_text = _recurse_through_children_in_order(child[2], sub_child_order)
     if child[1]:
         text = child[1].strip()
-        if child[0].lower().find("time") > 0 and child[0].lower().find("offset") < 0:
+        if child[0].lower().find("time") >= 0 and child[0].lower().find("offset") < 0:
             text = _fix_time_stamp_format(text)
         else:
             text = _canonize_value(text)
