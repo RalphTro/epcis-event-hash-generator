@@ -61,7 +61,7 @@ def command_line_parsing():
         "-a",
         "--algorithm",
         help="Hashing algorithm to use.",
-        choices=["sha256", "sha3_256", "sha384", "sha512"],
+        choices=["sha256", "sha3-256", "sha384", "sha512"],
         default="sha256")
     parser.add_argument(
         "-l",
@@ -124,7 +124,7 @@ def main():
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
         (hashes, prehashes) = epcis_hash_from_file(
-            filename, args.algorithm, args.join, args.enforce_format)
+            path=filename, hashalg=args.algorithm, join_by=args.join, enforce=args.enforce_format)
 
         # Output:
         if args.batch:
