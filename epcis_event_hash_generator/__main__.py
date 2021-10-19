@@ -61,7 +61,7 @@ def command_line_parsing():
         "-a",
         "--algorithm",
         help="Hashing algorithm to use.",
-        choices=["sha256", "sha3_256", "sha384", "sha512"],
+        choices=["sha256", "sha3-256", "sha384", "sha512"],
         default="sha256")
     parser.add_argument(
         "-l",

@@ -233,8 +233,8 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
         if hashalg == 'sha256':
             hash_string = 'ni:///sha-256;' + \
                           hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
-        elif hashalg == 'sha3_256':
-            hash_string = 'ni:///sha3_256;' + \
+        elif hashalg == 'sha3-256':
+            hash_string = 'ni:///sha3-256;' + \
                           hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         elif hashalg == 'sha384':
             hash_string = 'ni:///sha-384;' + \
