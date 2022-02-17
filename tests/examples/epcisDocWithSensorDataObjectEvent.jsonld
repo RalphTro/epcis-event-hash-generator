@@ -1,14 +1,14 @@
 {
   "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
-  "isA": "EPCISDocument",
-  "creationDate": "2005-07-11T11:30:47+00:00",
+  "type": "EPCISDocument",
+  "creationDate": "2022-02-17T11:30:47+00:00",
   "schemaVersion": 1.2,
   "format": "application/ld+json",
   "epcisBody": {
     "eventList": [
       {
-        "isA": "ObjectEvent",
-        "eventTime": "2019-04-02T15:00:00.000+01:00",
+        "type": "ObjectEvent",
+        "eventTime": "2022-02-16T15:00:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
           "urn:epc:id:sgtin:4012345.011111.9876"
@@ -19,7 +19,7 @@
         "sensorElementList": [
           {
             "sensorMetadata": {
-              "time": "2019-04-02T14:05:00.000+01:00",
+              "time": "2022-02-16T14:05:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
               "deviceMetadata": "https://id.gs1.org/giai/4000001111",
               "rawData": "https://example.org/giai/401234599999"
@@ -49,7 +49,7 @@
           },
           {
             "sensorMetadata": {
-              "time": "2019-04-02T14:35:00.000+01:00",
+              "time": "2022-02-16T14:35:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
               "deviceMetadata": "https://id.gs1.org/giai/4000001111",
               "rawData": "https://example.org/giai/401234599999"
@@ -79,7 +79,7 @@
           },
           {
             "sensorMetadata": {
-              "time": "2019-04-02T14:55:00.000+01:00",
+              "time": "2022-02-16T14:55:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
               "deviceMetadata": "https://id.gs1.org/giai/4000001111",
               "rawData": "https://example.org/giai/401234599999"

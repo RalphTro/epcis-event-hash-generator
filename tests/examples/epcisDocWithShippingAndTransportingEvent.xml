@@ -1,8 +1,8 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2017-09-25T15:30:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:example="http://ns.example.com/epcis">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2022-02-17T11:30:47+00:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:example="http://ns.example.com/epcis">
 	<EPCISBody>
 		<EventList>
 			<ObjectEvent>
-				<eventTime>2020-02-20T12:50:00.000+01:00</eventTime>
+				<eventTime>2022-02-16T12:50:00.000+01:00</eventTime>
 				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
 				<epcList>
 					<epc>urn:epc:id:sscc:4012345.1112223334</epc>
@@ -25,7 +25,7 @@
 				</extension>
 			</ObjectEvent>	
             <ObjectEvent>
-				<eventTime>2020-02-20T16:50:00.000+01:00</eventTime>
+				<eventTime>2022-02-16T16:50:00.000+01:00</eventTime>
 				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
 				<epcList>
 					<epc>urn:epc:id:sscc:4012345.1112223334</epc>

@@ -180,8 +180,8 @@ def _gather_elements_not_in_order(children, child_order):
 
     # remove fields that are to be ignored in the hash:
     # remove all elements from XML tree which do shouldn't take part in hash calculation
-    to_be_ignored = ["recordTime", "eventID"]
-    for child in children:
+    to_be_ignored = ["recordTime", "eventID", "type"]
+    for child in children[:]:
         if child[0] in to_be_ignored:
             children.remove(child)
     if children:

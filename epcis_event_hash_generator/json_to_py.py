@@ -5,7 +5,7 @@ See the description of xml_to_py for more details about what 'simple' means here
 
 For example
 {
-  "isA": "ObjectEvent",
+  "type": "ObjectEvent",
   "eventTime": "2019-04-02T15:00:00.000+01:00",
   "eventTimeZoneOffset": "+01:00",
   "epcList": [
@@ -96,13 +96,13 @@ def _json_to_py(json_obj):
         for child in json_obj:
             py_obj[2].append(_json_to_py(child))
     elif isinstance(json_obj, dict):
-        if "isA" in json_obj:
-            py_obj = (json_obj["isA"], "", [])
+        if "type" in json_obj:
+            py_obj = (json_obj["type"], "", [])
 
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        to_be_ignored = ["isA", "#text", "rdfs:comment", "comment"]
+        to_be_ignored = ["#text", "rdfs:comment", "comment"]
         for (key, val) in [x for x in json_obj.items() if x[0] not in to_be_ignored]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"
