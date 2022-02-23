@@ -2,7 +2,7 @@
 
 For example
 {
-  "isA": "ObjectEvent",
+  "type": "ObjectEvent",
   "eventTime": "2019-04-02T15:00:00.000+01:00",
   "eventTimeZoneOffset": "+01:00",
   "epcList": [
