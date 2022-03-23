@@ -11,14 +11,12 @@
 				<TransformationEvent>
 					<eventTime>2020-01-14T00:00:00.000+01:00</eventTime>
 					<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
-					<baseExtension>
 						<eventID>urn:uuid:374d95fc-9457-4a51-bd6a-0bba133845a8</eventID>
 						<errorDeclaration>
 							<declarationTime>2020-01-15T00:00:00.000+01:00</declarationTime>
 							<reason>urn:epcglobal:cbv:er:incorrect_data</reason>
 							<example:vendorExtension>Test1</example:vendorExtension>
 						</errorDeclaration>
-					</baseExtension>
 					<inputEPCList>
 						<epc>urn:epc:id:sgtin:4012345.011111.987</epc>
 					</inputEPCList>

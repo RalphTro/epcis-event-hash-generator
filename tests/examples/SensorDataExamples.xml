@@ -294,7 +294,6 @@
                 <TransformationEvent>
                     <eventTime>2020-09-29T14:00:00.000+02:00</eventTime>
                     <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-                    <baseExtension>
                         <errorDeclaration>
                             <declarationTime>2020-09-29T15:00:00.000+02:00</declarationTime>
                             <example:issuer>Employee 123</example:issuer>
@@ -304,7 +303,6 @@
                             </example3:errorCodes>
                             <example:field example:furtherData="abcd1234"/>
                         </errorDeclaration>
-                    </baseExtension>
                     <inputQuantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4023333.055555.ABC123</epcClass>
