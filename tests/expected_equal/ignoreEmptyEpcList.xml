@@ -13,7 +13,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4054739.00001.0</id>
                 </readPoint>
-                <extension>
                     <quantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4054739.099914.20160711</epcClass>
@@ -24,7 +23,6 @@
                     <ilmd>
                         <cbvmda:bestBeforeDate>2019-10-21</cbvmda:bestBeforeDate>
                     </ilmd>
-                </extension>
             </ObjectEvent>
             <ObjectEvent>
                 <eventTime>2019-10-21T14:58:56.000+02:00</eventTime>
@@ -35,7 +33,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4054739.00001.0</id>
                 </readPoint>
-                <extension>
                     <quantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4054739.099914.20160711</epcClass>
@@ -46,7 +43,6 @@
                     <ilmd>
                         <cbvmda:bestBeforeDate>2019-10-21</cbvmda:bestBeforeDate>
                     </ilmd>
-                </extension>
             </ObjectEvent>
              <ObjectEvent>
                 <eventTime>2019-10-21T14:58:56.000+02:00</eventTime>
@@ -57,7 +53,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4054739.00001.0</id>
                 </readPoint>
-                <extension>
                     <quantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4054739.099914.20160711</epcClass>
@@ -68,7 +63,6 @@
                     <ilmd>
                         <cbvmda:bestBeforeDate>2019-10-21</cbvmda:bestBeforeDate>
                     </ilmd>
-                </extension>
             </ObjectEvent>
         </EventList>
     </EPCISBody>

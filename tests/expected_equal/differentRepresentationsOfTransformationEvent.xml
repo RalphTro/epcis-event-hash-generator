@@ -2,7 +2,6 @@
 <epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2019-10-21T14:59:02.099+02:00" xmlns:cbvmda="urn:epcglobal:cbv:mda" xmlns:example="http://ns.example.com/epcis" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<EPCISBody>
 		<EventList>
- 			<extension>
 				<TransformationEvent>
 					<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
 					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
@@ -95,7 +94,6 @@
 						<example:batch>4711</example:batch>
 					</ilmd>
 				</TransformationEvent>
-			</extension>
 		</EventList>
 	</EPCISBody>
 </epcis:EPCISDocument>

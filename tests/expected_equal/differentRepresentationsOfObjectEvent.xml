@@ -17,7 +17,6 @@
 					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
 					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
 				</bizTransactionList>
-				<extension>
 					<sourceList>
 						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
 					</sourceList>
@@ -25,7 +24,6 @@
 						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
 						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
 					</destinationList>
-				</extension>
 			</ObjectEvent>
 			<ObjectEvent>
 				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
@@ -42,7 +40,6 @@
 					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
 					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
 				</bizTransactionList>
-				<extension>
 					<sourceList>
 						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
 					</sourceList>
@@ -50,7 +47,6 @@
 						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
 						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
 					</destinationList>
-				</extension>
 			</ObjectEvent>
 			<ObjectEvent>
 				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
@@ -67,7 +63,6 @@
 					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
 					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
 				</bizTransactionList>
-				<extension>
 					<sourceList>
 						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
 					</sourceList>
@@ -75,7 +70,6 @@
 						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
 						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
 					</destinationList>
-				</extension>
 			</ObjectEvent>
 		</EventList>
 	</EPCISBody>

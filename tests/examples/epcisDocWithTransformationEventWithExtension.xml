@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <epcis:EPCISDocument
-    xmlns:epcis="urn:epcglobal:epcis:xsd:1"
+    xmlns:epcis="urn:epcglobal:epcis:xsd:2"
     xmlns:epcglobal="urn:epcglobal:xsd:1"
     xmlns:c4l="https://circ4life.eecc.info/epcis"
-    schemaVersion="1.2"
+    schemaVersion="2.0"
     creationDate="2022-02-17T10:01:00.000+02:00"
-    >
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd">
   <EPCISBody>
-    <EventList>
-      <extension>
-        
+    <EventList>     
         <TransformationEvent>
           <eventTime>2022-02-16T08:40:21.3142715Z</eventTime>
           <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
@@ -24,8 +23,6 @@
           <disposition>urn:epcglobal:cbv:disp:damaged</disposition>
           <c4l:lifeTime>P3Y</c4l:lifeTime>
         </TransformationEvent>
-                
-      </extension>
     </EventList>
   </EPCISBody>
 </epcis:EPCISDocument>

@@ -1,6 +1,4 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2020-04-01T15:00:00.000+01:00" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd" 
-    xmlns:gs1="https://gs1.org/voc/" >
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2020-04-01T15:00:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd" xmlns:gs1="https://gs1.org/voc/">
     <EPCISBody>
         <EventList>
             <ObjectEvent>
@@ -16,13 +14,9 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
-                        <persistentDisposition>
-                            <set>urn:epcglobal:cbv:disp:recalled</set>
-                        </persistentDisposition>
-                    </extension>
-                </extension>
+                <persistentDisposition>
+                    <set>urn:epcglobal:cbv:disp:recalled</set>
+                </persistentDisposition>
             </ObjectEvent>
             <ObjectEvent>
                 <eventTime>2021-04-01T15:00:00.000+01:00</eventTime>
@@ -35,13 +29,9 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
-                        <persistentDisposition>
-                            <unset>urn:epcglobal:cbv:disp:recalled</unset>
-                        </persistentDisposition>
-                    </extension>
-                </extension>
+                <persistentDisposition>
+                    <unset>urn:epcglobal:cbv:disp:recalled</unset>
+                </persistentDisposition>
             </ObjectEvent>
         </EventList>
     </EPCISBody>
