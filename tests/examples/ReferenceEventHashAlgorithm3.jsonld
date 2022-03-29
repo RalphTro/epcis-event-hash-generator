@@ -1,9 +1,14 @@
 {
-  "@context": ["https://gs1.github.io/EPCIS/epcis-context.jsonld",{"example": "https://ns.example.com/epcis"}],
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "gs1": "https://gs1.org/voc/"
+    }
+  ],
+  "id": "https://id.example.org/document1",
   "type": "EPCISDocument",
-  "creationDate": "2020-12-10T15:45:00+01:00",
-  "schemaVersion": 2,
-  "format": "application/ld+json",
+  "schemaVersion": "2.0",
+  "creationDate": "2022-02-17T11:30:47.0Z",
   "epcisBody": {
     "eventList": [
       {
@@ -14,27 +19,27 @@
           "urn:epc:id:sgtin:0614141.011111.987"
         ],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:departing",
-        "disposition": "urn:epcglobal:cbv:disp:in_transit",
-        "readPoint": 
-          {"id": "urn:epc:id:sgln:4012345.00011.0",
-           "example:myField1": "AB-12"}
-        ,
+        "bizStep": "departing",
+        "disposition": "in_transit",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00011.0",
+          "example:myField1": "AB-12"
+        },
         "bizTransactionList": [
           {
-            "type": "urn:epcglobal:cbv:btt:po",
+            "type": "po",
             "bizTransaction": "urn:epc:id:gdti:4012345.11111.123"
           }
         ],
         "sourceList": [
           {
-            "type": "urn:epcglobal:cbv:sdt:owning_party",
+            "type": "owning_party",
             "source": "urn:epc:id:pgln:4012345.00000"
           }
         ],
         "destinationList": [
           {
-            "type": "urn:epcglobal:cbv:sdt:owning_party",
+            "type": "owning_party",
             "destination": "urn:epc:id:pgln:0614141.00000"
           }
         ],
