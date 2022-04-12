@@ -1,5 +1,3 @@
-/* NOT JET VALIDATING - IDENTIFIED AN ISSUE WITH THE SCHEMA */
-
 {
 	"@context": [
 		"https://gs1.github.io/EPCIS/epcis-context.jsonld",
