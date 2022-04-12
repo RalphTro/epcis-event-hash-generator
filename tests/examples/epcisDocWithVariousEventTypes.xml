@@ -265,7 +265,7 @@
 					</quantityElement>
 				</outputQuantityList>
 				<transformationID>urn:epc:id:gdti:4012345.55555.1234</transformationID>
-				<bizStep>http://epcis.example.com/user/vocab/bizstep/commissioning</bizStep>
+				<bizStep>http://epcis.example.com/user/vocab/bizstep/exampling</bizStep>
 				<readPoint>
 					<id>urn:epc:id:sgln:4012345.00001.0</id>
 				</readPoint>
