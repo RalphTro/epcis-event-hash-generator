@@ -79,7 +79,7 @@ PROP_ORDER = [
                                   ('deviceMetadata', None),
                                   ('rawData', None),
                                   ('dataProcessingMethod', None),
-                                  ('time', None)
+                                  ('time', None),
                                   ('microorganism', None),
                                   ('chemicalSubstance', None),
                                   ('value', None),
