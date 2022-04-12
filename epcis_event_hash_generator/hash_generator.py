@@ -183,10 +183,8 @@ def _gather_elements_not_in_order(children, child_order):
 
     # remove fields that are to be ignored in the hash:
     # remove all elements from XML tree which do shouldn't take part in hash calculation
-    to_be_ignored = ["recordTime", "eventID"]
-    for child in children:
-        if child[0] in to_be_ignored:
-            children.remove(child)
+    to_be_ignored = ["recordTime", "eventID", "type"]
+    children = [child for child in children if child[0] not in to_be_ignored]
     if children:
         return _generic_child_list_to_prehash_string(children)
 
@@ -236,8 +234,8 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
         if hashalg == 'sha256':
             hash_string = 'ni:///sha-256;' + \
                           hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
-        elif hashalg == 'sha3_256':
-            hash_string = 'ni:///sha3_256;' + \
+        elif hashalg == 'sha3-256':
+            hash_string = 'ni:///sha3-256;' + \
                           hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
         elif hashalg == 'sha384':
             hash_string = 'ni:///sha-384;' + \

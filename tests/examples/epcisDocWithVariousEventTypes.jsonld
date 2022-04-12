@@ -1,13 +1,13 @@
 {
   "@context": "https://id.gs1.org/epcis-context.jsonld",
-  "isA": "EPCISDocument",
-  "creationDate": "2005-07-11T11:30:47+00:00",
+  "type": "EPCISDocument",
+  "creationDate": "2022-02-17T11:30:47+00:00",
   "schemaVersion": 1.2,
   "format": "application/ld+json",
   "epcisBody": {
     "eventList": [
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2019-10-21T11:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
@@ -44,7 +44,7 @@
         ]
       },
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2019-10-21T12:00:30.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
@@ -89,7 +89,7 @@
         ]
       },
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2019-10-21T15:45:00.000+01:00",
         "eventTimeZoneOffset": "+01:00",
         "epcList": [
@@ -101,7 +101,7 @@
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00024.0"}
       },
       {
-        "isA": "ObjectEvent",
+        "type": "ObjectEvent",
         "eventTime": "2019-10-21T14:58:56.000+02:00",
         "eventTimeZoneOffset": "+02:00",
         "quantityList": [
@@ -122,7 +122,7 @@
         }
       },
       {
-        "isA": "AggregationEvent",
+        "type": "AggregationEvent",
         "eventTime": "2019-10-21T11:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:4047023.0111111122",
@@ -137,7 +137,7 @@
         "readPoint": {"id": "urn:epc:id:sgln:4047023.00012.0"}
       },
       {
-        "isA": "AggregationEvent",
+        "type": "AggregationEvent",
         "eventTime": "2019-10-21T17:30:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:4012344.0111111133",
@@ -157,7 +157,7 @@
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00025.0"}
       },
       {
-        "isA": "AggregationEvent",
+        "type": "AggregationEvent",
         "eventTime": "2019-10-21T11:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:4012344.0111111144",
@@ -172,7 +172,7 @@
         ]
       },
       {
-        "isA": "AggregationEvent",
+        "type": "AggregationEvent",
         "eventTime": "2019-10-21T14:02:56.000+02:00",
         "eventTimeZoneOffset": "+02:00",
         "parentID": "urn:epc:id:sscc:4012344.0998811122",
@@ -192,7 +192,7 @@
         ]
       },
       {
-        "isA": "TransactionEvent",
+        "type": "TransactionEvent",
         "eventTime": "2019-10-21T00:05:00-06:00",
         "eventTimeZoneOffset": "-06:00",
         "epcList": [
@@ -211,7 +211,7 @@
         ]
       },
       {
-        "isA": "TransactionEvent",
+        "type": "TransactionEvent",
         "eventTime": "2019-10-21T14:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "quantityList": [
@@ -233,7 +233,7 @@
         ]
       },
       {
-        "isA": "TransformationEvent",
+        "type": "TransformationEvent",
         "eventTime": "2019-10-21T14:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "inputEPCList": [
@@ -261,7 +261,7 @@
         }
       },
       {
-        "isA": "TransformationEvent",
+        "type": "TransformationEvent",
         "eventTime": "2019-10-21T14:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "inputEPCList": [
@@ -303,7 +303,7 @@
         }
       },
       {
-        "isA": "TransformationEvent",
+        "type": "TransformationEvent",
         "eventTime": "2019-10-21T14:58:56.591+02:00",
         "eventTimeZoneOffset": "+02:00",
         "inputEPCList": [
