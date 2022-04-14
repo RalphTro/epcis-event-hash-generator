@@ -284,14 +284,8 @@
           "id": "urn:epc:id:sgln:4012345.00001.0"
         },
         "ilmd": {
-          "example:bestBeforeDate": {
-            "@xmlns:example": "https://ns.example.com/epcis",
-            "#text": "2020-11-10"
-          },
-          "example:batch": {
-            "@xmlns:example": "https://ns.example.com/epcis",
-            "#text": "4711"
-          }
+          "example:bestBeforeDate": "2020-11-10",
+          "example:batch": "4711"
         }
       },
       {
@@ -328,14 +322,8 @@
           "id": "urn:epc:id:sgln:4012345.00001.0"
         },
         "ilmd": {
-          "example:bestBeforeDate": {
-            "@xmlns:example": "https://ns.example.com/epcis",
-            "#text": "2015-11-10"
-          },
-          "example:batch": {
-            "@xmlns:example": "https://ns.example.com/epcis",
-            "#text": "XYZ"
-          }
+          "example:bestBeforeDate": "2015-11-10",
+          "example:batch": "XYZ"
         }
       },
       {
