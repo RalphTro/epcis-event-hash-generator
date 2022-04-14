@@ -3,6 +3,9 @@
     "https://gs1.github.io/EPCIS/epcis-context.jsonld",
     {
       "gs1": "https://gs1.org/voc/"
+    },
+    {
+     "example": "http://ns.example.com/epcis/"
     }
   ],
   "id": "https://id.example.org/document1",
@@ -43,10 +46,7 @@
             "destination": "urn:epc:id:pgln:0614141.00000"
           }
         ],
-        "example:userExt": {
-          "@xmlns:example": "https://ns.example.com/epcis",
-          "#text": "CD-34"
-        }
+        "example:userExt": "CD-34"
       }
     ]
   }
