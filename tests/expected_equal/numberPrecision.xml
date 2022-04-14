@@ -1,7 +1,7 @@
 <epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2020-04-01T15:00:00.000+01:00" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd" 
     xmlns:gs1="https://gs1.org/voc/" 
-    xmlns:example="http://ns.example.com/epcis/" 
+    xmlns:example="https://ns.example.com/epcis/" 
     xmlns:schema="http://schema.org/">
     <EPCISBody>
         <EventList>

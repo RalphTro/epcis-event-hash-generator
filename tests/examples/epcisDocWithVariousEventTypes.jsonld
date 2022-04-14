@@ -3,6 +3,9 @@
     "https://gs1.github.io/EPCIS/epcis-context.jsonld",
     {
       "gs1": "https://gs1.org/voc/"
+    },
+    {
+      "example": "https://ns.example.com/epcis/"
     }
   ],
   "id": "https://id.example.org/document1",
@@ -282,11 +285,11 @@
         },
         "ilmd": {
           "example:bestBeforeDate": {
-            "@xmlns:example": "http://ns.example.com/epcis",
+            "@xmlns:example": "https://ns.example.com/epcis",
             "#text": "2020-11-10"
           },
           "example:batch": {
-            "@xmlns:example": "http://ns.example.com/epcis",
+            "@xmlns:example": "https://ns.example.com/epcis",
             "#text": "4711"
           }
         }
@@ -326,11 +329,11 @@
         },
         "ilmd": {
           "example:bestBeforeDate": {
-            "@xmlns:example": "http://ns.example.com/epcis",
+            "@xmlns:example": "https://ns.example.com/epcis",
             "#text": "2015-11-10"
           },
           "example:batch": {
-            "@xmlns:example": "http://ns.example.com/epcis",
+            "@xmlns:example": "https://ns.example.com/epcis",
             "#text": "XYZ"
           }
         }

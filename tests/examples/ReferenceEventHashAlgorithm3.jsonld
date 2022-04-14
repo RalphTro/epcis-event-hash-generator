@@ -5,7 +5,7 @@
       "gs1": "https://gs1.org/voc/"
     },
     {
-     "example": "http://ns.example.com/epcis/"
+     "example": "https://ns.example.com/epcis/"
     }
   ],
   "id": "https://id.example.org/document1",
