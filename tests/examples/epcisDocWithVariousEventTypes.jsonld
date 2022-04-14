@@ -6,6 +6,9 @@
     },
     {
       "example": "https://ns.example.com/epcis/"
+    },
+    {
+      "cbvmda": "urn:epcglobal:cbv:mda:"
     }
   ],
   "id": "https://id.example.org/document1",
@@ -131,10 +134,7 @@
           "id": "urn:epc:id:sgln:4054739.00001.0"
         },
         "ilmd": {
-          "cbvmda:bestBeforeDate": {
-            "@xmlns:cbvmda": "urn:epcglobal:cbv:mda",
-            "#text": "2019-10-21"
-          }
+          "cbvmda:bestBeforeDate": "2019-10-21"
         }
       },
       {
