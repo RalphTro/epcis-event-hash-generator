@@ -3,6 +3,9 @@
     "https://gs1.github.io/EPCIS/epcis-context.jsonld",
     {
       "gs1": "https://gs1.org/voc/"
+    },
+    {
+     "example": "https://ns.example.com/epcis/"
     }
   ],
   "id": "https://id.example.org/document1",
@@ -27,16 +30,11 @@
           "id": "urn:epc:id:sgln:4012345.00011.987"
         },
         "example:myField1": {
-          "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField1": "2",
           "example:mySubField2": "5"
         },
-        "example:myField2": {
-          "@xmlns:example": "https://ns.example.com/epcis",
-          "#text": "0"
-        },
+        "example:myField2": "0",
         "example:myField3": {
-          "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField3": [
             "3",
             "1"

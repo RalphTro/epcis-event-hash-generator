@@ -25,11 +25,11 @@
                     <example:mySubField1>2</example:mySubField1>
                     <example:mySubField2>5</example:mySubField2>
                 </example:myField1>
-                <https:myField2>0</https:myField2>
-                <https:myField3>
+                <example:myField2>0</example:myField2>
+                <example:myField3>
                     <example:mySubField3>3</example:mySubField3>
                     <example:mySubField3>1</example:mySubField3>
-                </https:myField3>
+                </example:myField3>
             </ObjectEvent>
         </EventList>
     </EPCISBody>
