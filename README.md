@@ -144,7 +144,7 @@ For better understanding, the following illustrations include the data content o
 
 Example 1:
 
-![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.jpg)
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.png)
 
 Run `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml -pj "\n"` to get a similar output of the pre-hash string and `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml` to verify the hash.
 
