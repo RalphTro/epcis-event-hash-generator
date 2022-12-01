@@ -74,10 +74,10 @@ def _namespace_replace(key):
 def _collect_namespaces_from_jsonld_context(context):
     global _namespaces
 
-    if not(isinstance(context, str)):
-        if(isinstance(context, list)):
+    if not isinstance(context, str):
+        if isinstance(context, list):
             for c in context:
-                if not(isinstance(c, str)):
+                if not isinstance(c, str):
                     for key in c.keys():
                         _namespaces[key] = "{" + c[key] + "}"
         else:
@@ -147,7 +147,7 @@ def event_list_from_epcis_document_json(json_obj):
     Apply the format corrections to match what we get from the respective xml representation.
     """
 
-    if not(json_obj.get("@context") is None):
+    if not json_obj.get("@context") is None:
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
     if "eventList" in json_obj["epcisBody"]:
