@@ -88,13 +88,10 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 11. All child elements as part of a list (e.g. epc in epcList, bizTransaction in bizTransactionList, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 12. If a child element of a list itself comprises one or more key-value pairs itself (e.g. quantityElement in quantityList, sensorReport in sensorElement), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character..
 13. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the type key-value pair (where the key is 'type' and the value the respective type attribute) SHALL follow the actual key-value before the alphabetical ordering takes place. 
-14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ns.gs1.org’).
+14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ref.gs1.org’).
 Example:
-‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ns.gs1.org/cbv/BizStep-receiving’
-
-**NOTE: The namespace ‘ns.gs1.org’ is a PLACEHOLDER and still PENDING – please keep it configurable until CBV 2.0 is ratified.**
-
-15. If an EPCIS event is represented in JSON/JSON-LD, standard vocabulary elements are not expressed as URIs, but in bare string notation (i.e. ‘in_transit’ instead of ‘https://ns.gs1.org/cbv/Disp-in_transit’). All standard vocabulary elements expressed in bare string notation SHALL be expanded to their corresponding GS1 Web URI (starting with ‘https://ns.gs1.org/cbv’).
+‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ref.gs1.org/cbv/BizStep-receiving’
+15. If an EPCIS event is represented in JSON/JSON-LD, standard vocabulary elements are not expressed as URIs, but in bare string notation (i.e. ‘in_transit’ instead of ‘https://ref.gs1.org/cbv/Disp-in_transit’). All standard vocabulary elements expressed in bare string notation SHALL be expanded to their corresponding GS1 Web URI (starting with ‘https://ref.gs1.org/cbv’).
 16. If present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’) or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding canonical GS1 Digital Link URI (starting with ‘https://id.gs1.org’). Canonical GS1 Digital Link URIs are specified in [GS1 Digital Link: URI Syntax, release 1.2], section 4.11.
 17. If a GS1 Digital Link URI is present, it SHALL take the form of a constrained canonical GS1 Digital Link URI. Specifically: (I) A custom domain SHALL be replaced by ‘https://id.gs1.org’. (II) The query string SHALL be stripped off. (III) It SHALL only contain the most fine-granular level of identification, i.e. contain the following GS1 keys/key qualifiers only: `00 / 01 / 01 21 / 01 10 / 01 235 / 253 / 255 / 401 / 402 / 414 / 414 254 / 417 / 8003 / 8004 / 8006 / 8006 21 / 8006 10 / 8010 / 8010 8011 / 8017 / 8018`
 18. If an EPCIS event comprises ILMD elements, the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('='). The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
@@ -147,7 +144,7 @@ For better understanding, the following illustrations include the data content o
 
 Example 1:
 
-![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.jpg)
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.png)
 
 Run `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml -pj "\n"` to get a similar output of the pre-hash string and `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml` to verify the hash.
 

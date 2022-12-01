@@ -52,9 +52,9 @@ PROP_ORDER = [
     ('bizStep', None),
     ('disposition', None),
     ('persistentDisposition', [
-                                ('set', None),
-                                ('unset', None)
-                            ]),
+        ('set', None),
+        ('unset', None)
+    ]),
     ('readPoint', [('id', None)]),
     ('bizLocation', [('id', None)]),
     ('bizTransactionList', [('bizTransaction', [('type', None)])]),
