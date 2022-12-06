@@ -156,7 +156,7 @@ Run `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorit
 
 Example 3:
 
-![Example 3 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example3.jpg)
+![Example 3 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example3.png)
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
 
