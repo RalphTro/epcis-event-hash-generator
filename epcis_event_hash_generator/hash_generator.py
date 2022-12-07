@@ -138,14 +138,14 @@ def _canonize_value(text):
 def _try_format_web_vocabulary(text):
     """Replace old CBV URNs by new web vocabulary equivalents."""
     return text.replace(
-        'urn:epcglobal:cbv:bizstep:', 'https://ns.gs1.org/voc/Bizstep-'
+        'urn:epcglobal:cbv:bizstep:', 'https://ref.gs1.org/cbv/Bizstep-'
     ).replace(
-        'urn:epcglobal:cbv:disp:', 'https://ns.gs1.org/voc/Disp-'
+        'urn:epcglobal:cbv:disp:', 'https://ref.gs1.org/cbv/Disp-'
     ).replace(
-        'urn:epcglobal:cbv:btt:', 'https://ns.gs1.org/voc/BTT-'
+        'urn:epcglobal:cbv:btt:', 'https://ref.gs1.org/cbv/BTT-'
     ).replace(
-        'urn:epcglobal:cbv:sdt:', 'https://ns.gs1.org/voc/SDT-'
-    ).replace('urn:epcglobal:cbv:er:', 'https://ns.gs1.org/voc/ER-')
+        'urn:epcglobal:cbv:sdt:', 'https://ref.gs1.org/cbv/SDT-'
+    ).replace('urn:epcglobal:cbv:er:', 'https://ref.gs1.org/cbv/ER-')
 
 
 def _try_format_numeric(text):
