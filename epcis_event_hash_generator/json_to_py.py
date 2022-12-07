@@ -75,8 +75,8 @@ def _namespace_replace(key):
 def _collect_namespaces_from_jsonld_context(context):
     global _namespaces
 
-    if not(isinstance(context, str)):
-        if(isinstance(context, list)):
+    if not isinstance(context, str):
+        if isinstance(context, list):
             for c in context:
                 if isinstance(c, str):
                     _namespaces[c] = "{" + c + "}"
@@ -167,7 +167,7 @@ def _replace_bare_string_values(json_obj, expanded_values):
     """
     if isinstance(json_obj, str):
         replacement = _find_replacement_string_values(json_obj, expanded_values)
-        if(replacement):
+        if replacement:
             return replacement
         return json_obj
 
@@ -197,7 +197,8 @@ def _bare_string_pre_preocessing(json_obj):
     expanded_values = []
     _find_expanded_values(expanded, expanded_values)
     logging.debug("all expanded_values: %s", expanded_values)
-    expanded_values = set([x for x in expanded_values if x.startswith("https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc")])
+    expanded_values = set([x for x in expanded_values if x.startswith(
+        "https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc")])
     logging.debug("expanded_values for replacement: %s", expanded_values)
     json_obj = _replace_bare_string_values(json_obj, expanded_values)
 
@@ -224,7 +225,7 @@ def event_list_from_epcis_document_json(json_obj):
     """
     json_obj = _bare_string_pre_preocessing(json_obj)
 
-    if not(json_obj.get("@context") is None):
+    if not json_obj.get("@context") is None:
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
     if "eventList" in json_obj["epcisBody"]:
