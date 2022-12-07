@@ -92,8 +92,6 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 Example:
 ‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ref.gs1.org/cbv/BizStep-receiving’
 
-**NOTE: The namespace ‘ref.gs1.org’ is a PLACEHOLDER and still PENDING – please keep it configurable until CBV 2.0 is ratified.**
-
 15. If an EPCIS event is represented in JSON/JSON-LD, standard vocabulary elements are not expressed as URIs, but in bare string notation (i.e. ‘in_transit’ instead of ‘https://ref.gs1.org/cbv/Disp-in_transit’). All standard vocabulary elements expressed in bare string notation SHALL be expanded to their corresponding GS1 Web URI (starting with ‘https://ref.gs1.org/cbv’).
 16. If present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’) or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding canonical GS1 Digital Link URI (starting with ‘https://id.gs1.org’). Canonical GS1 Digital Link URIs are specified in [GS1 Digital Link: URI Syntax, release 1.2], section 4.11.
 17. If a GS1 Digital Link URI is present, it SHALL take the form of a constrained canonical GS1 Digital Link URI. Specifically: (I) A custom domain SHALL be replaced by ‘https://id.gs1.org’. (II) The query string SHALL be stripped off. (III) It SHALL only contain the most fine-granular level of identification, i.e. contain the following GS1 keys/key qualifiers only: `00 / 01 / 01 21 / 01 10 / 01 235 / 253 / 255 / 401 / 402 / 414 / 414 254 / 417 / 8003 / 8004 / 8006 / 8006 21 / 8006 10 / 8010 / 8010 8011 / 8017 / 8018`
