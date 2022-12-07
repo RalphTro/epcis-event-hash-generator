@@ -47,6 +47,7 @@ file for details.
 
 """
 
+from pyld import jsonld
 import json
 import logging
 
@@ -77,9 +78,8 @@ def _collect_namespaces_from_jsonld_context(context):
     if not(isinstance(context, str)):
         if(isinstance(context, list)):
             for c in context:
-                if not(isinstance(c, str)):
-                    for key in c.keys():
-                        _namespaces[key] = "{" + c[key] + "}"
+                if isinstance(c, str):
+                    _namespaces[c] = "{" + c + "}"
                 else:
                     for key in c.keys():
                         _namespaces[key] = "{" + c[key] + "}"
@@ -130,6 +130,78 @@ def _json_to_py(json_obj):
     return py_obj
 
 
+def _find_expanded_values(expanded, expanded_values):
+    """
+    Find the string values in the expanded JSON document.
+    """
+    if isinstance(expanded, str):
+        expanded_values.append(expanded)
+        return
+
+    if isinstance(expanded, list):
+        for item in expanded:
+            _find_expanded_values(item, expanded_values)
+        return
+
+    for key in expanded.keys():
+        _find_expanded_values(expanded[key], expanded_values)
+
+
+def _find_replacement_string_values(value, expanded_values):
+    """
+    Heuristic matching of value to expanded values.
+    """
+    matches = [x for x in expanded_values if x.endswith(value)]
+    if len(matches) == 1:
+        return matches[0]
+    return
+
+
+def _replace_bare_string_values(json_obj, expanded_values):
+    """
+    Find the string values in the json_obj. Search for matching replacements and replace the values.
+    """
+    if isinstance(json_obj, str):
+        replacement = _find_replacement_string_values(json_obj, expanded_values)
+        if(replacement):
+            return replacement
+        return json_obj
+
+    if isinstance(json_obj, list):
+        new_list = []
+        for item in json_obj:
+            new_list.append(_replace_bare_string_values(item, expanded_values))
+        return new_list
+
+    for key in json_obj.keys():
+        json_obj[key] = _replace_bare_string_values(json_obj[key], expanded_values)
+
+    return json_obj
+
+
+def _bare_string_pre_preocessing(json_obj):
+    """
+    Use JSON-LD Expansion to replace the bare string notation for attribute values
+    with the full web-vocabulary URLs.
+    Only replacing CBV web vocabulary, (e.g. not EPCIS).
+    """
+    print("JSON-LD:")
+    print(json.dumps(json_obj, indent=2))
+    expanded = jsonld.expand(json_obj)
+    print("Expanded JSON:")
+    print(json.dumps(expanded, indent=2))
+
+    expanded_values = []
+    _find_expanded_values(expanded, expanded_values)
+    expanded_values = [x for x in expanded_values if x.startswith("https://ref.gs1.org/cbv")]
+    json_obj = _replace_bare_string_values(json_obj, expanded_values)
+
+    print("bare strings replaced:")
+    print(json.dumps(json_obj, indent=2))
+    
+    return json_obj
+
+
 def event_list_from_epcis_document_str(data):
     """
     Parse the JSON str data and convert to a simple python object.
@@ -146,6 +218,7 @@ def event_list_from_epcis_document_json(json_obj):
     Convert the json_obj to a simple python object.
     Apply the format corrections to match what we get from the respective xml representation.
     """
+    json_obj = _bare_string_pre_preocessing(json_obj)
 
     if not(json_obj.get("@context") is None):
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
