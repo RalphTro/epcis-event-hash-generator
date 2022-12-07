@@ -143,8 +143,9 @@ def _find_expanded_values(expanded, expanded_values):
             _find_expanded_values(item, expanded_values)
         return
 
-    for key in expanded.keys():
-        _find_expanded_values(expanded[key], expanded_values)
+    if isinstance(expanded, dict):
+        for key in expanded.keys():
+            _find_expanded_values(expanded[key], expanded_values)
 
 
 def _find_replacement_string_values(value, expanded_values):
@@ -173,8 +174,9 @@ def _replace_bare_string_values(json_obj, expanded_values):
             new_list.append(_replace_bare_string_values(item, expanded_values))
         return new_list
 
-    for key in json_obj.keys():
-        json_obj[key] = _replace_bare_string_values(json_obj[key], expanded_values)
+    if isinstance(json_obj, dict):
+        for key in json_obj.keys():
+            json_obj[key] = _replace_bare_string_values(json_obj[key], expanded_values)
 
     return json_obj
 
@@ -185,20 +187,17 @@ def _bare_string_pre_preocessing(json_obj):
     with the full web-vocabulary URLs.
     Only replacing CBV web vocabulary, (e.g. not EPCIS).
     """
-    print("JSON-LD:")
-    print(json.dumps(json_obj, indent=2))
+    logging.debug("JSON-LD: %s", json.dumps(json_obj, indent=2))
     expanded = jsonld.expand(json_obj)
-    print("Expanded JSON:")
-    print(json.dumps(expanded, indent=2))
+    logging.debug("Expanded JSON: %s", json.dumps(expanded, indent=2))
 
     expanded_values = []
     _find_expanded_values(expanded, expanded_values)
     expanded_values = [x for x in expanded_values if x.startswith("https://ref.gs1.org/cbv")]
     json_obj = _replace_bare_string_values(json_obj, expanded_values)
 
-    print("bare strings replaced:")
-    print(json.dumps(json_obj, indent=2))
-    
+    logging.debug("bare strings replaced: %s", json.dumps(json_obj, indent=2))
+
     return json_obj
 
 
