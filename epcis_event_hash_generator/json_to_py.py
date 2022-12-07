@@ -152,11 +152,11 @@ def _find_replacement_string_values(value, expanded_values):
     """
     Heuristic matching of value to expanded values.
     """
-    matches = [x for x in expanded_values if x.endswith(value)]
+    matches = [x for x in expanded_values if x.endswith("-" + value) or x.endswith("/" + value)]
     if len(matches) == 1:
         return matches[0]
-    elif len(matches)>1:
-        logging.warning("More than one matching bare string replaacement %s", matches)
+    elif len(matches) > 1:
+        logging.warning("More than one matching bare string replacement %s", matches)
 
     return
 
@@ -196,8 +196,9 @@ def _bare_string_pre_preocessing(json_obj):
 
     expanded_values = []
     _find_expanded_values(expanded, expanded_values)
-    expanded_values = set([x for x in expanded_values if x.startswith("https://ref.gs1.org/cbv")])
-    logging.debug("replacements: %s", expanded_values)
+    logging.debug("all expanded_values: %s", expanded_values)
+    expanded_values = set([x for x in expanded_values if x.startswith("https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc")])
+    logging.debug("expanded_values for replacement: %s", expanded_values)
     json_obj = _replace_bare_string_values(json_obj, expanded_values)
 
     logging.debug("bare strings replaced: %s", json.dumps(json_obj, indent=2))
