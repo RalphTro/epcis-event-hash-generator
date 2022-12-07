@@ -27,7 +27,7 @@
         ],
         "inputQuantityList": [
           {
-            "epcClass": "urn:epc:class:lgtin:4012345.022222.87545GHGH",
+            "epcClass": "urn:epc:class:lgtin:4012345.022222.87545GHGH"
           }
         ],
         "outputQuantityList": [
