@@ -7,7 +7,7 @@ import logging
 import importlib.resources
 import json
 
-from pyld.jsonld import (JsonLdError, parse_link_header, LINK_HEADER_REL)
+from pyld.jsonld import JsonLdError
 
 
 def file_document_loader(secure=False, **kwargs):
@@ -24,7 +24,8 @@ def file_document_loader(secure=False, **kwargs):
     from pyld import jsonld
 
     context_file_hashes = {
-        "https://gs1.github.io/EPCIS/epcis-context.jsonld": "14b10c9d3e92d35f577bfc610fe5ec15aa2941124987919389d7cd9998516861"
+        "https://gs1.github.io/EPCIS/epcis-context.jsonld":
+        "14b10c9d3e92d35f577bfc610fe5ec15aa2941124987919389d7cd9998516861"
     }
 
     def loader(url, options={}):
