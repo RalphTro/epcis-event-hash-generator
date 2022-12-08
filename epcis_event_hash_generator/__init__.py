@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
 
+from pyld import jsonld
+
+try:
+    from .context import epcis_event_hash_generator
+except ImportError:
+    from context import epcis_event_hash_generator  # noqa: F401
+
+from epcis_event_hash_generator import file_document_loader
+
+
 JOIN_BY = ""
 """
 Join the substrings to the pre hash string using this deliminator.
@@ -104,3 +114,6 @@ defined, the second element is a property order for the children,
 otherwise the second element is None.
 
 """
+
+
+jsonld.set_document_loader(file_document_loader.file_document_loader())
