@@ -67,6 +67,8 @@ import logging
 import xml.etree.ElementTree as ElementTree
 from typing import Tuple
 
+_expansions = {"gs1:": "https://gs1.org/voc/"}
+
 
 def _remove_extension_tags(data):
     """
@@ -74,6 +76,24 @@ def _remove_extension_tags(data):
     """
     return data.replace('<extension>', '').replace('</extension>', '').replace(
         '<baseExtension>', '').replace('</baseExtension>', '')
+
+
+def _expand_value_prefix(obj):
+    """
+    Expand namespaces used in string values, e.g.
+    <sensorReport type="gs1:Temperature" value="26" uom="CEL" sDev="0.1"/>
+    to
+    <sensorReport type="https://gs1.org/voc/Temperature" value="26" uom="CEL" sDev="0.1"/>
+    """
+    for key, value in _expansions.items():
+        if obj[1].startswith(key):
+            obj = (obj[0], obj[1].replace(key, value), obj[2])
+
+    new_kids = []
+    for child in obj[2]:
+        new_kids.append(_expand_value_prefix(child))
+
+    return (obj[0], obj[1], new_kids)
 
 
 def _xml_to_py(root, sort=True):
@@ -120,6 +140,8 @@ def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
 
     # sort=False => preserve document order of events
     obj = _xml_to_py(eventList, False)
+
+    obj = _expand_value_prefix(obj)
 
     logging.debug("Simple python object:\n%s", obj)
 

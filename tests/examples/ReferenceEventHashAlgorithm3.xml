@@ -1,4 +1,4 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2020-12-10T15:45:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd" xmlns:example="https://ns.example.com/epcis">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2020-12-10T15:45:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd" xmlns:example="https://ns.example.com/epcis/">
 	<EPCISBody>
 		<EventList>
 			<ObjectEvent>
@@ -17,14 +17,12 @@
 				<bizTransactionList>
 					<bizTransaction type="urn:epcglobal:cbv:btt:po">urn:epc:id:gdti:4012345.11111.123</bizTransaction>
 				</bizTransactionList>
-				<extension>
-					<sourceList>
-						<source type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4012345.00000</source>
-					</sourceList>
-					<destinationList>
-						<destination type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:0614141.00000</destination>
-					</destinationList>
-				</extension>
+				<sourceList>
+					<source type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4012345.00000</source>
+				</sourceList>
+				<destinationList>
+					<destination type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:0614141.00000</destination>
+				</destinationList>
 				<example:userExt>CD-34</example:userExt>
 			</ObjectEvent>
 		</EventList>

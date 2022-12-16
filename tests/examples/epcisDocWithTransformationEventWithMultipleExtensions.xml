@@ -1,60 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<epcis:EPCISDocument
-    xmlns:epcis="urn:epcglobal:epcis:xsd:1"
-    xmlns:epcglobal="urn:epcglobal:xsd:1"
-    xmlns:c4l="https://circ4life.eecc.info/epcis"
-    schemaVersion="1.2"
-    creationDate="2022-02-17T10:01:00.000+02:00"
-    >
-  <EPCISBody>
-    <EventList>
-      <extension>
-        
-        <TransformationEvent>
-          <eventTime>2022-02-16T08:40:21.3142715Z</eventTime>
-          <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-          <inputEPCList>
-            <epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
-            <epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
-          </inputEPCList>
-          <outputEPCList>
-            <epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
-          </outputEPCList>
-          <bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
-          <disposition>urn:epcglobal:cbv:disp:damaged</disposition>
-
-          <c4l:lifeTime>P3Y</c4l:lifeTime>
-
-          <c4l:wasteList>
-            <c4l:wasteElement>
-              <c4l:waste>http://circ4life.eecc.info/material/plastics</c4l:waste>
-              <c4l:amount>
-                <c4l:quantity>0.5</c4l:quantity>
-                <c4l:uom>KGM</c4l:uom>
-              </c4l:amount>
-              <c4l:sink>http://circ4life.eecc.info/sink/landfill</c4l:sink>
-            </c4l:wasteElement>
-          </c4l:wasteList>
-
-          <c4l:resourceList>
-            <c4l:epc>https://circ4life.eecc.info/recycling/bin/obj/1234567890119051400001112345</c4l:epc>
-            <c4l:quantityElement>
-              <epcClass>http://circ4life.eecc.info/material/copper</epcClass>
-              <quantity>0.5</quantity>
-              <uom>KGM</uom>
-            </c4l:quantityElement>
-            <c4l:resourceElement>
-              <c4l:resource>https://w3id.org/saref#Electricity</c4l:resource>
-              <c4l:amount>
-                <c4l:quantity>0.5</c4l:quantity>
-                <c4l:uom>WHR</c4l:uom>
-              </c4l:amount>
-              <c4l:source>http://semanco02.hs-albsig.de/repository/ontology-releases/eu/semanco/ontology/SEMANCO/SEMANCO.owl#Not-Renewable_Energy_Source</c4l:source>
-            </c4l:resourceElement>
-          </c4l:resourceList>
-          
-        </TransformationEvent>
-      </extension>
-    </EventList>
-  </EPCISBody>
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" xmlns:epcglobal="urn:epcglobal:xsd:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c4l="https://circ4life.eecc.info/epcis" schemaVersion="2.0" creationDate="2022-02-17T10:01:00.000+02:00" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd">
+	<EPCISBody>
+		<EventList>
+			<TransformationEvent>
+				<eventTime>2022-02-16T08:40:21.3142715Z</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
+					<epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
+				</inputEPCList>
+				<outputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
+				</outputEPCList>
+				<bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
+				<disposition>urn:epcglobal:cbv:disp:damaged</disposition>
+				<c4l:lifeTime>P3Y</c4l:lifeTime>
+				<c4l:wasteList>
+					<c4l:wasteElement>
+						<c4l:waste>http://circ4life.eecc.info/material/plastics</c4l:waste>
+						<c4l:amount>
+							<c4l:quantity>0.5</c4l:quantity>
+							<c4l:uom>KGM</c4l:uom>
+						</c4l:amount>
+						<c4l:sink>http://circ4life.eecc.info/sink/landfill</c4l:sink>
+					</c4l:wasteElement>
+				</c4l:wasteList>
+				<c4l:resourceList>
+					<c4l:epc>https://circ4life.eecc.info/recycling/bin/obj/1234567890119051400001112345</c4l:epc>
+					<c4l:quantityElement>
+						<epcClass>http://circ4life.eecc.info/material/copper</epcClass>
+						<quantity>0.5</quantity>
+						<uom>KGM</uom>
+					</c4l:quantityElement>
+					<c4l:resourceElement>
+						<c4l:resource>https://w3id.org/saref#Electricity</c4l:resource>
+						<c4l:amount>
+							<c4l:quantity>0.5</c4l:quantity>
+							<c4l:uom>WHR</c4l:uom>
+						</c4l:amount>
+						<c4l:source>http://semanco02.hs-albsig.de/repository/ontology-releases/eu/semanco/ontology/SEMANCO/SEMANCO.owl#Not-Renewable_Energy_Source</c4l:source>
+					</c4l:resourceElement>
+				</c4l:resourceList>
+			</TransformationEvent>
+		</EventList>
+	</EPCISBody>
 </epcis:EPCISDocument>

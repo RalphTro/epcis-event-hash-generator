@@ -1,8 +1,11 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="2.0" creationDate="2019-10-07T15:00:00.000+01:00"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-2_0.xsd"
+<epcis:EPCISDocument 
+	xmlns:epcis="urn:epcglobal:epcis:xsd:2" 
+	schemaVersion="2.0" creationDate="2019-10-07T15:00:00.000+01:00"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd"
     xmlns:gs1="https://gs1.org/voc/"
     xmlns:cbvmda="urn:epcglobal:cbv:mda"
-    xmlns:example="https://ns.example.com/epcis"
+    xmlns:example="https://ns.example.com/epcis/"
     xmlns:example1="https://ns.example1.com/epcis"
     xmlns:example2="https://ns.example2.com/epcis"
     xmlns:example3="https://ns.example3.com/epcis"
@@ -21,33 +24,29 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
-                                <sensorMetadata time="2019-04-02T14:05:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999"/>
+                                <sensorMetadata time="2019-04-02T14:05:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999"/>
                                 <sensorReport type="gs1:MT-Temperature" value="26.0" uom="CEL"/>
                                 <sensorReport type="gs1:MT-Humidity" value="12.1" uom="A93"/>
                                 <sensorReport type="gs1:MT-Speed" value="160.0" uom="KMH"/>
                                 <sensorReport type="gs1:MT-Illuminance" value="800.0" uom="LUX"/>
                             </sensorElement>
                             <sensorElement>
-                                <sensorMetadata time="2019-04-02T14:35:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999"/>
+                                <sensorMetadata time="2019-04-02T14:35:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999"/>
                                 <sensorReport type="gs1:MT-Temperature" value="26.1" uom="CEL"/>
                                 <sensorReport type="gs1:MT-Humidity" value="12.2" uom="A93"/>
                                 <sensorReport type="gs1:MT-Speed" value="161.0" uom="KMH"/>
                                 <sensorReport type="gs1:MT-Illuminance" value="801.0" uom="LUX"/>
                             </sensorElement>
                             <sensorElement>
-                                <sensorMetadata time="2019-04-02T14:55:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999"/>
+                                <sensorMetadata time="2019-04-02T14:55:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999"/>
                                 <sensorReport type="gs1:MT-Temperature" value="26.2" uom="CEL"/>
                                 <sensorReport type="gs1:MT-Humidity" value="12.2" uom="A93"/>
                                 <sensorReport type="gs1:MT-Speed" value="162.0" uom="KMH"/>
                                 <sensorReport type="gs1:MT-Illuminance" value="802.0" uom="LUX"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 2: based on the same measurements as case 1. Data aggregated.-->
             <ObjectEvent>
@@ -61,19 +60,15 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
-                                <sensorMetadata startTime="2019-04-02T13:55:01.000+01:00" endTime="2019-04-02T14:55:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999" bizRules="https://example.com/gdti/4012345000054987"/>
+                                <sensorMetadata startTime="2019-04-02T13:55:01.000+01:00" endTime="2019-04-02T14:55:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999" bizRules="https://example.com/253/4012345000054987"/>
                                 <sensorReport type="gs1:MT-Temperature" minValue="26.0" maxValue="26.2" uom="CEL" meanValue="26.1" sDev="0.1"/>
                                 <sensorReport type="gs1:MT-Humidity" minValue="12.1" maxValue="12.2" uom="A93"/>
                                 <sensorReport type="gs1:MT-Speed" minValue="160.0" maxValue="162.0" uom="KMH"/>
                                 <sensorReport type="gs1:MT-Illuminance" minValue="800.0" maxValue="802.0" uom="LUX"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 3: documenting the storage conditions of a given location (note that there is no object ID in the what dimension) -->
             <ObjectEvent>
@@ -85,8 +80,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata startTime="2019-04-01T15:00:00.000+01:00" endTime="2019-04-02T14:59:59.999+01:00"/>
@@ -94,8 +87,6 @@
                                 <sensorReport type="gs1:MT-Humidity" minValue="69.2" maxValue="72.5" uom="A93"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 4: include some meta data in sensorReport element (in case sensor data originates from various sensor devices) -->
             <ObjectEvent>
@@ -107,7 +98,7 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
+
                     <quantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4023333.002000.2019-10-07</epcClass>
@@ -115,18 +106,15 @@
                             <uom>KGM</uom>
                         </quantityElement>
                     </quantityList>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata time="2019-04-02T14:55:00.000+01:00"/>
-                                <sensorReport type="gs1:MT-Temperature" value="26.0" uom="CEL" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999"/>
-                                <sensorReport type="gs1:MT-Humidity" value="12.1" uom="A93" deviceID="urn:epc:id:giai:4000001.222" deviceMetadata="https://id.gs1.org/giai/4000001222" rawData="https://example.org/giai/401234599999"/>
-                                <sensorReport type="gs1:MT-Speed" value="160" uom="KMH" deviceID="urn:epc:id:giai:4000001.333" deviceMetadata="https://id.gs1.org/giai/4000001333" rawData="https://example.org/giai/401234599999"/>
-                                <sensorReport type="gs1:MT-Illuminance" value="800" uom="LUX" deviceID="urn:epc:id:giai:4000001.444" deviceMetadata="https://id.gs1.org/giai/4000001444" rawData="https://example.org/giai/401234599999"/>
+                                <sensorReport type="gs1:MT-Temperature" value="26.0" uom="CEL" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999"/>
+                                <sensorReport type="gs1:MT-Humidity" value="12.1" uom="A93" deviceID="urn:epc:id:giai:4000001.222" deviceMetadata="https://id.gs1.org/8004/4000001222" rawData="https://example.org/8004/401234599999"/>
+                                <sensorReport type="gs1:MT-Speed" value="160" uom="KMH" deviceID="urn:epc:id:giai:4000001.333" deviceMetadata="https://id.gs1.org/8004/4000001333" rawData="https://example.org/8004/401234599999"/>
+                                <sensorReport type="gs1:MT-Illuminance" value="800" uom="LUX" deviceID="urn:epc:id:giai:4000001.444" deviceMetadata="https://id.gs1.org/8004/4000001444" rawData="https://example.org/8004/401234599999"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 5 (to be discouraged unless there is a strong reason to do so): transmit time-stamped sensor data. -->
             <ObjectEvent>
@@ -140,11 +128,9 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
-                                <sensorMetadata deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111"/>
+                                <sensorMetadata deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111"/>
                                 <sensorReport time="2019-04-02T14:05:00.000+01:00" type="gs1:MT-Temperature" value="26.0" uom="CEL"/>
                                 <sensorReport time="2019-04-02T14:15:00.000+01:00" type="gs1:MT-Temperature" value="26.1" uom="CEL"/>
                                 <sensorReport time="2019-04-02T14:25:00.000+01:00" type="gs1:MT-Temperature" value="26.2" uom="CEL"/>
@@ -153,8 +139,6 @@
                                 <sensorReport time="2019-04-02T14:55:00.000+01:00" type="gs1:MT-Temperature" value="26.5" uom="CEL"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 6: user/vendor extensions -->
             <ObjectEvent>
@@ -166,8 +150,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata startTime="2019-04-01T15:00:00.000+01:00" endTime="2019-04-02T14:59:59.999+01:00" example:someFurtherMetadata="someText"/>
@@ -179,8 +161,6 @@
                                 </example:furtherSensorData>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 7: accommodating non-float values -->
             <ObjectEvent>
@@ -194,8 +174,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata time="2019-07-19T14:00:00.000+01:00"/>
@@ -207,8 +185,6 @@
                                 <sensorReport type="rail:Mno" uriValue="https://example.org/rail/someSectorSpecificValue" deviceID="urn:epc:id:giai:4000001.116"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 8: other eventType, containing ALL possible attributes -->
             <AggregationEvent>
@@ -222,7 +198,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00025.0</id>
                 </readPoint>
-                <extension>
                     <childQuantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4012345.011111.1234</epcClass>
@@ -230,10 +205,9 @@
                             <uom>KGM</uom>
                         </quantityElement>
                     </childQuantityList>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
-                                <sensorMetadata time="2019-07-19T14:00:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999" dataProcessingMethod="https://example.com/gdti/4012345000054987" bizRules="https://example.org/gdti/4012345000054987"/>
+                                <sensorMetadata time="2019-07-19T14:00:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999" dataProcessingMethod="https://example.com/253/4012345000054987" bizRules="https://example.org/253/4012345000054987"/>
                                 <sensorReport type="gs1:MT-Humidity" value="12.1" uom="A93"/>
                                 <sensorReport type="gs1:MT-Molar_concentration" chemicalSubstance="https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
                                 <sensorReport type="gs1:MT-Molar_concentration" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>
@@ -248,12 +222,10 @@
                                 </example:furtherSensorData>
                             </sensorElement>
                             <sensorElement>
-                                <sensorReport type="gs1:MT-Temperature" uom="CEL" time="2019-07-19T14:00:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/giai/4000001111" rawData="https://example.org/giai/401234599999" dataProcessingMethod="https://example.com/gdti/4012345000054987" bizRules="https://example.org/gdti/4012345000054987"/>
+                                <sensorReport type="gs1:MT-Temperature" uom="CEL" time="2019-07-19T14:00:00.000+01:00" deviceID="urn:epc:id:giai:4000001.111" deviceMetadata="https://id.gs1.org/8004/4000001111" rawData="https://example.org/8004/401234599999" dataProcessingMethod="https://example.com/253/4012345000054987" bizRules="https://example.org/253/4012345000054987"/>
                                 <sensorReport type="example:someSensorProperty" stringValue="someSensorOutput"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </AggregationEvent>
             <!-- Case 9: Event with an error condition AND an alarm condition-->
             <ObjectEvent>
@@ -267,16 +239,12 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorReport type="gs1:AT-Error_condition" uriValue="https://example.com/ErrorCode-A827"/>
                                 <sensorReport type="gs1:AT-Alarm_condition" booleanValue="true"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 10: Event with multi-dimensional sensor data
             Here: velocity, consisting of three scalar values for speed (in m/s), for each direction of motion -->
@@ -291,8 +259,6 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00005.0</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorReport type="gs1:MT-Speed" value="4.5" component="example:x" uom="MTS"/>
@@ -300,8 +266,6 @@
                                 <sensorReport type="gs1:MT-Speed" value="0" component="example:z" uom="MTS"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </ObjectEvent>
             <!-- Case 11: Transation Event with sensor data, here: effective dose rate (P71 = millisievert per hour) -->
             <TransactionEvent>
@@ -320,22 +284,16 @@
                 <readPoint>
                     <id>urn:epc:id:sgln:4012345.00000.5</id>
                 </readPoint>
-                <extension>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorReport type="gs1:MT-EffectiveDoseRate" value="0.005" uom="P71"/>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
-                </extension>
             </TransactionEvent>
             <!-- Case 12: Transformation Event with all areas in which user extensions can appear -->
-            <extension>
                 <TransformationEvent>
                     <eventTime>2020-09-29T14:00:00.000+02:00</eventTime>
                     <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-                    <baseExtension>
                         <errorDeclaration>
                             <declarationTime>2020-09-29T15:00:00.000+02:00</declarationTime>
                             <example:issuer>Employee 123</example:issuer>
@@ -345,7 +303,6 @@
                             </example3:errorCodes>
                             <example:field example:furtherData="abcd1234"/>
                         </errorDeclaration>
-                    </baseExtension>
                     <inputQuantityList>
                         <quantityElement>
                             <epcClass>urn:epc:class:lgtin:4023333.055555.ABC123</epcClass>
@@ -373,7 +330,6 @@
                             <example2:sizeCode>B-2</example2:sizeCode>
                         </example2:userMasterData>
                     </ilmd>
-                    <extension>
                         <sensorElementList>
                             <sensorElement>
                                 <sensorMetadata startTime="2019-04-01T15:00:00.000+01:00" endTime="2019-04-02T14:59:59.999+01:00" example:someFurtherMetadata="someText"/>
@@ -386,7 +342,6 @@
                                 <example:someUserField>abc123</example:someUserField>
                             </sensorElement>
                         </sensorElementList>
-                    </extension>
                     <example:internalData>
                         <example:machine>urn:epc:id:giai:4012345.ABC</example:machine>
                         <example:procedure>A-1</example:procedure>
@@ -394,7 +349,6 @@
                     <example2:furtherData example2:assemblyLine="2" example2:workingShift="1"></example2:furtherData>
                     <example4:otherThings>some text</example4:otherThings>
                 </TransformationEvent>
-            </extension>
         </EventList>
     </EPCISBody>
 </epcis:EPCISDocument>

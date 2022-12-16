@@ -1,9 +1,16 @@
 {
-  "@context": "https://id.gs1.org/epcis-context.jsonld",
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "gs1": "https://gs1.org/voc/"
+    },
+    {
+     "example": "https://ns.example.com/epcis/"
+    }
+  ],
   "type": "EPCISDocument",
   "creationDate": "2020-03-03T13:07:51.709+00:00",
-  "schemaVersion": 1.2,
-  "format": "application/ld+json",
+  "schemaVersion": "2.0",
   "epcisBody": {
     "eventList": [
       {
@@ -17,28 +24,17 @@
           "urn:epc:id:sscc:4012345.0000000222"
         ],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:departing",
+        "bizStep": "departing",
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00011.987"},
         "example:myField1": {
-          "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField1": "2",
           "example:mySubField2": "5"
         },
-        "https:myField2": {
-          "@xmlns:https": "https://ns.example.com/epcis",
-          "#text": "0"
-        },
-        "https:myField3": {
-          "@xmlns:https": "https://ns.example.com/epcis",
-          "https:mySubField3": [
-            {
-              "@xmlns:example": "https://ns.example.com/epcis",
-              "#text": "3"
-            },
-            {
-              "@xmlns:example": "https://ns.example.com/epcis",
-              "#text": "1"
-            }
+        "example:myField2": "0",
+        "example:myField3": {
+          "example:mySubField3": [
+            "3",
+            "1"
           ]
         }
       },
@@ -53,19 +49,14 @@
           "urn:epc:id:sscc:4012345.0000000222"
         ],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:departing",
+        "bizStep": "departing",
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00011.987"},
         "example:myField1": {
-          "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField1": "2",
           "example:mySubField2": "5"
         },
-        "example:myField2": {
-          "@xmlns:example": "https://ns.example.com/epcis",
-          "#text": "0"
-        },
+        "example:myField2": "0",
         "example:myField3": {
-          "@xmlns:example": "https://ns.example.com/epcis",
           "example:mySubField3": [
             "3",
             "1"

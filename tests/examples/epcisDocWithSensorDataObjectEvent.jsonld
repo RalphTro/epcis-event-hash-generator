@@ -1,9 +1,14 @@
 {
-  "@context": ["https://id.gs1.org/epcis-context.jsonld",{"gs1": "https://gs1.org/voc/"}],
+  "@context": [
+    "https://gs1.github.io/EPCIS/epcis-context.jsonld",
+    {
+      "gs1": "https://gs1.org/voc/"
+    }
+  ],
+  "id": "https://id.example.org/document1",
   "type": "EPCISDocument",
-  "creationDate": "2022-02-17T11:30:47+00:00",
-  "schemaVersion": 1.2,
-  "format": "application/ld+json",
+  "schemaVersion": "2.0",
+  "creationDate": "2022-02-17T11:30:47.0Z",
   "epcisBody": {
     "eventList": [
       {
@@ -14,34 +19,36 @@
           "urn:epc:id:sgtin:4012345.011111.9876"
         ],
         "action": "OBSERVE",
-        "bizStep": "urn:epcglobal:cbv:bizstep:inspecting",
-        "readPoint": {"id": "urn:epc:id:sgln:4012345.00005.0"},
+        "bizStep": "inspecting",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00005.0"
+        },
         "sensorElementList": [
           {
             "sensorMetadata": {
               "time": "2022-02-16T14:05:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
-              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
-              "rawData": "https://example.org/giai/401234599999"
+              "deviceMetadata": "https://id.gs1.org/8004/4000001111",
+              "rawData": "https://id.example.org/8004/401234599999"
             },
             "sensorReport": [
               {
-                "type": "gs1:MT-Temperature",
+                "type": "Temperature",
                 "value": 26,
                 "uom": "CEL"
               },
               {
-                "type": "gs1:MT-Humidity",
+                "type": "AbsoluteHumidity",
                 "value": 12.1,
                 "uom": "A93"
               },
               {
-                "type": "gs1:MT-Speed",
+                "type": "Speed",
                 "value": 160,
                 "uom": "KMH"
               },
               {
-                "type": "gs1:MT-Illuminance",
+                "type": "Illuminance",
                 "value": 800,
                 "uom": "LUX"
               }
@@ -51,27 +58,27 @@
             "sensorMetadata": {
               "time": "2022-02-16T14:35:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
-              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
-              "rawData": "https://example.org/giai/401234599999"
+              "deviceMetadata": "https://id.gs1.org/8004/4000001111",
+              "rawData": "https://id.example.org/8004/401234599999"
             },
             "sensorReport": [
               {
-                "type": "gs1:MT-Temperature",
+                "type": "Temperature",
                 "value": 26.1,
                 "uom": "CEL"
               },
               {
-                "type": "gs1:MT-Humidity",
+                "type": "AbsoluteHumidity",
                 "value": 12.2,
                 "uom": "A93"
               },
               {
-                "type": "gs1:MT-Speed",
+                "type": "Speed",
                 "value": 161,
                 "uom": "KMH"
               },
               {
-                "type": "gs1:MT-Illuminance",
+                "type": "Illuminance",
                 "value": 801,
                 "uom": "LUX"
               }
@@ -81,27 +88,27 @@
             "sensorMetadata": {
               "time": "2022-02-16T14:55:00.000+01:00",
               "deviceID": "urn:epc:id:giai:4000001.111",
-              "deviceMetadata": "https://id.gs1.org/giai/4000001111",
-              "rawData": "https://example.org/giai/401234599999"
+              "deviceMetadata": "https://id.gs1.org/8004/4000001111",
+              "rawData": "https://id.example.org/8004/401234599999"
             },
             "sensorReport": [
               {
-                "type": "gs1:MT-Temperature",
+                "type": "Temperature",
                 "value": 26.2,
                 "uom": "CEL"
               },
               {
-                "type": "gs1:MT-Humidity",
+                "type": "AbsoluteHumidity",
                 "value": 12.2,
                 "uom": "A93"
               },
               {
-                "type": "gs1:MT-Speed",
+                "type": "Speed",
                 "value": 162,
                 "uom": "KMH"
               },
               {
-                "type": "gs1:MT-Illuminance",
+                "type": "Illuminance",
                 "value": 802,
                 "uom": "LUX"
               }

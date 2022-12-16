@@ -1,11 +1,19 @@
 {
-  "@context": "https://id.gs1.org/epcis-context.jsonld",
-  "type": "EPCISDocument",
-  "creationDate": "2022-02-17T11:30:47+00:00",
-  "schemaVersion": 1.2,
-  "format": "application/ld+json",
-  "epcisBody": {
-    "eventList": [
+	"@context": [
+		"https://gs1.github.io/EPCIS/epcis-context.jsonld",
+		{
+			"gs1": "https://gs1.org/voc/"
+		},
+      	{
+      		"example": "https://ns.example.com/epcis/"
+    	}
+	],
+	"id": "https://id.example.org/document1",
+	"type": "EPCISDocument",
+    "schemaVersion": "2.0",
+    "creationDate":"2022-02-17T11:30:47.0Z",
+    "epcisBody": {
+   	"eventList": [
       {
         "type": "TransformationEvent",
         "eventTime": "2020-01-14T00:00:00.000+01:00",
@@ -29,17 +37,14 @@
             "uom": "KGM"
           }
         ],
-        "bizStep": "urn:epcglobal:cbv:bizstep:commissioning",
+        "bizStep": "commissioning",
         "readPoint": {"id": "urn:epc:id:sgln:4012345.00000.0"},
         "errorDeclaration": {
           "declarationTime": "2020-01-15T00:00:00.000+01:00",
-          "reason": "urn:epcglobal:cbv:er:incorrect_data",
-          "example:vendorExtension": {
-            "@xmlns:example": "http://ns.example.com/epcis",
-            "#text": "Test1"
+          "reason": "incorrect_data",
+          "example:vendorExtension": "Test1"
           }
         }
-      }
     ]
   }
 }
