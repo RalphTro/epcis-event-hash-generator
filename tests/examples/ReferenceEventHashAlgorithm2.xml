@@ -26,7 +26,7 @@
                                 <sensorReport type="gs1:Temperature" value="26" uom="CEL" sDev="0.1"/>
                                 <sensorReport type="gs1:AbsoluteHumidity" value="12.1" uom="A93"/>
                                 <sensorReport type="gs1:Dimensionless" microorganism="https://www.ncbi.nlm.nih.gov/taxonomy/1126011" value="0.05" uom="C35"/>
-                                <sensorReport type="gs1:Dimensionlessn" chemicalSubstance="urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
+                                <sensorReport type="gs1:Dimensionless" chemicalSubstance="urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N" value="0.18" uom="C35"/>
                             </sensorElement>
                         </sensorElementList>
             </ObjectEvent>

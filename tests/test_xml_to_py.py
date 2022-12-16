@@ -49,15 +49,15 @@ def test_epcsi_reference_example():
                                                                  'urn:epc:id:sgln:4012345.00011.987',
                                                                  [])]),
                                                            ('recordTime', '2020-03-04T11:00:30.999+01:00', []), (
-                                                               '{https://ns.example.com/epcis}myField1', '',
-                                                               [('{https://ns.example.com/epcis}mySubField1', '2', []),
+                                                               '{https://ns.example.com/epcis/}myField1', '',
+                                                               [('{https://ns.example.com/epcis/}mySubField1', '2', []),
                                                                 (
-                                                                    '{https://ns.example.com/epcis}mySubField2', '5',
+                                                                    '{https://ns.example.com/epcis/}mySubField2', '5',
                                                                     [])]),
-                                                           ('{https://ns.example.com/epcis}myField2', '0', []), (
-                                                               '{https://ns.example.com/epcis}myField3', '',
-                                                               [('{https://ns.example.com/epcis}mySubField3', '1', []),
-                                                                ('{https://ns.example.com/epcis}mySubField3', '3',
+                                                           ('{https://ns.example.com/epcis/}myField2', '0', []), (
+                                                               '{https://ns.example.com/epcis/}myField3', '',
+                                                               [('{https://ns.example.com/epcis/}mySubField3', '1', []),
+                                                                ('{https://ns.example.com/epcis/}mySubField3', '3',
                                                                  [])])])])
 
     assert expected_obj == actual_obj

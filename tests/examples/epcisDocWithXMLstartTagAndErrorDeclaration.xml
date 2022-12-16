@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <epcis:EPCISDocument 
 	xmlns:epcis="urn:epcglobal:epcis:xsd:2" 
-	xmlns:example="https://ns.example.com/epcis" 
+	xmlns:example="https://ns.example.com/epcis/" 
 	schemaVersion="2.0" 
 	creationDate="2020-01-15T07:47:21.677Z" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
