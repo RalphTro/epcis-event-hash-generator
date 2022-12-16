@@ -2,34 +2,36 @@
   "@context": [
     "https://gs1.github.io/EPCIS/epcis-context.jsonld",
     {
-      "example": "http://ns.example.com/epcis/"
+      "gs1": "https://gs1.org/voc/"
     }
   ],
+  "id": "https://id.example.org/document1",
   "type": "EPCISDocument",
-  "schemaVersion": 2.0,
+  "schemaVersion": "2.0",
   "creationDate": "2022-02-17T11:30:47.0Z",
   "epcisBody": {
-    "event": {
-      "eventID": "_:event1",
-      "type": "ObjectEvent",
-      "action": "OBSERVE",
-      "bizStep": "urn:epcglobal:cbv:bizstep:shipping",
-      "disposition": "urn:epcglobal:cbv:disp:in_transit",
-      "epcList": [
-        "urn:epc:id:sgtin:0614141.107346.2017",
-        "urn:epc:id:sgtin:0614141.107346.2018"
-      ],
-      "eventTime": "2022-02-16T20:33:31.116000-06:00",
-      "eventTimeZoneOffset": "-06:00",
-      "readPoint": {
-        "id": "urn:epc:id:sgln:0614141.07346.1234"
-      },
-      "bizTransactionList": [
-        {
-          "type": "urn:epcglobal:cbv:btt:po",
-          "bizTransaction": "http://transaction.acme.com/po/12345678"
-        }
-      ]
-    }
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "action": "OBSERVE",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107346.2017",
+          "urn:epc:id:sgtin:0614141.107346.2018"
+        ],
+        "eventTime": "2022-02-16T20:33:31.116000-06:00",
+        "eventTimeZoneOffset": "-06:00",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:0614141.07346.1234"
+        },
+        "bizTransactionList": [
+          {
+            "type": "po",
+            "bizTransaction": "http://transaction.acme.com/po/12345678"
+          }
+        ]
+      }
+    ]
   }
 }

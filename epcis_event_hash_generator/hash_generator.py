@@ -138,7 +138,7 @@ def _canonize_value(text):
 def _try_format_web_vocabulary(text):
     """Replace old CBV URNs by new web vocabulary equivalents."""
     return text.replace(
-        'urn:epcglobal:cbv:bizstep:', 'https://ref.gs1.org/cbv/Bizstep-'
+        'urn:epcglobal:cbv:bizstep:', 'https://ref.gs1.org/cbv/BizStep-'
     ).replace(
         'urn:epcglobal:cbv:disp:', 'https://ref.gs1.org/cbv/Disp-'
     ).replace(

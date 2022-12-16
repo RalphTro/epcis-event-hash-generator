@@ -91,6 +91,7 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ref.gs1.org’).
 Example:
 ‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ref.gs1.org/cbv/BizStep-receiving’
+
 15. If an EPCIS event is represented in JSON/JSON-LD, standard vocabulary elements are not expressed as URIs, but in bare string notation (i.e. ‘in_transit’ instead of ‘https://ref.gs1.org/cbv/Disp-in_transit’). All standard vocabulary elements expressed in bare string notation SHALL be expanded to their corresponding GS1 Web URI (starting with ‘https://ref.gs1.org/cbv’).
 16. If present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’) or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding canonical GS1 Digital Link URI (starting with ‘https://id.gs1.org’). Canonical GS1 Digital Link URIs are specified in [GS1 Digital Link: URI Syntax, release 1.2], section 4.11.
 17. If a GS1 Digital Link URI is present, it SHALL take the form of a constrained canonical GS1 Digital Link URI. Specifically: (I) A custom domain SHALL be replaced by ‘https://id.gs1.org’. (II) The query string SHALL be stripped off. (III) It SHALL only contain the most fine-granular level of identification, i.e. contain the following GS1 keys/key qualifiers only: `00 / 01 / 01 21 / 01 10 / 01 235 / 253 / 255 / 401 / 402 / 414 / 414 254 / 417 / 8003 / 8004 / 8006 / 8006 21 / 8006 10 / 8010 / 8010 8011 / 8017 / 8018`
@@ -144,7 +145,7 @@ For better understanding, the following illustrations include the data content o
 
 Example 1:
 
-![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.png)
+![Example 1 for EPCIS event pre-hash computation](docs/hashingAlgorithmLogicIllustration_example1.jpg)
 
 Run `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml -pj "\n"` to get a similar output of the pre-hash string and `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorithm.xml` to verify the hash.
 
@@ -156,7 +157,7 @@ Run `epcis_event_hash_generator/main.py tests/examples/ReferenceEventHashAlgorit
 
 Example 3:
 
-![Example 3 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example3.png)
+![Example 3 for EPCIS event pre-hash computation ](docs/hashingAlgorithmLogicIllustration_example3.jpg)
 
 The line breaks in the pre-hash string are displayed for readability reasons. The actual pre-hash string does not contain any whitespace (unless specifically used in a value) and the lines displayed in the above picture have to be concatenated (by empty string) in order to get the actual pre-hash string.
 

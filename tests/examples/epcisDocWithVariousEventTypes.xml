@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:1" schemaVersion="1.2" creationDate="2019-10-21T14:59:02.099+02:00" xmlns:cbvmda="urn:epcglobal:cbv:mda" xmlns:example="http://ns.example.com/epcis" xsi:schemaLocation="urn:epcglobal:epcis:xsd:1 EPCglobal-epcis-1_2.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2019-10-21T14:59:02.099+02:00" xmlns:cbvmda="urn:epcglobal:cbv:mda:" xmlns:example="https://ns.example.com/epcis/" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<EPCISBody>
-	  <EventList>
+		<EventList>
 			<ObjectEvent>
 				<eventTime>2019-10-21T11:00:30.000+01:00</eventTime>
 				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
@@ -17,15 +17,13 @@
 					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
 					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
 				</bizTransactionList>
-				<extension>
-					<sourceList>
-						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
-					</sourceList>
-					<destinationList>
-						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
-						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
-					</destinationList>
-				</extension>
+				<sourceList>
+					<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:5200001.00000</source>
+				</sourceList>
+				<destinationList>
+					<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.98765</destination>
+					<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
+				</destinationList>
 			</ObjectEvent>
 			<ObjectEvent>
 				<eventTime>2019-10-21T12:00:30.000+01:00</eventTime>
@@ -42,17 +40,15 @@
 					<bizTransaction type="urn:epcglobal:cbv:btt:desadv">urn:epcglobal:cbv:bt:5200001000008:4711</bizTransaction>
 					<bizTransaction type="urn:epcglobal:cbv:btt:inv">urn:epcglobal:cbv:bt:5200001000008:RE1099</bizTransaction>
 				</bizTransactionList>
-				<extension>
-					<sourceList>
-						<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.00012</source>
-						<source type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4000001.00012</source>
-					</sourceList>
-					<destinationList>
-						<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4012345.00000</destination>
-						<destination type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4012345.00000</destination>
-						<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
-					</destinationList>
-				</extension>
+				<sourceList>
+					<source type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4000001.00012</source>
+					<source type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4000001.00012</source>
+				</sourceList>
+				<destinationList>
+					<destination type="urn:epcglobal:cbv:sdt:possessing_party">urn:epc:id:pgln:4012345.00000</destination>
+					<destination type="urn:epcglobal:cbv:sdt:owning_party">urn:epc:id:pgln:4012345.00000</destination>
+					<destination type="urn:epcglobal:cbv:sdt:location">urn:epc:id:sgln:4012345.00012.0</destination>
+				</destinationList>
 			</ObjectEvent>
 			<ObjectEvent>
 				<eventTime>2019-10-21T15:45:00.000+01:00</eventTime>
@@ -75,18 +71,16 @@
 				<readPoint>
 					<id>urn:epc:id:sgln:4054739.00001.0</id>
 				</readPoint>
-				<extension>
-					<quantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4054739.099914.20160711</epcClass>
-							<quantity>600</quantity>
-							<uom>KGM</uom>
-						</quantityElement>
-					</quantityList>
-					<ilmd>
-						<cbvmda:bestBeforeDate>2019-10-21</cbvmda:bestBeforeDate>
-					</ilmd>
-				</extension>
+				<quantityList>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4054739.099914.20160711</epcClass>
+						<quantity>600</quantity>
+						<uom>KGM</uom>
+					</quantityElement>
+				</quantityList>
+				<ilmd>
+					<cbvmda:bestBeforeDate>2019-10-21</cbvmda:bestBeforeDate>
+				</ilmd>
 			</ObjectEvent>
 			<AggregationEvent>
 				<eventTime>2019-10-21T11:58:56.591+02:00</eventTime>
@@ -113,19 +107,17 @@
 				<readPoint>
 					<id>urn:epc:id:sgln:4012345.00025.0</id>
 				</readPoint>
-				<extension>
-					<childQuantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4054739.099902.P2</epcClass>
-							<quantity>12</quantity>
-							<uom>KGM</uom>
-						</quantityElement>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4054739.012345.lot2</epcClass>
-							<quantity>17</quantity>
-						</quantityElement>
-					</childQuantityList>
-				</extension>
+				<childQuantityList>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4054739.099902.P2</epcClass>
+						<quantity>12</quantity>
+						<uom>KGM</uom>
+					</quantityElement>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4054739.012345.lot2</epcClass>
+						<quantity>17</quantity>
+					</quantityElement>
+				</childQuantityList>
 			</AggregationEvent>
 			<AggregationEvent>
 				<eventTime>2019-10-21T11:58:56.591+02:00</eventTime>
@@ -191,101 +183,93 @@
 				<bizLocation>
 					<id>urn:epc:id:sgln:4012345.00002.0</id>
 				</bizLocation>
-				<extension>
-					<quantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4012345.099988.2014-02-10</epcClass>
-							<quantity>2030</quantity>
-							<uom>KGM</uom>
-						</quantityElement>
-					</quantityList>
-				</extension>
+				<quantityList>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4012345.099988.2014-02-10</epcClass>
+						<quantity>2030</quantity>
+						<uom>KGM</uom>
+					</quantityElement>
+				</quantityList>
 			</TransactionEvent>
-			<extension>
-				<TransformationEvent>
-					<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
-					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-					<inputEPCList>
-						<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
-						<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
-					</inputEPCList>
-					<outputEPCList>
-						<epc>urn:epc:id:sgtin:4012345.077889.25</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.26</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.27</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.28</epc>
-					</outputEPCList>
-					<transformationID>urn:epc:id:gdti:4012345.55555.1234</transformationID>
-					<bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
-					<readPoint>
-						<id>urn:epc:id:sgln:4012345.00001.0</id>
-					</readPoint>
-					<ilmd>
-						<example:bestBeforeDate>2020-11-10</example:bestBeforeDate>
-						<example:batch>4711</example:batch>
-					</ilmd>
-				</TransformationEvent>
-			</extension>
-			<extension>
-				<TransformationEvent>
-					<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
-					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-					<inputEPCList>
-						<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
-						<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
-					</inputEPCList>
-					<inputQuantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4012345.011111.4444</epcClass>
-							<quantity>10</quantity>
-							<uom>KGM</uom>
-						</quantityElement>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:0614141.077777.987</epcClass>
-							<quantity>30</quantity>
-						</quantityElement>
-						<quantityElement>
-							<epcClass>urn:epc:idpat:sgtin:4012345.066666.*</epcClass>
-							<quantity>220</quantity>
-						</quantityElement>
-					</inputQuantityList>
-					<outputEPCList>
-						<epc>urn:epc:id:sgtin:4012345.077889.25</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.26</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.27</epc>
-						<epc>urn:epc:id:sgtin:4012345.077889.28</epc>
-					</outputEPCList>
-					<bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
-					<readPoint>
-						<id>urn:epc:id:sgln:4012345.00001.0</id>
-					</readPoint>
-					<ilmd>
-						<example:bestBeforeDate>2015-11-10</example:bestBeforeDate>
-						<example:batch>XYZ</example:batch>
-					</ilmd>
-				</TransformationEvent>
-			</extension>
-			<extension>
-				<TransformationEvent>
-					<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
-					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-					<inputEPCList>
-						<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
-						<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
-					</inputEPCList>
-					<outputQuantityList>
-						<quantityElement>
-							<epcClass>urn:epc:class:lgtin:4054739.099902.P20131121</epcClass>
-							<quantity>9520</quantity>
-						</quantityElement>
-					</outputQuantityList>
-					<transformationID>urn:epc:id:gdti:4012345.55555.1234</transformationID>
-					<bizStep>http://epcis.example.com/user/vocab/bizstep/commissioning</bizStep>
-					<readPoint>
-						<id>urn:epc:id:sgln:4012345.00001.0</id>
-					</readPoint>
-				</TransformationEvent>
-			</extension>
+			<TransformationEvent>
+				<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
+					<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
+				</inputEPCList>
+				<outputEPCList>
+					<epc>urn:epc:id:sgtin:4012345.077889.25</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.26</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.27</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.28</epc>
+				</outputEPCList>
+				<transformationID>urn:epc:id:gdti:4012345.55555.1234</transformationID>
+				<bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:4012345.00001.0</id>
+				</readPoint>
+				<ilmd>
+					<example:bestBeforeDate>2020-11-10</example:bestBeforeDate>
+					<example:batch>4711</example:batch>
+				</ilmd>
+			</TransformationEvent>
+			<TransformationEvent>
+				<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
+					<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
+				</inputEPCList>
+				<inputQuantityList>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4012345.011111.4444</epcClass>
+						<quantity>10</quantity>
+						<uom>KGM</uom>
+					</quantityElement>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:0614141.077777.987</epcClass>
+						<quantity>30</quantity>
+					</quantityElement>
+					<quantityElement>
+						<epcClass>urn:epc:idpat:sgtin:4012345.066666.*</epcClass>
+						<quantity>220</quantity>
+					</quantityElement>
+				</inputQuantityList>
+				<outputEPCList>
+					<epc>urn:epc:id:sgtin:4012345.077889.25</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.26</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.27</epc>
+					<epc>urn:epc:id:sgtin:4012345.077889.28</epc>
+				</outputEPCList>
+				<bizStep>urn:epcglobal:cbv:bizstep:commissioning</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:4012345.00001.0</id>
+				</readPoint>
+				<ilmd>
+					<example:bestBeforeDate>2015-11-10</example:bestBeforeDate>
+					<example:batch>XYZ</example:batch>
+				</ilmd>
+			</TransformationEvent>
+			<TransformationEvent>
+				<eventTime>2019-10-21T14:58:56.591+02:00</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4012345.011122.25</epc>
+					<epc>urn:epc:id:sgtin:4000001.065432.99886655</epc>
+				</inputEPCList>
+				<outputQuantityList>
+					<quantityElement>
+						<epcClass>urn:epc:class:lgtin:4054739.099902.P20131121</epcClass>
+						<quantity>9520</quantity>
+					</quantityElement>
+				</outputQuantityList>
+				<transformationID>urn:epc:id:gdti:4012345.55555.1234</transformationID>
+				<bizStep>http://epcis.example.com/user/vocab/bizstep/exampling</bizStep>
+				<readPoint>
+					<id>urn:epc:id:sgln:4012345.00001.0</id>
+				</readPoint>
+			</TransformationEvent>
 		</EventList>
 	</EPCISBody>
 </epcis:EPCISDocument>
