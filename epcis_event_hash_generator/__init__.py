@@ -21,6 +21,7 @@ When using the command line utility, this can be changed via the -j flag.
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
+    ('certificationInfo', None),
     ('errorDeclaration',
      [
          ('declarationTime', None),
@@ -85,13 +86,16 @@ PROP_ORDER = [
                              ('sensorReport',
                               [
                                   ('type', None),
+                                  ('exception', None),
                                   ('deviceID', None),
                                   ('deviceMetadata', None),
                                   ('rawData', None),
                                   ('dataProcessingMethod', None),
+                                  ('time', None),
                                   ('microorganism', None),
                                   ('chemicalSubstance', None),
                                   ('value', None),
+                                  ('component', None),
                                   ('stringValue', None),
                                   ('booleanValue', None),
                                   ('hexBinaryValue', None),
@@ -103,6 +107,7 @@ PROP_ORDER = [
                                   ('percRank', None),
                                   ('percValue', None),
                                   ('uom', None),
+                                  ('coordinateReferenceSystem', None)
                               ])  # end sensorReport
                              ])])  # end sensorElement
 ]
