@@ -17,9 +17,13 @@ def _py_to_value_list(py_obj):
     Ignoring times and eventID
     """
     key_values = []
-    key, value, children = py_obj
-    if "time" not in key.lower() and value != "" and key != "eventID":
-        key_values.append((key, _canonize_value(value)))
+    if isinstance(py_obj, tuple) and len(py_obj) == 2:
+        children = py_obj
+    else:
+        key, value, children = py_obj
+        if "time" not in key.lower() and value != "" and key != "eventID":
+            key_values.append((key, _canonize_value(value)))
+
     for child in children:
         key_values += _py_to_value_list(child)
     return key_values
