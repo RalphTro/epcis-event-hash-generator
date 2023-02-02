@@ -67,7 +67,7 @@ import logging
 import xml.etree.ElementTree as ElementTree
 from typing import Tuple
 
-_expansions = {"gs1:": "https://gs1.org/voc/"}
+_expansions = {"gs1:": "https://gs1.org/voc/", "cbv:": "https://ref.gs1.org/cbv/"}
 
 
 def _remove_extension_tags(data):
