@@ -47,12 +47,6 @@ def _correct_xml_vs_js_structure_mismatch(py_obj):
     Some of the object substructure in XML EPCIS is just not present in JSON or unsystematically renamed
     """
 
-    # bisTransaction, source and destination have a nested id in JSON but not in XML
-    if py_obj[0] == "bizTransaction" or py_obj[0] == "source" or py_obj[0] == "destination":
-        for element in [x for x in py_obj[2] if x[0] == py_obj[0]]:
-            py_obj[2].remove(element)
-            return py_obj[0], element[1], py_obj[2]
-
     # inconsistent child names / omissions
     if py_obj[0] == "inputEPC" or py_obj[0] == "outputEPC":
         return "epc", py_obj[1], py_obj[2]
@@ -72,18 +66,23 @@ def _correct_xml_vs_js_structure_mismatch(py_obj):
 def deep_structure_correction(py_obj):
     """deep copy, applying structure corrections"""
 
-    lvl1_corrected_children = py_obj[2]
+    lvl1_corrected_children = []
+    if len(py_obj) > 2:
+        lvl1_corrected_children = py_obj[2]
 
     # Systematic correction of elementList child name omissions
     lists = {}
-    for element in [element for element in lvl1_corrected_children if element[0].endswith("List")]:
+    for element in [e for e in lvl1_corrected_children if not isinstance(e[0], tuple) and e[0].endswith("List")]:
         if not element[0] in lists:
             lists[element[0]] = []
         lists[element[0]].append((element[0][:-4], element[1], element[2]))
         lvl1_corrected_children.remove(element)
 
     for list_name, list_elements in lists.items():
-        lvl1_corrected_children.append((list_name, "", list_elements))
+        if list_name in ["sourceList", "destinationList", "bizTransactionList"]:
+            lvl1_corrected_children.append((list_name, "", list(map(lambda e: (e[2][0], e[2][1]), list_elements))))
+        else:
+            lvl1_corrected_children.append((list_name, "", list_elements))
 
     # list of childEPCs -> childEPCs list of EPCs
     child_epcs = []
@@ -97,7 +96,11 @@ def deep_structure_correction(py_obj):
     corrected_children = []
     # recursion
     for element in lvl1_corrected_children:
-        corrected_children.append(deep_structure_correction(element))
+        # no need to do recursion for elements with no second level
+        if element[0] in ["sourceList", "destinationList", "bizTransactionList"]:
+            corrected_children.append(element)
+        else:
+            corrected_children.append(deep_structure_correction(element))
 
     # 2nd level corrections
     return _correct_xml_vs_js_structure_mismatch((py_obj[0], py_obj[1], corrected_children))
