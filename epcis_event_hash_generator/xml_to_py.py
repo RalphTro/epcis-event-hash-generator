@@ -119,7 +119,6 @@ def check_for_nested_tuples_with_type_attribute(obj):
                 if isinstance(child, tuple) and child[0] == 'type':
                     child_as_list = list(child)
                     skip = True
-                    # TODO: value replacement in tuple yet to be taken care of
                     if str(child_as_list[1]).startswith(key):
                         altered = True
                         child_as_list[1] = str(child_as_list[1]).replace(key, value)
