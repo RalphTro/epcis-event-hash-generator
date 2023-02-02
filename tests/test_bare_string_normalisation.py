@@ -23,9 +23,7 @@ def test_epcsi_reference_example():
             ]),
             ('type', 'ObjectEvent', []),
             ('bizTransactionList', '', [
-                ('bizTransaction', 'http://transaction.acme.com/po/12345678', [
-                    ('type', 'https://ref.gs1.org/cbv/BTT-po', [])
-                ])
+                (('type', 'https://ref.gs1.org/cbv/BTT-po', []), ('bizTransaction', 'http://transaction.acme.com/po/12345678', []))
             ]),
             ('epcList', '', [
                 ('epc', 'urn:epc:id:sgtin:0614141.107346.2017', []),
