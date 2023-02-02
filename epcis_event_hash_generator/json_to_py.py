@@ -86,7 +86,8 @@ def _collect_namespaces_from_jsonld_context(context):
 
 
 def _json_to_py(json_obj):
-    """ Recursively convert a string/list/dict to a simple python object
+    """
+    Recursively convert a string/list/dict to a simple python object
     """
     global _namespaces
 
@@ -126,7 +127,9 @@ def _json_to_py(json_obj):
         logging.debug("converting '%s' to str", json_obj)
         return "", str(json_obj), []
 
-    py_obj[2].sort()
+    # do not sort elements with bizTransaction, source and destination
+    if not [k for k in ["bizTransaction", "source", "destination"] if k in json_obj]:
+        py_obj[2].sort()
     return py_obj
 
 
