@@ -1,24 +1,26 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2022-04-07T10:00:00Z" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd" xmlns:gs1="https://gs1.org/voc/">
-  <EPCISBody>
-    <EventList>
-      <ObjectEvent>
-        <eventTime>2022-04-07T10:00:00Z</eventTime>
-        <eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
-        <epcList>
-          <epc>https://id.example.com/8003/040123450007718765</epc>
-        </epcList>
-        <action>OBSERVE</action>
-        <bizStep>urn:epcglobal:cbv:bizstep:sensor_reporting</bizStep>
-        <readPoint>
-          <id>https://id.example.com/414/4012345000054</id>
-        </readPoint>
-        <sensorElementList>
-          <sensorElement>
-            <sensorReport type="gs1:Angle" coordinateReferenceSystem="http://www.opengis.net/def/crs/OGC/1.3/CRS84" value="42.698334" component="gs1:Latitude" uom="DD" />
-            <sensorReport type="gs1:Angle" coordinateReferenceSystem="http://www.opengis.net/def/crs/OGC/1.3/CRS84" value="23.319941" component="gs1:Longitude" uom="DD" />
-          </sensorElement>
-        </sensorElementList>
-      </ObjectEvent>
-    </EventList>
-  </EPCISBody>
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2022-04-07T10:00:00Z"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd"
+    xmlns:gs1="https://ref.gs1.org/cbv/Comp-">
+    <EPCISBody>
+        <EventList>
+            <ObjectEvent>
+                <eventTime>2022-04-07T10:00:00Z</eventTime>
+                <eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+                <epcList>
+                    <epc>https://id.example.com/8003/040123450007718765</epc>
+                </epcList>
+                <action>OBSERVE</action>
+                <bizStep>urn:epcglobal:cbv:bizstep:sensor_reporting</bizStep>
+                <readPoint>
+                    <id>https://id.example.com/414/4012345000054</id>
+                </readPoint>
+                <sensorElementList>
+                    <sensorElement>
+                        <sensorReport type="gs1:Angle" coordinateReferenceSystem="http://www.opengis.net/def/crs/OGC/1.3/CRS84" value="42.698334" component="gs1:latitude" uom="DD" />
+                        <sensorReport type="gs1:Angle" coordinateReferenceSystem="http://www.opengis.net/def/crs/OGC/1.3/CRS84" value="23.319941" component="gs1:longitude" uom="DD" />
+                    </sensorElement>
+                </sensorElementList>
+            </ObjectEvent>
+        </EventList>
+    </EPCISBody>
 </epcis:EPCISDocument>
