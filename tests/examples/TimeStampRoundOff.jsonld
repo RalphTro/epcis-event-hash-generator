@@ -1,0 +1,69 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2023-02-02T11:05:00.0Z",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2023-02-02T11:04:03.1415Z",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "https://id.gs1.de/00/040123451111111110"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "shipping",
+        "disposition": "in_transit",
+        "readPoint": {
+          "id": "https://id.gs1.de/414/4012345000115"
+        }
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2023-02-02T11:04:03.1414Z",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "https://id.gs1.de/00/040123451111111110"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "transporting",
+        "readPoint": {
+          "id": "geo:50.947573340894124,6.922120147375441"
+        }
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2023-02-12T11:04:03.1415Z",
+        "eventTimeZoneOffset": "+01:00",
+        "certificationInfo": "https://accreditation-council.example.org/certificate/ABC12345",
+        "epcList": [
+          "https://id.gs1.de/01/04012345999990/21/XYZ-1234"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "receiving",
+        "disposition": "in_progress",
+        "readPoint": {
+          "id": "https://id.gs1.de/414/4012345000115"
+        },
+        "sensorElementList": [
+          {
+            "sensorMetadata": {
+              "time": "2023-02-12T11:04:03.1007Z",
+              "bizRules": "https://id.example.com/253/4012345000054987"
+            },
+            "sensorReport": [
+              {
+                "type": "Dimensionless",
+                "exception": "ALARM_CONDITION",
+                "coordinateReferenceSystem": "http://www.opengis.net/def/crs/EPSG/0/27700"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
