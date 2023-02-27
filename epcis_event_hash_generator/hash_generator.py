@@ -50,6 +50,12 @@ def _fix_time_stamp_format(timestamp):
 
     # convert to UTC
     abstract_date_time = abstract_date_time.astimezone(datetime.timezone.utc)
+
+    microsecond = abstract_date_time.microsecond
+
+    # round off microsecond upto 3 digits
+    abstract_date_time = abstract_date_time.replace(microsecond=round(microsecond, -3))
+
     # normalise precision to ms and convert to ISO string using "Z" instead of +00:00
     fixed = abstract_date_time.isoformat(timespec='milliseconds')[:-6] + "Z"
 
