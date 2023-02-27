@@ -21,6 +21,7 @@ When using the command line utility, this can be changed via the -j flag.
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
+    ('certificationInfo', None),
     ('errorDeclaration',
      [
          ('declarationTime', None),
@@ -67,9 +68,10 @@ PROP_ORDER = [
     ]),
     ('readPoint', [('id', None)]),
     ('bizLocation', [('id', None)]),
-    ('bizTransactionList', [('bizTransaction', [('type', None)])]),
-    ('sourceList', [('source', [('type', None)])]),
-    ('destinationList', [('destination', [('type', None)])]),
+
+    ('bizTransactionList', [(('type', None), ('bizTransaction', None))]),
+    ('sourceList', [(('type', None), ('source', None))]),
+    ('destinationList', [(('type', None), ('destination', None))]),
     ('sensorElementList', [('sensorElement',
                             [('sensorMetadata',
                               [
@@ -85,6 +87,7 @@ PROP_ORDER = [
                              ('sensorReport',
                               [
                                   ('type', None),
+                                  ('exception', None),
                                   ('deviceID', None),
                                   ('deviceMetadata', None),
                                   ('rawData', None),
@@ -105,6 +108,7 @@ PROP_ORDER = [
                                   ('percRank', None),
                                   ('percValue', None),
                                   ('uom', None),
+                                  ('coordinateReferenceSystem', None)
                               ])  # end sensorReport
                              ])])  # end sensorElement
 ]

@@ -67,7 +67,7 @@ import logging
 import xml.etree.ElementTree as ElementTree
 from typing import Tuple
 
-_expansions = {"gs1:": "https://gs1.org/voc/"}
+_expansions = {"gs1:": "https://gs1.org/voc/", "cbv:": "https://ref.gs1.org/cbv/"}
 
 
 def _remove_extension_tags(data):
@@ -85,15 +85,50 @@ def _expand_value_prefix(obj):
     to
     <sensorReport type="https://gs1.org/voc/Temperature" value="26" uom="CEL" sDev="0.1"/>
     """
+
+    # a special logic required to deal with nested tuple structure for elements
+    # like sourceList, destinationList, bizTransactionList
+    (restructured_obj, skip) = check_for_nested_tuples_with_type_attribute(obj)
+
+    if skip:
+        return restructured_obj
+    else:
+        for key, value in _expansions.items():
+            if obj[1].startswith(key):
+                obj = (obj[0], obj[1].replace(key, value), obj[2])
+
+        new_kids = []
+        for child in obj[2]:
+            new_kids.append(_expand_value_prefix(child))
+        return obj[0], obj[1], new_kids
+
+
+def check_for_nested_tuples_with_type_attribute(obj):
+    """
+    Checks if type attribute value to be expanded in various nested tuple elements
+    like source, destination, bizTranslation, etc.
+    """
+    skip = False
+    restructured_obj = None
+    altered = False
+
     for key, value in _expansions.items():
-        if obj[1].startswith(key):
-            obj = (obj[0], obj[1].replace(key, value), obj[2])
+        if isinstance(obj, tuple) and len(obj) == 2:
+            obj_as_list = list(obj)
+            for index, child in enumerate(obj_as_list):
+                if isinstance(child, tuple) and child[0] == 'type':
+                    child_as_list = list(child)
+                    skip = True
+                    if str(child_as_list[1]).startswith(key):
+                        altered = True
+                        child_as_list[1] = str(child_as_list[1]).replace(key, value)
+                        obj_as_list[index] = tuple(child_as_list)
+            restructured_obj = tuple(obj_as_list)
 
-    new_kids = []
-    for child in obj[2]:
-        new_kids.append(_expand_value_prefix(child))
+    if altered:
+        return restructured_obj, skip
 
-    return (obj[0], obj[1], new_kids)
+    return obj, skip
 
 
 def _xml_to_py(root, sort=True):
@@ -111,6 +146,18 @@ def _xml_to_py(root, sort=True):
     # Sort lists to compensate for using ordered list to model unordered ones
     if sort:
         children.sort()
+
+    # ensure attributes & values of bizTransaction, source and destination are in expected order
+    children_in_order = []
+    for child in children:
+        if child[0] == 'bizTransaction' or child[0] == 'source' or child[0] == 'destination':
+            if isinstance(child[2], list):
+                tuple_of_children = (child[2][0], (child[0], child[1], []))
+                children_in_order.append(tuple_of_children)
+
+    if children_in_order:
+        children.clear()
+        children += children_in_order
 
     text = ""
     if root.text:

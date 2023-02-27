@@ -166,14 +166,30 @@ def _generic_child_list_to_prehash_string(children):
     logging.debug("Parsing remaining elements in: %s", children)
 
     for child in children:
-        text = child[1].strip()
-        if text:
-            text = _canonize_value(text)
-            text = "=" + text
-        list_of_values.append(child[0] + text + _generic_child_list_to_prehash_string(child[2]))
+        if isinstance(child, tuple) and len(child) == 2 and isinstance(child[0], tuple):
+            list_of_values.append(_generic_child_list_to_prehash_string(child))
+        else:
+            text = child[1].strip()
+            if text:
+                text = _canonize_value(text)
+                text = "=" + text
+            list_of_values.append(child[0] + text + _generic_child_list_to_prehash_string(child[2]))
 
-    list_of_values.sort()
+    if len(children) > 1 and should_sort(children):
+        list_of_values.sort()
     return JOIN_BY.join(list_of_values)
+
+
+def should_sort(children):
+    """
+    avoid sort for 'bizTransaction', 'source', 'destination' to match order as defined in CBV 2.0
+    :param children:
+    :return: True/False
+    """
+    for child in children:
+        if child[0] == 'bizTransaction' or child[0] == 'source' or child[0] == 'destination':
+            return False
+    return True
 
 
 def _gather_elements_not_in_order(children, child_order):

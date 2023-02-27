@@ -6,11 +6,12 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="epcis-event-hash-generator",
     keywords="epcis GS1 hashing traceability",
-    version="1.6.2",
-    author="Sebastian Schmittner",
+    version="1.7.0",
+    author="""Package author: Sebastian Schmittner
+    Code authors: https://github.com/RalphTro/epcis-event-hash-generator/graphs/contributors""",
     author_email="sebastian.schmittner@eecc.de",
     license="MIT",
-    description="Exemplary implementation of the epcis event hash generator algorithm described in the README",
+    description="Exemplary implementation of the EPCIS event hash generator algorithm described in the README",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/RalphTro/epcis-event-hash-generator",
