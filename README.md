@@ -179,6 +179,30 @@ That said, the algorithm has limited applicability when EPCIS events are redacte
 * RFC 6920, Naming Things with Hashes, https://tools.ietf.org/html/rfc6920
 * Named Information Hash Algorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
 
+## Acknowledgements
+
+The following table lists, in alphabetical order of their GitHub profile name, all persons who have contributed to this project so far through:
+- software development (:computer:)
+- maintenance (:construction:) 
+- submitting issues (:ticket:)
+- testing (:microscope:)
+- providing advice/feedback/ideas (:bulb:) 
+
+All of this was and is both very valuable as well as very much appreciated and we would like to take the opportunity to express our gratitude for all this valuable support.  
+
+| GitHub Profile |  Link + Image         | Name (if revealed)   | Primary contribution |
+| -------------- | --------------------- | -------------------- | -------------- |
+| Aravinda93     | [![](https://github.com/Aravinda93.png?size=50)](https://github.com/Aravinda93)     | Aravinda Baliga      | :ticket: :bulb: :microscope: |
+| clementh59     | [![](https://github.com/clementh59.png?size=50)](https://github.com/clementh59)     | Clément              | :ticket: :microscope: |
+| CraigRe        | [![](https://github.com/CraigRe.png?size=50)](https://github.com/CraigRe)           | Craig Alan Repec     | :bulb:  |
+| dakbhavesh     | [![](https://github.com/dakbhavesh.png?size=50)](https://github.com/dakbhavesh)     | Bhavesh Shah         | :computer: :construction: :microscope: |
+| domguinard     | [![](https://github.com/domguinard.png?size=50)](https://github.com/domguinard)     | Dominique Guinard    | :bulb: |
+| Echsecutor     | [![](https://github.com/Echsecutor.png?size=50)](https://github.com/Echsecutor)     | Sebastian Schmittner | :computer: :construction: :microscope: |
+| mgh128         | [![](https://github.com/mgh128.png?size=50)](https://github.com/mgh128)             | Mark Harrison        | :bulb: |
+| RalphTro       | [![](https://github.com/RalphTro.png?size=50)](https://github.com/RalphTro)         | Ralph Troeger        | :microscope: :ticket: :computer: |
+| sboeckelmann   | [![](https://github.com/sboeckelmann.png?size=50)](https://github.com/sboeckelmann) |                      | :bulb: |
+| ShaikDayan     | [ShaikDayan](https://github.com/ShaikDayan)                             |                      | :microscope: :ticket: |
+| tnahddisttud   | [![](https://github.com/tnahddisttud.png?size=50)](https://github.com/tnahddisttud) | Siddhant Pandey      | :computer: :construction: |
 
 ## License
 
