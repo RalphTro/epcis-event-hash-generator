@@ -1,6 +1,12 @@
 {
   "@context": [
-    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
+    {
+      "cbv": "https://ref.gs1.org/cbv/"
+    },
+    {
+      "gs1": "https://gs1.org/voc/"
+    }
   ],
   "type": "EPCISDocument",
   "schemaVersion": "2.0",
@@ -23,16 +29,16 @@
           {
             "sensorReport": [
               {
-                "type": "Angle",
+                "type": "gs1:Angle",
                 "value": 42.698334,
-                "component": "Latitude",
+                "component": "cbv:Comp-latitude",
                 "uom": "DD",
                 "coordinateReferenceSystem": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
               },
               {
-                "type": "Angle",
+                "type": "gs1:Angle",
                 "value": 23.319941,
-                "component": "Longitude",
+                "component": "cbv:Comp-longitude",
                 "uom": "DD",
                 "coordinateReferenceSystem": "http://www.opengis.net/def/crs/OGC/1.3/CRS84"
               }
