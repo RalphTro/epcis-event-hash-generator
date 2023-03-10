@@ -61,15 +61,23 @@ from epcis_event_hash_generator import json_xml_model_mismatch_correction
 _namespaces = {}  # global dictionary gathered during parsing
 
 
-def _namespace_replace(key):
+def _namespace_replace(text, is_value=False):
     """If the key contains a namespace (followed by ":"), replace it with
     the {naemspace_url} from the _namespaces dict.
     """
-    splitted = key.split(":", 1)
-    if len(splitted) > 1:
+
+    if not isinstance(text, str):
+        return text
+
+    splitted = text.split(":", 1)
+
+    if len(splitted) > 1 and splitted[0] in _namespaces:
+        if is_value:
+            return _namespaces[splitted[0]].replace('{', '').replace('}', '') + splitted[1]
+
         return _namespaces[splitted[0]] + splitted[1]
 
-    return key
+    return text
 
 
 def _collect_namespaces_from_jsonld_context(context):
@@ -125,7 +133,7 @@ def _json_to_py(json_obj):
 
     else:
         logging.debug("converting '%s' to str", json_obj)
-        return "", str(json_obj), []
+        return "", str(_namespace_replace(json_obj, True)), []
 
     # do not sort elements with bizTransaction, source and destination
     if not [k for k in ["bizTransaction", "source", "destination"] if k in json_obj]:
