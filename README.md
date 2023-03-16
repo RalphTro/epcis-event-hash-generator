@@ -206,7 +206,7 @@ All of this was and is both very valuable as well as very much appreciated and w
 
 ## License
 
-<img alt="MIT" style="border-width:0" src="https://opensource.org/files/OSIApproved_1.png" width="150px;"/><br />
+<img alt="Open Source Initiative" style="border-width:0" src="docs/OSI.jpeg" width="150px;"/><br />
 
 Copyright 2020, 2021 | Ralph Tröger <ralph.troeger@gs1.de> and Sebastian Schmittner <schmittner@eecc.info>
 
