@@ -200,8 +200,8 @@ All of this was and is both very valuable as well as very much appreciated and w
 | Echsecutor     | [![](https://github.com/Echsecutor.png?size=50)](https://github.com/Echsecutor)     | Sebastian Schmittner | :computer: :construction: :microscope: |
 | mgh128         | [![](https://github.com/mgh128.png?size=50)](https://github.com/mgh128)             | Mark Harrison        | :bulb: |
 | RalphTro       | [![](https://github.com/RalphTro.png?size=50)](https://github.com/RalphTro)         | Ralph Troeger        | :microscope: :ticket: :computer: |
-| sboeckelmann   | [![](https://github.com/sboeckelmann.png?size=50)](https://github.com/sboeckelmann) |                      | :bulb: |
-| ShaikDayan     | [ShaikDayan](https://github.com/ShaikDayan)                             |                      | :microscope: :ticket: |
+| sboeckelmann   | [![](https://github.com/sboeckelmann.png?size=50)](https://github.com/sboeckelmann) | Sven Boeckelmann     | :bulb: |
+| ShaikDayan     | [![](https://github.com/ShaikDayan.png?size=50)](https://github.com/ShaikDayan)     | Shaik Dayan          | :microscope: :ticket: |
 | tnahddisttud   | [![](https://github.com/tnahddisttud.png?size=50)](https://github.com/tnahddisttud) | Siddhant Pandey      | :computer: :construction: |
 
 ## License
