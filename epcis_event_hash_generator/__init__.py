@@ -22,12 +22,6 @@ PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
     ('certificationInfo', None),
-    ('errorDeclaration',
-     [
-         ('declarationTime', None),
-         ('reason', None),
-         ('correctiveEventIDs', [('correctiveEventID', None)])
-     ]),
     ('parentID', None),
     ('epcList', [('epc', None)]),
     ('inputEPCList', [('epc', None)]),
