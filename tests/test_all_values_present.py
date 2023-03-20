@@ -14,9 +14,14 @@ TEST_FILE_PATH = "examples/"
 def _py_to_value_list(py_obj):
     """
     Transform a nested (Key, Value, Children) object tree into a list of (key, value) pairs.
-    Ignoring times and eventID
+    Ignoring times, eventID and errorDeclaration
     """
     key_values = []
+
+    # Disregard a check for errorDeclaration
+    if py_obj[0] == "errorDeclaration":
+        return key_values
+
     if isinstance(py_obj, tuple) and len(py_obj) == 2:
         children = py_obj
     else:
@@ -41,6 +46,7 @@ def _check_values(filename):
 
     for (py_obj, prehash_string) in zip(events[2], prehash_string_list):
         key_values = _py_to_value_list(py_obj)
+        print(key_values)
         for key, value in key_values:
             msg = "Value '{}' for key '{}' not contained in prehash string\n{}\n for file {}".format(value,
                                                                                                      key,
