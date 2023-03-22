@@ -163,10 +163,16 @@ def _gather_user_extensions(child_list):
         if 'eventTime' in child[0] or 'action' in child[0]:
             return user_extensions
 
+    # collect user extensions in a separate list
     for x in child_list:
         if isinstance(x, tuple) and ('{' in x[0] and '/}' in x[0]):
             user_extensions.append(x)
-            child_list.remove(x)
+
+    # remove user extensions from original list
+    if user_extensions:
+        for element_to_remove in user_extensions:
+            child_list.remove(element_to_remove)
+
     return user_extensions
 
 
