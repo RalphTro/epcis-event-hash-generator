@@ -101,6 +101,9 @@ def _recurse_through_children_in_order(child_list, child_order):
     """
     pre_hash = ""
     logging.debug("Calculating pre hash for child list %s \nWith order %s", child_list, child_order)
+
+    user_extensions = _gather_user_extensions(child_list)
+
     for (child_name, sub_child_order) in child_order:
         children = [x for x in child_list if x[0] == child_name]  # elements with the same name
         list_of_values = []
@@ -124,6 +127,10 @@ def _recurse_through_children_in_order(child_list, child_order):
                 list_of_values.insert(0, pre_hash)  # yields correct Joining behavior
             pre_hash = JOIN_BY.join(list_of_values)
 
+    if len(user_extensions) > 0:
+        user_extensions_prehash = _generic_child_list_to_prehash_string(user_extensions)
+        pre_hash = pre_hash + JOIN_BY + user_extensions_prehash
+
     logging.debug("child list pre hash is %s", pre_hash)
 
     return pre_hash
@@ -139,6 +146,34 @@ def _canonize_value(text):
         return converted
     logging.debug("No canonical form for '%s'", text)
     return text
+
+
+def _gather_user_extensions(child_list):
+    """
+    Collect user extensions enclosed in child like sensorElementList, readPoint, etc.
+    So that user extensions can be appended to its enclosing element only
+    """
+    user_extensions = []
+
+    if len(child_list) <= 1:
+        return user_extensions
+
+    # ignore top level user extensions
+    for child in child_list:
+        if 'eventTime' in child[0] or 'action' in child[0]:
+            return user_extensions
+
+    # collect user extensions in a separate list
+    for x in child_list:
+        if isinstance(x, tuple) and ('{' in x[0] and '/}' in x[0]):
+            user_extensions.append(x)
+
+    # remove user extensions from original list
+    if user_extensions:
+        for element_to_remove in user_extensions:
+            child_list.remove(element_to_remove)
+
+    return user_extensions
 
 
 def _try_format_web_vocabulary(text):
