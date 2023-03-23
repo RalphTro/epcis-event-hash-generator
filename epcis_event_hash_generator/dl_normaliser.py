@@ -73,23 +73,19 @@ def checkDigit(keyWoCD):
     -------
         str or None: Check digit for GS1 key or None if keyWoCD is invalid.
     """
-    # Check that input string conveys number of digits that correspond to a given GS1 key
-    if not match(r'(^\d{7}$)|(^\d{11}$)|(^\d{12}$)|(^\d{13}$)|(^\d{16}$)|(^\d{17}$)', keyWoCD):
-        return None
-    else:
-        # Reverse string
-        keyWoCD = keyWoCD[::-1]
-        # Alternatively fetch digits, multiply them by 3 or 1, and sum them up
-        sum = 0
-        for i in range(len(keyWoCD)-1, -1, -1):
-            if int(keyWoCD[i]) == 0:
-                continue
-            elif i % 2 != 0:
-                sum += int(keyWoCD[i]) * 1
-            else:
-                sum += int(keyWoCD[i]) * 3  
-        # Subtract sum from nearest equal or higher multiple of ten
-        checkDigit = math.ceil(sum / 10) * 10 - sum
+    # Reverse string
+    keyWoCD = keyWoCD[::-1]
+    # Alternatively fetch digits, multiply them by 3 or 1, and sum them up
+    sum = 0
+    for i in range(len(keyWoCD)-1, -1, -1):
+        if int(keyWoCD[i]) == 0:
+            continue
+        elif i % 2 != 0:
+            sum += int(keyWoCD[i]) * 1
+        else:
+            sum += int(keyWoCD[i]) * 3  
+    # Subtract sum from nearest equal or higher multiple of ten
+    checkDigit = math.ceil(sum / 10) * 10 - sum
     return (checkDigit)
 
 
