@@ -30,8 +30,7 @@ import logging
 import math
 
 def __web_uri_percent_encoder(input):
-    """
-    Function percent-encodes URL-unsafe characters in GS1 Digital Link URIs.
+    """Function percent-encodes URL-unsafe characters in GS1 Digital Link URIs.
 
     Table 7-1 in the GS1 Digital Link Standard requires
     the following symbols to be percent-encoded:
@@ -50,6 +49,7 @@ def __web_uri_percent_encoder(input):
     str
         Percent-encoded equivalent of character.
     """
+    
     return (
         input.replace('!', '%21')
              .replace('(', '%28')
@@ -71,8 +71,9 @@ def checkDigit(keyWoCD):
 
     Returns
     -------
-        str or None: Check digit for GS1 key or None if keyWoCD is invalid.
+        str: Check digit for GS1 key.
     """
+
     # Reverse string
     keyWoCD = keyWoCD[::-1]
     # Alternatively fetch digits, multiply them by 3 or 1, and sum them up
@@ -90,8 +91,7 @@ def checkDigit(keyWoCD):
 
 
 def normaliser(uri):
-    """
-    Function converts any standard URI conveying a GS1 Key in Canonical GS1 DL URI.
+    """Function converts any standard URI conveying a GS1 Key in Canonical GS1 DL URI.
 
     Function 'normaliser' expects any URI to be used in EPCIS events
     that convey a GS1 key, i.e. EPC URIs, EPC Class URIs,
@@ -111,6 +111,7 @@ def normaliser(uri):
         Constrained, canonicalised GS1 Digital Link URI equivalent.
     None
     """
+
     if not isinstance(uri, str):
         logging.warning("dl normaliser called with non-string argument")
         return None
