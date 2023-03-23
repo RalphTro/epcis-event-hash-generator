@@ -13,7 +13,7 @@ It converts all of them into one normalised form, meaning that it
 
 .. moduleauthor:: Ralph Troeger <ralph.troeger@gs1.de>
 
-Copyright 2019-2021 Ralph Troeger
+Copyright 2019-2023 Ralph Troeger
 
 This program is free software: you can redistribute it and/or modify
 it under the terms given in the LICENSE file.
@@ -28,7 +28,6 @@ file for details.
 from re import match
 import logging
 import math
-
 
 def __web_uri_percent_encoder(input):
     """
@@ -63,12 +62,13 @@ def __web_uri_percent_encoder(input):
 
 def checkDigit(keyWoCD):
     """Returns check digit for GTIN-8, GTIN-12, GTIN-13, GLN, GTIN-14, SSCC, GSIN, GSRN, GSRN-P.
-    Returns None if input (GS1 key without check digit) is invalid.
     For further details, see GS1 GenSpecs, section 7.9.1: Standard check digit calculations for GS1 data structures.
+
     Parameters
     ----------
     input : keyWoCD (str)
         GS1 key without check digit.
+
     Returns
     -------
         str or None: Check digit for GS1 key or None if keyWoCD is invalid.
@@ -83,7 +83,7 @@ def checkDigit(keyWoCD):
         elif i % 2 != 0:
             sum += int(keyWoCD[i]) * 1
         else:
-            sum += int(keyWoCD[i]) * 3  
+            sum += int(keyWoCD[i]) * 3
     # Subtract sum from nearest equal or higher multiple of ten
     checkDigit = math.ceil(sum / 10) * 10 - sum
     return (checkDigit)
