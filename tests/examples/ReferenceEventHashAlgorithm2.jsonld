@@ -49,7 +49,7 @@
               },
               {
                 "type": "Dimensionless",
-                "chemicalSubstance": "urn:epcglobal:cbv:inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
+                "chemicalSubstance": "https://identifiers.org/inchikey:CZMRCDWAGMRECN-UGDNZRGBSA-N",
                 "value": 0.18,
                 "uom": "C35"
               }
