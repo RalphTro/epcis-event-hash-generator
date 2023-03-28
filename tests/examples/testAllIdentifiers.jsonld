@@ -14,6 +14,7 @@
         "epcList": [
           "urn:epc:id:sgtin:4012345.012345.12",
           "urn:epc:id:sscc:4012345.0000000333",
+          "https://id.gs1.org/00/040123450000003338",
           "urn:epc:id:grai:4012345.66666.87",
           "urn:epc:id:giai:4012345.AAbb",
           "urn:epc:id:gsrn:4012345.9876540000",
