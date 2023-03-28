@@ -12,7 +12,7 @@ def test_good_epc_conversion():
     assert normaliser('urn:epc:id:sgtin:415056789012.0.987654') == "https://id.gs1.org/01/04150567890128/21/987654"
     assert normaliser(
         'urn:epc:id:sgtin:0614141.812345.6789%2F%26%25%22!%3F()') == "https://id.gs1.org/01/80614141123458/21/6789%2F%26%25%22%21%3F%28%29"
-    assert normaliser('urn:epc:id:sscc:4012345.3111111111') == "https://id.gs1.org/00/3401234531111111110"
+    assert normaliser('urn:epc:id:sscc:4012345.3111111111') == "https://id.gs1.org/00/340123451111111111"
     assert normaliser('urn:epc:id:sgln:4012345.00005.122') == "https://id.gs1.org/414/4012345000054/254/122"
     assert normaliser('urn:epc:id:sgln:4012345.00005.0') == "https://id.gs1.org/414/4012345000054"
     assert normaliser('urn:epc:id:grai:4012345.00022.334455') == "https://id.gs1.org/8003/04012345000221334455"
