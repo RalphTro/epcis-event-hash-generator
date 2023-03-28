@@ -127,3 +127,8 @@ def test_incorrect_syntax():
     assert normaliser('42') is None
     assert normaliser(42) is None
     assert normaliser('Hello World!') is None
+
+
+def test_regression_87():
+    "See https://github.com/RalphTro/epcis-event-hash-generator/issues/87"
+    assert normaliser('urn:epc:id:sscc:4012345.0000000011') == 'https://id.gs1.org/00/040123450000000115'
