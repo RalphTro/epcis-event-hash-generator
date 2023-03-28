@@ -132,3 +132,10 @@ def test_incorrect_syntax():
 def test_regression_87():
     "See https://github.com/RalphTro/epcis-event-hash-generator/issues/87"
     assert normaliser('urn:epc:id:sscc:4012345.0000000011') == 'https://id.gs1.org/00/040123450000000115'
+
+def test_regression_52():
+    "See https://github.com/RalphTro/epcis-event-hash-generator/issues/52"
+
+    assert normaliser("urn:epc:id:gsrn:4012345.9876540000") == "https://id.gs1.org/8018/401234598765400000"
+    assert normaliser("urn:epc:id:gsrnp:4012345.0000098765") == "https://id.gs1.org/8017/401234500000987658"
+    assert normaliser("urn:epc:id:gsin:4012345.999987654") == "https://id.gs1.org/402/40123459999876541"
