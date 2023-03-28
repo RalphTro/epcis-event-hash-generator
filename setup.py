@@ -30,7 +30,6 @@ setuptools.setup(
     },
     install_requires=[
         'python_dateutil>=2.8',
-        'Flask>=1.1',
-        'gtin>=0.1.13'
+        'Flask>=1.1'
     ],
 )
