@@ -137,7 +137,7 @@ def normaliser(uri):
             r'^urn:epc:id:sscc:((\d{6}\.\d{11}$)|(\d{7}\.\d{10}$)|(\d{8}\.\d{9}$)|(\d{9}\.\d{8}$)|(\d{10}\.\d{7}$)|(\d{11}\.\d{6}$)|(\d{12}\.\d{5}$))',
             uri) is not None:
         gs1companyprefix = uri[16:partition]
-        serialref = uri[(partition + 1):]
+        serialref = uri[(partition + 2):]
         rawSSCC = uri[(partition + 1):(partition + 2)] + gs1companyprefix + serialref
         return ('https://id.gs1.org/00/' + rawSSCC + str(check_digit(rawSSCC)))
 
