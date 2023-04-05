@@ -173,8 +173,8 @@ This algorithm has *various potential areas of application*:
 That said, the algorithm has limited applicability when EPCIS events are redacted (meaning that, e.g. for privacy reasons, EPCIS events are not shared entirely, but deliberately omit specific fields or including readPoint IDs with a lesser granularity - see EPCIS and CBV Implementation Guide, section 6.7). In such a case, the content of a redacted EPCIS event will in no case yield to the hash value of the original one.
 
 ## References
-* EPCIS Standard, v. 1.2: https://www.gs1.org/standards/epcis
-* Core Business Vocabulary (CBV) Standard, v. 1.2.2: https://www.gs1.org/standards/epcis
+* EPCIS Standard, v. 2.0: https://ref.gs1.org/standards/epcis/
+* Core Business Vocabulary (CBV) Standard, v. 2.0: https://ref.gs1.org/standards/cbv/
 * RFC 6920, Naming Things with Hashes, https://tools.ietf.org/html/rfc6920
 * Named Information Hash Algorithm Registry, https://www.iana.org/assignments/named-information/named-information.xhtml
 
