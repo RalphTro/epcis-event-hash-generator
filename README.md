@@ -92,7 +92,6 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding GS1 Web Vocabulary URI equivalent (starting with ‘https://ref.gs1.org’).
 Example:
 ‘urn:epcglobal:cbv:bizstep:receiving’ --> ‘https://ref.gs1.org/cbv/BizStep-receiving’
-
 15. If an EPCIS event is represented in JSON/JSON-LD, standard vocabulary elements are not expressed as URIs, but in bare string notation (i.e. ‘in_transit’ instead of ‘https://ref.gs1.org/cbv/Disp-in_transit’). All standard vocabulary elements expressed in bare string notation SHALL be expanded to their corresponding GS1 Web URI (starting with ‘https://ref.gs1.org/cbv’).
 16. If present, EPC URIs (starting with ‘urn:epc:id’), EPC Class URIs (starting with ‘urn:epc:class’) or EPC Pattern URIs (starting with ‘urn:epc:idpat’) SHALL be converted into the corresponding canonical GS1 Digital Link URI (starting with ‘https://id.gs1.org’). Canonical GS1 Digital Link URIs are specified in [GS1 Digital Link: URI Syntax, release 1.2], section 4.11.
 17. If a GS1 Digital Link URI is present, it SHALL take the form of a constrained canonical GS1 Digital Link URI. Specifically: (I) A custom domain SHALL be replaced by ‘https://id.gs1.org’. (II) The query string SHALL be stripped off. (III) It SHALL only contain the most fine-granular level of identification, i.e. contain the following GS1 keys/key qualifiers only: `00 / 01 / 01 21 / 01 10 / 01 235 / 253 / 255 / 401 / 402 / 414 / 414 254 / 417 / 8003 / 8004 / 8006 / 8006 21 / 8006 10 / 8010 / 8010 8011 / 8017 / 8018`
@@ -115,32 +114,31 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 1 | `eventType` |
 | 2 | `eventTime` |
 | 3 | `eventTimeZoneOffset` |
-| 4 | `errorDeclaration` (`declarationTime`, `reason`, `correctiveEventIDs` – `correctiveEventID`) |
-| 5 | `epcList` – `epc` |
-| 6 | `parentID` |
-| 7 | `inputEPCList` – `epc` |
-| 8 | `childEPCs` – `epc` |
-| 9 | `quantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
-| 10 | `childQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
-| 11 | `inputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
-| 12 | `outputEPCList` – `epc` |
-| 13 | `outputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
-| 14 | `action` |
-| 15 | `transformationID` |
-| 16 | `bizStep` |
-| 17 | `disposition` |
-| 18 | `persistentDisposition` - (`set`, `unset`) |
-| 19 | `readPoint` – `id` |
-| 20 | `bizLocation` – `id` |
-| 21 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
-| 22 | `sourceList` – `source` (`source ID`, `source type`) |
-| 23 | `destinationList` – `destination` (`destination ID`, `destination type`) |
-| 24 | `sensorElement` ( |
+| 4 | `epcList` – `epc` |
+| 5 | `parentID` |
+| 6 | `inputEPCList` – `epc` |
+| 7 | `childEPCs` – `epc` |
+| 8 | `quantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 9 | `childQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 10 | `inputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 11 | `outputEPCList` – `epc` |
+| 12 | `outputQuantityList` – `quantityElement` (`epcClass`, `quantity`, `uom`) |
+| 13 | `action` |
+| 14 | `transformationID` |
+| 15 | `bizStep` |
+| 16 | `disposition` |
+| 17 | `persistentDisposition` - (`set`, `unset`) |
+| 18 | `readPoint` – `id` |
+| 19 | `bizLocation` – `id` |
+| 20 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
+| 21 | `sourceList` – `source` (`source ID`, `source type`) |
+| 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
+| 23 | `sensorElement` ( |
 |    | `sensorMetadata` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `bizRules`), |
 |    | `sensorReport` (`type`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
 |    | ) |
-| 25 | `ilmd` – `{ILMD elements}` |
-| 26 | `{User extension elements}`|
+| 24 | `ilmd` – `{ILMD elements}` |
+| 25 | `{User extension elements}`|
 
 For better understanding, the following illustrations include the data content of EPCIS events (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), show the corresponding pre-hash string as well as the canonical hash value of that event.
 
