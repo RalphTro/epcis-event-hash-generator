@@ -4,8 +4,9 @@
 [![Linter Status](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Code%20Style/badge.svg)](https://github.com/RalphTro/epcis-event-hash-generator/actions?query=workflow%3A%22Code+Style%22)
 ![Docker Release Build](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Docker%20Release%20Build/badge.svg)
 
-This is a proposal/reference implementation for a method to uniquely identify an EPCIS event or validate the integrity thereof. To this end, a syntax-/representation-agnostic approach based on hashing is developed.
-The <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint thereof. 
+This is a reference implementation for a method to uniquely identify an EPCIS event as specified in the Core Business Vocabulary (CBV) Standard 2.0. 
+The *EPCIS Event Hash ID* works syntax-/representation-agnostic and is based on hashing.
+This <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted in XML or JSON-LD) and returns the hash value(s) of the contained EPCIS events representing a unique fingerprint thereof. 
 
 ![EPCIS event hash generator algorithm illustration](docs/epcisEventHashGenerator.png)
 
