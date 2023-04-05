@@ -133,9 +133,9 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 | 20 | `bizTransactionList` – `bizTransaction` (`business transaction identifier`, `business transaction type`) |
 | 21 | `sourceList` – `source` (`source ID`, `source type`) |
 | 22 | `destinationList` – `destination` (`destination ID`, `destination type`) |
-| 23 | `sensorElement` ( |
+| 23 | `sensorElementList` - `sensorElement` ( |
 |    | `sensorMetadata` (`time`, `startTime`, `endTime`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `bizRules`), |
-|    | `sensorReport` (`type`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`)|
+|    | `sensorReport` (`type`, `exception`, `deviceID`, `deviceMetadata`, `rawData`, `dataProcessingMethod`, `time`, `microorganism`, `chemicalSubstance`, `value`, `component`, `stringValue`, `booleanValue`, `hexBinaryValue`, `uriValue`, `minValue`, `maxValue`, `meanValue`, `sDev`, `percRank`, `percValue`, `uom`, `coordinateReferenceSystem`)|
 |    | ) |
 | 24 | `ilmd` – `{ILMD elements}` |
 | 25 | `{User extension elements}`|
