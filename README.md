@@ -13,9 +13,7 @@ This <b>PROTOTYPICAL DEMO SOFTWARE</b> takes an EPCIS Document (either formatted
 
 ## Status of the reference implementation
 
-The current (v1.6.0 at the time of writing) set of examples and implementation of the json parser is based on an old version of the EPCIS 2.0 JSON schema, see https://github.com/RalphTro/epcis-event-hash-generator/issues/37 . Currently, only the XML hashing should be used. See
-https://github.com/gs1/EPCIS/blob/master/JSON/
-for the current (still draft) version of the JSON schema and for examples.
+Working as expected, no known major bugs.  
 
 
 
