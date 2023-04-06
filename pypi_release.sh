@@ -17,7 +17,7 @@ flake8
 cd tests
 pytest
 cd ..
-$PYTHON -m pip install -e .
+#$PYTHON -m pip install -e .
 echo -e "[ok]\t testing"
 
 echo
