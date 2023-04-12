@@ -1,0 +1,32 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2023-01-11T12:00:00.000+01:00",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2023-01-11T12:00:00+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "https://id.gs1.de/01/04012345999990/21/XYZ-1234"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "receiving",
+        "disposition": "in_progress",
+        "readPoint": {
+          "id": "https://id.gs1.de/414/4012345000115"
+        },
+        "bizTransactionList": [
+          {
+            "type": "desadv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345000009:ASN1099"
+          }
+        ]
+      }
+    ]
+  }
+}
