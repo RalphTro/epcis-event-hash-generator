@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cbv="https://ref.gs1.org/cbv/" schemaVersion="2.0" creationDate="2023-01-11T12:00:00.000+01:00" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd">
+	<EPCISBody>
+		<EventList>
+			<ObjectEvent>
+				<eventTime>2023-01-11T12:00:00+01:00</eventTime>
+				<eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
+				<epcList>
+					<epc>https://id.gs1.de/01/04012345999990/21/XYZ-1234</epc>
+				</epcList>
+				<action>OBSERVE</action>
+				<bizStep>cbv:BizStep-receiving</bizStep>
+				<disposition>cbv:Disp-in_progress</disposition>
+				<readPoint>
+					<id>https://id.gs1.de/414/4012345000115</id>
+				</readPoint>
+				<bizTransactionList>
+					<bizTransaction type="cbv:BTT-desadv">urn:epcglobal:cbv:bt:4012345000009:ASN1099</bizTransaction>
+				</bizTransactionList>
+			</ObjectEvent>
+		</EventList>
+	</EPCISBody>
+</epcis:EPCISDocument>
