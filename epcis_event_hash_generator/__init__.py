@@ -116,4 +116,4 @@ otherwise the second element is None.
 """
 
 
-jsonld.set_document_loader(file_document_loader.file_document_loader())
+jsonld.set_document_loader(file_document_loader.file_document_loader(timeout=10))

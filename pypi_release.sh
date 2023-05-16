@@ -10,6 +10,13 @@ cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
 echo "Publishing Package from $(pwd)"
 
+echo -e "[...]\t removing old artefacts"
+rm -rf *.egg-info
+rm -rf build
+rm -rf dist
+rm -rf */__pycache__
+echo -e "[ok]\t removing artefacts"
+
 echo
 echo -e "[...]\t testing"
 $PYTHON -m pip install -r requirements.txt
@@ -17,15 +24,13 @@ flake8
 cd tests
 pytest
 cd ..
-#$PYTHON -m pip install -e .
+$PYTHON -m pip install -e .
 echo -e "[ok]\t testing"
 
 echo
 echo -e "[...]\t building"
-$PYTHON -m pip install --upgrade setuptools
-$PYTHON setup.py sdist
-$PYTHON -m pip install --upgrade wheel
-$PYTHON setup.py bdist_wheel --universal
+$PYTHON -m pip install --upgrade setuptools build wheel
+$PYTHON -m build
 echo -e "[ok]\t building"
 
 echo
@@ -35,7 +40,7 @@ $PYTHON -m twine upload dist/*
 echo -e "[ok]\t uploaded"
 echo
 echo -e "[...]\t installing from PyPI via"
-COMMAND="$PYTHON -m pip install epcis_event_hash_generator"
+COMMAND="$PYTHON -m pip install --upgrade epcis_event_hash_generator"
 echo $COMMAND
 echo
 $COMMAND

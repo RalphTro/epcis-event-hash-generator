@@ -1,0 +1,1 @@
+recursive-include epcis_event_hash_generator *.jsonld

@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="epcis-event-hash-generator",
     keywords="epcis GS1 hashing traceability",
-    version="1.9.0",
+    version="1.9.3",
     author="""Package author: Sebastian Schmittner
     Code authors: https://github.com/RalphTro/epcis-event-hash-generator/graphs/contributors""",
     author_email="sebastian.schmittner@eecc.de",
@@ -31,6 +31,7 @@ setuptools.setup(
     install_requires=[
         'python_dateutil>=2.8',
         'Flask>=1.1',
-        'PyLD==2.0.3'
+        'PyLD>=2.0.3'
     ],
+    include_package_data=True,
 )
