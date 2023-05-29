@@ -178,6 +178,10 @@ def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
         root = ElementTree.fromstring(data)
 
         eventList = root.find("*EventList")
+
+        if not eventList:
+            eventList = root.find('.//*EventList')
+
         if not eventList:
             raise ValueError("No EventList found")
     except (ValueError, OSError) as ex:

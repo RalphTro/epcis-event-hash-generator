@@ -241,6 +241,8 @@ def event_list_from_epcis_document_json(json_obj):
 
     if "eventList" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["eventList"]
+    elif "queryResults" in json_obj["epcisBody"]:
+        event_list = json_obj["epcisBody"]["queryResults"]["resultsBody"]["eventList"]
     else:
         # epcisBody may contain single event
         event_list = [json_obj["epcisBody"]["event"]]
