@@ -226,6 +226,11 @@ def event_list_from_epcis_document_str(data):
 
     json_obj = json.loads(data)
 
+    # remove empty entries from context
+    cleaned_ctx = [element for element in json_obj["@context"] if not isinstance(element, dict) or element]
+
+    json_obj["@context"] = cleaned_ctx
+
     return event_list_from_epcis_document_json(json_obj)
 
 
@@ -241,6 +246,8 @@ def event_list_from_epcis_document_json(json_obj):
 
     if "eventList" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["eventList"]
+    elif "queryResults" in json_obj["epcisBody"]:
+        event_list = json_obj["epcisBody"]["queryResults"]["resultsBody"]["eventList"]
     else:
         # epcisBody may contain single event
         event_list = [json_obj["epcisBody"]["event"]]
