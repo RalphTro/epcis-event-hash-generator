@@ -38,7 +38,12 @@
                     "urn:epc:id:pgln:999999999999.",
                     "urn:epc:class:lgtin:4012345.012345.Lot987",
                     "https://id.gs1.org/gtin/09780345418913",
-                    "https://example.com/gtin/09780345418913/21/765tz?abc=211121"
+                    "https://example.com/gtin/09780345418913/21/765tz?abc=211121",
+                    "https://id.gs1.org/01/4064074123453/21/245",
+                    "https://id.gs1.org/01/04064074123453/21/246",
+                    "https://id.example.com/01/12345670/21/123",
+                    "https://id.example.com/01/061414112345/21/123",
+                    "https://id.example.com/01/4012345123456/21/123"
                 ],
                 "action": "OBSERVE",
                 "bizStep": "inspecting",
