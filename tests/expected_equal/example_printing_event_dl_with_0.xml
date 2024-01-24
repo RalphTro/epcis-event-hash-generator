@@ -8,7 +8,7 @@
                     <eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
                     <inputQuantityList>
                         <quantityElement>
-                            <epcClass>https://id.gs1.org/01/04064074123453/10/245</epcClass>
+                            <epcClass>https://id.gs1.org/01/94064074123453/10/245</epcClass>
                             <quantity>9500</quantity>
                             <uom>MTR</uom>
                         </quantityElement>
@@ -37,7 +37,7 @@
                     <eventTimeZoneOffset>+01:00</eventTimeZoneOffset>
                     <inputQuantityList>
                         <quantityElement>
-                            <epcClass>https://id.gs1.org/01/4064074123453/10/245</epcClass>
+                            <epcClass>https://id.gs1.org/01/94064074123453/10/245</epcClass>
                             <quantity>9500</quantity>
                             <uom>MTR</uom>
                         </quantityElement>
