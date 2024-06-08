@@ -31,8 +31,8 @@
                         </quantityElement>
                     </quantityList>
                 </extension>
-                <example:testField1>123</example:testField1>
-                <example:testField4>ABC</example:testField4>
+                <example:testField1>1234</example:testField1>
+                <example:testField4>ABCD</example:testField4>
             </ObjectEvent>
             <ObjectEvent>
                 <eventTime>2024-06-08T10:58:56.591+02:00</eventTime>
@@ -53,8 +53,8 @@
                         </quantityElement>
                     </quantityList>
                 </extension>
-                <example:testField2>123</example:testField2>
-                <example:testField3>XYZ</example:testField3>
+                <example:testField2>1234</example:testField2>
+                <example:testField3>PQRS</example:testField3>
             </ObjectEvent>
         </EventList>
     </EPCISBody>
