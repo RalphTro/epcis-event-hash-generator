@@ -2,18 +2,19 @@
 <epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                      xmlns:cbv="https://ref.gs1.org/cbv/"
                      schemaVersion="2.0"
-                     creationDate="2023-01-11T12:00:00.000+01:00"
+                     creationDate="2024-06-08T12:00:00.000+01:00"
                      xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd"
                      xmlns:repository-x="https://repository-x.example.com/"
                      xmlns:example="https://ns.example.com/epcis/">
     <repository-x:ignoreFields>
         <example:testField1/>
+        <example:testField2/>
     </repository-x:ignoreFields>
     <EPCISBody>
         <EventList>
             <ObjectEvent>
-                <eventTime>2015-03-30T10:58:56.591+02:00</eventTime>
-                <recordTime>2015-03-30T15:38:32.052+02:00</recordTime>
+                <eventTime>2024-06-08T10:58:56.591+02:00</eventTime>
+                <recordTime>2024-06-08T15:38:32.052+02:00</recordTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <epcList/>
                 <action>ADD</action>
@@ -31,11 +32,11 @@
                     </quantityList>
                 </extension>
                 <example:testField1>123</example:testField1>
-                <example:testField2>ABC</example:testField2>
+                <example:testField4>ABC</example:testField4>
             </ObjectEvent>
             <ObjectEvent>
-                <eventTime>2015-03-30T10:58:56.591+02:00</eventTime>
-                <recordTime>2015-03-30T15:38:32.052+02:00</recordTime>
+                <eventTime>2024-06-08T10:58:56.591+02:00</eventTime>
+                <recordTime>2024-06-08T15:38:32.052+02:00</recordTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <epcList/>
                 <action>ADD</action>
@@ -52,7 +53,8 @@
                         </quantityElement>
                     </quantityList>
                 </extension>
-                <example:testField2>ABC</example:testField2>
+                <example:testField2>123</example:testField2>
+                <example:testField3>XYZ</example:testField3>
             </ObjectEvent>
         </EventList>
     </EPCISBody>

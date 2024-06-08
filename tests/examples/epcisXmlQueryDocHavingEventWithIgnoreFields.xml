@@ -3,18 +3,19 @@
                            xmlns:cbvmda="urn:epcglobal:cbv:mda"
                            xmlns:sbdh="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader"
                            schemaVersion="2.0"
-                           creationDate="2005-07-11T11:30:47.0Z"
+                           creationDate="2024-06-08T11:30:47.0Z"
                            xmlns:repository-x="https://repository-x.example.com/"
                            xmlns:example="https://ns.example.com/epcis/">
     <repository-x:ignoreFields>
         <example:testField1/>
+        <example:testField2/>
     </repository-x:ignoreFields>
     <queryName>SimpleEventQuery</queryName>
     <resultsBody>
         <EventList>
             <ObjectEvent>
-                <eventTime>2015-03-30T10:58:56.591+02:00</eventTime>
-                <recordTime>2015-03-30T15:38:32.052+02:00</recordTime>
+                <eventTime>2024-06-08T10:58:56.591+02:00</eventTime>
+                <recordTime>2024-06-08T15:38:32.052+02:00</recordTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <epcList/>
                 <action>ADD</action>
@@ -32,11 +33,11 @@
                     </quantityList>
                 </extension>
                 <example:testField1>123</example:testField1>
-                <example:testField2>ABC</example:testField2>
+                <example:testField4>ABC</example:testField4>
             </ObjectEvent>
             <ObjectEvent>
-                <eventTime>2015-03-30T10:58:56.591+02:00</eventTime>
-                <recordTime>2015-03-30T15:38:32.052+02:00</recordTime>
+                <eventTime>2024-06-08T10:58:56.591+02:00</eventTime>
+                <recordTime>2024-06-08T15:38:32.052+02:00</recordTime>
                 <eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
                 <epcList/>
                 <action>ADD</action>
@@ -53,7 +54,8 @@
                         </quantityElement>
                     </quantityList>
                 </extension>
-                <example:testField2>ABC</example:testField2>
+                <example:testField2>123</example:testField2>
+                <example:testField3>XYZ</example:testField3>
             </ObjectEvent>
         </EventList>
     </resultsBody>
