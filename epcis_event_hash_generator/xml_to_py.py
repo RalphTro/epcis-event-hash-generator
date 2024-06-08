@@ -65,6 +65,7 @@ file for details.
 
 import logging
 import xml.etree.ElementTree as ElementTree
+from lxml import etree
 from typing import Tuple
 
 _expansions = {"gs1:": "https://gs1.org/voc/", "cbv:": "https://ref.gs1.org/cbv/"}
@@ -168,12 +169,45 @@ def _xml_to_py(root, sort=True):
     return obj
 
 
+def remove_xml_declaration(xml_string):
+    """
+    Removes the <?xml> tag from the beginning of an XML string if present.
+    """
+    if xml_string.startswith("<?xml"):
+        # Find the end of the processing instruction
+        end_pos = xml_string.find("?>") + 2  # Include the ?> characters
+        return xml_string[end_pos:]
+    else:
+        return xml_string
+
+
+def get_ignore_field_prefix_ns(xmlStr: str):
+    """
+    if presents, gets all fields to be ignored from events of EPCIS document.
+    """
+    xml_str_without_decl = remove_xml_declaration(xmlStr)
+
+    all_namespaces = etree.fromstring(xml_str_without_decl).nsmap
+
+    ignore_field_ns_prefix = None
+    for key, value in all_namespaces.items():
+        if value == 'https://repository-x.example.com/':
+            return key
+
+    return ignore_field_ns_prefix
+
+
 def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
     """
     Read EPCIS XML document and generate the event List in the form of a simple python object
     """
     try:
         data = _remove_extension_tags(xmlStr)
+
+        ignore_field_ns_prefix = get_ignore_field_prefix_ns(xmlStr)
+
+        if ignore_field_ns_prefix is not None:
+            data = data.replace(ignore_field_ns_prefix + ':', '')
 
         root = ElementTree.fromstring(data)
 
@@ -184,6 +218,14 @@ def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
 
         if not eventList:
             raise ValueError("No EventList found")
+
+        # remove all fields to be ignored
+        for field_to_remove in root.findall("ignoreFields/*"):
+            for event in eventList:
+                el = event.find(field_to_remove.tag)
+                if el is not None:
+                    event.remove(el)
+
     except (ValueError, OSError) as ex:
         logging.error(ex)
         logging.error("Input string does not contain a valid EPCIS XML document with EventList.")
