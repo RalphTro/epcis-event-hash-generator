@@ -1,0 +1,3 @@
+eventType=ObjectEventeventTime=2024-06-08T08:58:56.591ZeventTimeZoneOffset=+02:00quantityListquantityElementepcClass=https://id.gs1.org/01/04054739999612/10/2015-03-30aquantity=150uom=KGMaction=ADDbizStep=https://ref.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4054738000050{https://ns.example.com/epcis/}testField4=ABC
+eventType=ObjectEventeventTime=2024-06-08T08:58:56.591ZeventTimeZoneOffset=+02:00quantityListquantityElementepcClass=https://id.gs1.org/01/04054739999612/10/2015-03-30aquantity=150uom=KGMaction=ADDbizStep=https://ref.gs1.org/cbv/BizStep-commissioningreadPointid=https://id.gs1.org/414/4054738000050{https://ns.example.com/epcis/}testField3=XYZ
+

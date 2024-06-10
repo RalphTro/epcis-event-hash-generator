@@ -1,0 +1,55 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
+    {
+      "example": "https://ns.example.com/epcis/",
+      "repository-x": "https://repository-x.example.com/"
+    },
+    {
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
+    }
+  ],
+  "id": "https://id.example.org/document1",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2005-07-11T11:30:47.0Z",
+  "repository-x:ignoreFields": ["repository-x:hash", "example:captureID"],
+  "epcisBody": {
+    "eventList": [
+        {
+            "type": "ObjectEvent",
+            "eventTime": "2019-10-21T14:45:00Z",
+            "recordTime": "2023-06-02T07:03:16.073Z",
+            "eventTimeZoneOffset": "+01:00",
+            "eventID": "ni:///sha-256;b3d481c5590757ab8361a6cb0e924820feb3b61eb568e7d7703f21a96f76f51d?ver=CBV2.0",
+            "epcList": [
+                "https://id.gs1.org/00/040123451111111127"
+            ],
+            "action": "OBSERVE",
+            "bizStep": "inspecting",
+            "disposition": "in_progress",
+            "readPoint": {
+                "id": "https://id.gs1.org/414/4012345000245/254/1"
+            },
+            "repository-x:hash": "ni:///sha-256;b3d481c5590757ab8361a6cb0e924820feb3b61eb568e7d7703f21a96f76f51d?ver=CBV2.0",
+            "example:captureID": "cc90bbe4-7f3a-4abd-b150-d4371c72a64f"
+        },
+        {
+            "type": "ObjectEvent",
+            "eventTime": "2019-10-21T14:45:00Z",
+            "recordTime": "2023-06-02T07:03:16.073Z",
+            "eventTimeZoneOffset": "+01:00",
+            "eventID": "ni:///sha-256;b3d481c5590757ab8361a6cb0e924820feb3b61eb568e7d7703f21a96f76f51d?ver=CBV2.0",
+            "epcList": [
+                "https://id.gs1.org/00/040123451111111127"
+            ],
+            "action": "OBSERVE",
+            "bizStep": "inspecting",
+            "disposition": "in_progress",
+            "readPoint": {
+                "id": "https://id.gs1.org/414/4012345000245/254/1"
+            }
+        }
+    ]
+  }
+}

@@ -93,10 +93,12 @@ def _collect_namespaces_from_jsonld_context(context):
                         _namespaces[key] = "{" + c[key] + "}"
 
 
-def _json_to_py(json_obj):
+def _json_to_py(json_obj, fields_to_ignore=None):
     """
     Recursively convert a string/list/dict to a simple python object
     """
+    if fields_to_ignore is None:
+        fields_to_ignore = []
     global _namespaces
 
     py_obj = ("", "", [])
@@ -111,7 +113,7 @@ def _json_to_py(json_obj):
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        to_be_ignored = ["#text", "rdfs:comment", "comment"]
+        to_be_ignored = ["#text", "rdfs:comment", "comment"] + fields_to_ignore
         for (key, val) in [x for x in json_obj.items() if x[0] not in to_be_ignored]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"
@@ -244,18 +246,28 @@ def event_list_from_epcis_document_json(json_obj):
     if not json_obj.get("@context") is None:
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
+    internal_domain = '{https://repository-x.example.com/}'
+    ignore_field_key = ':ignoreFields'
+    for key, value in _namespaces.items():
+        if value == internal_domain:
+            ignore_field_key = key+ignore_field_key
+            break
+
     if "eventList" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["eventList"]
+        fields_to_ignore = json_obj.get(ignore_field_key)
     elif "queryResults" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["queryResults"]["resultsBody"]["eventList"]
+        fields_to_ignore = json_obj["epcisBody"]["queryResults"].get(ignore_field_key)
     else:
         # epcisBody may contain single event
         event_list = [json_obj["epcisBody"]["event"]]
+        fields_to_ignore = json_obj.get(ignore_field_key)
 
     events = []
 
     # Correct JSON/XML data model mismatch
     for event in event_list:
-        events.append(json_xml_model_mismatch_correction.deep_structure_correction(_json_to_py(event)))
+        events.append(json_xml_model_mismatch_correction.deep_structure_correction(_json_to_py(event, fields_to_ignore)))
 
     return ("EventList", "", events)
