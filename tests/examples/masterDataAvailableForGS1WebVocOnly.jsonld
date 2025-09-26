@@ -1,54 +1,55 @@
 {
-    "@context": [
-        "https://ref.gs1.org/standards/epcis/epcis-context.jsonld"
-    ],
-    "type": "EPCISDocument",
-    "schemaVersion": "2.0",
-    "creationDate": "2024-11-22T11:30:00+01:00",
-    "epcisBody": {
-        "eventList": [
-            {
-                "type": "ObjectEvent",
-                "eventTime": "2024-11-22T11:30:00+01:00",
-                "eventTimeZoneOffset": "+01:00",
-                "action": "ADD",
-                "quantityList": [
-                    {
-                        "epcClass": "https://id.gs1.de/01/04012345999969/10/Batch1",
-                        "quantity": 20
-                    },
-                    {
-                        "epcClass": "https://id.example.com/01/04012345123456/10/LOT1",
-                        "quantity": 25
-                    }
-                ],
-                "bizStep": "commissioning",
-                "disposition": "active",
-                "readPoint": {
-                    "id": "https://id.gs1.org/414/4262431780029"
-                },
-                "gs1:masterDataAvailableFor": [
-                    {
-                        "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
-                        "harvestDateStart": "2024-11-20",
-                        "harvestDateEnd": "2024-11-22"
-                    },
-                    {
-                        "id": "https://id.example.com/01/04012345123456/10/LOT1",
-                        "harvestDate": "2024-11-21"
-                    },
-                    {
-                        "id": "https://id.gs1.org/414/4262431780029",
-                        "additionalLocationID": {
-                            "locationID": "AB XYZ",
-                            "locationID_Type": "LocationID_Type-UN_LOCODE"
-                        },
-                        "relatedOrganization": {
-                            "id": "https://id.example.com/417/4262431780005"
-                        }
-                    }
-                ]
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/epcis-context.jsonld",
+    "https://eecc.de/global_2025-09-26.jsonld"
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2024-11-22T11:30:00+01:00",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2024-11-22T11:30:00+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "action": "ADD",
+        "quantityList": [
+          {
+            "epcClass": "https://id.gs1.de/01/04012345999969/10/Batch1",
+            "quantity": 20
+          },
+          {
+            "epcClass": "https://id.example.com/01/04012345123456/10/LOT1",
+            "quantity": 25
+          }
+        ],
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "readPoint": {
+          "id": "https://id.gs1.org/414/4262431780029"
+        },
+        "gs1:masterDataAvailableFor": [
+          {
+            "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
+            "harvestDateStart": "2024-11-20",
+            "harvestDateEnd": "2024-11-22"
+          },
+          {
+            "id": "https://id.example.com/01/04012345123456/10/LOT1",
+            "harvestDate": "2024-11-21"
+          },
+          {
+            "id": "https://id.gs1.org/414/4262431780029",
+            "additionalLocationID": {
+              "locationID": "AB XYZ",
+              "locationID_Type": "LocationID_Type-UN_LOCODE"
+            },
+            "relatedOrganization": {
+              "id": "https://id.example.com/417/4262431780005"
             }
+          }
         ]
-    }
+      }
+    ]
+  }
 }

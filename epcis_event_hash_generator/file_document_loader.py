@@ -27,7 +27,11 @@ def file_document_loader(secure=False, **kwargs):
         "https://gs1.github.io/EPCIS/epcis-context.jsonld":
         "14b10c9d3e92d35f577bfc610fe5ec15aa2941124987919389d7cd9998516861.jsonld",
         "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld":
-        "e532647e8eb371379b8b0e8602d8981c8566bc60f7351f22c76a5bc865962008.jsonld"
+        "e532647e8eb371379b8b0e8602d8981c8566bc60f7351f22c76a5bc865962008.jsonld",
+        "https://eecc.de/global_2025-09-26.jsonld":
+        "d7b7387ef0ea28c725046d7c491218f0d765e84b58199cb4c1896516157f4fbb.jsonld",
+        "https://ref.gs1.org/standards/epcis/epcis-context.jsonld":
+        "5056c65f991425b1d3a35e35edf4f7d0c7ff56cf688c2912b930f93494713737.jsonld"
     }
 
     def loader(url, options={}):

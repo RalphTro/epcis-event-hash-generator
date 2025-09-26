@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+
+# Changelog Conventions
+
+## Sections and Structure
+
+### WIP Section
+
+- Located at the top of the file after the title
+- Format: `## WIP` followed by bullet point entries
+- This is where all unreleased changes should be documented
+
+### Version Sections
+
+We use semantic versioning.
+
+- Format: `## X.Y.Z+YYYY-MM-DD` where:
+  - X.Y.Z is the version number consisting of
+    - X Major Version, to be increased on releasing breaking changes
+    - Y Minor Version, to be increased on feature releases. Set to 0 on major version increase.
+    - Z Patch Version, to be increased if the release contains only bug fixes. Set to 0 on minor or major version increase.
+  - YYYY-MM-DD is the current date at release time
+- Example: `## 6.45.0+2025-05-19`
+
+## Entry Guidelines
+
+- Start each entry with a dash `-`
+- For issue references, place them at the start: `- 10469: fixed bug in...`
+- Group related changes together
+- Use backticks for code references: `` `methodName` ``
+- Use indentation for sub-details:
+  ```
+  - New feature X
+      - Detail 1
+      - Detail 2
+  ```
+
+## Entry Categories
+
+- **New features**: Usually warrant a MINOR version bump
+- **Bugfixes**: Usually warrant a PATCH version bump
+- **Breaking changes**: Usually warrant a MAJOR version bump (mark these clearly)
+- **Internal improvements**: Depends on impact
+
+## Best Practices
+
+- Be specific about what changed
+- Document regression tests when added
+- For API changes, document both old and new behavior
+- If an endpoint changed, explicitly mention the old and new endpoint path
+- Use consistent terminology
+- Keep entries concise but descriptive
+- Do not manually add version headers - they are added by the release script
