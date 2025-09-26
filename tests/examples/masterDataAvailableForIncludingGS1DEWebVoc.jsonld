@@ -1,0 +1,65 @@
+{
+    "@context": [
+        "https://ref.gs1.org/standards/epcis/epcis-context.jsonld",
+        {
+            "gs1de": "https://voc.gs1.de/",
+            "gs1de:productionDateStart": {
+                "@type": "xsd:date"
+            },
+            "gs1de:productionDateEnd": {
+                "@type": "xsd:date"
+            },
+            "gs1de:importClassificationTypeCode": {
+                "@type": "@vocab"
+            }
+        }
+    ],
+    "type": "EPCISDocument",
+    "schemaVersion": "2.0",
+    "creationDate": "2025-06-22T11:30:00+01:00",
+    "epcisBody": {
+        "eventList": [
+            {
+                "type": "ObjectEvent",
+                "eventTime": "2025-06-22T11:30:00+01:00",
+                "eventTimeZoneOffset": "+01:00",
+                "action": "ADD",
+                "quantityList": [
+                    {
+                        "epcClass": "https://id.gs1.de/01/04012345999969/10/Batch1",
+                        "quantity": 20
+                    }
+                ],
+                "bizStep": "commissioning",
+                "disposition": "active",
+                "readPoint": {
+                    "id": "https://id.gs1.org/414/4262431780029"
+                },
+                "gs1:masterDataAvailableFor": [
+                    {
+                        "id": "https://id.gs1.de/01/04012345999969/10/Batch3",
+                        "gs1de:productionDateStart": "2025-06-21",
+                        "gs1de:productionDateEnd": "2025-06-22",
+                        "gs1de:plotOfOrigin": [
+                            {
+                                "geo": {
+                                    "latitude": "50.942499",
+                                    "longitude": "6.898247"
+                                }
+                            },
+                            {
+                                "geo": {
+                                    "polygon": "6.898247,50.942499 6.898292,50.942275 6.898094,50.942263 6.898126,50.942106 6.898526,50.942130 6.898451,50.942512 6.898247,50.942499"
+                                }
+                            }
+                        ],
+                        "gs1de:importClassification": {
+                            "gs1de:importClassificationTypeCode": "gs1de:ImportClassificationTypeCode-INTRASTAT_COMBINED_NOMENCLATURE",
+                            "gs1de:importClassificationValue": "44151010"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}
