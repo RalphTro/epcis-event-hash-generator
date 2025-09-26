@@ -41,7 +41,7 @@
                         "id": "https://id.gs1.org/414/4262431780029",
                         "additionalLocationID": {
                             "locationID": "AB XYZ",
-                            "locationID_Type": "LocationID_Type-UN_LOCODE"
+                            "locationID_Type": "UN_LOCODE"
                         },
                         "relatedOrganization": {
                             "id": "https://id.example.com/417/4262431780005"
