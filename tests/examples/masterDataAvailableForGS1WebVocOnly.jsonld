@@ -1,7 +1,7 @@
 {
   "@context": [
-    "https://ref.gs1.org/standards/epcis/epcis-context.jsonld",
-    "https://eecc.de/global_2025-09-26.jsonld"
+    "https://mgh128.github.io/JSON-LDcontext_experiments/GS1WebVoc-minimal-draft-context.jsonld",
+    "https://mgh128.github.io/JSON-LDcontext_experiments/EPCIS_2_0_1-draft-context.jsonld"
   ],
   "type": "EPCISDocument",
   "schemaVersion": "2.0",
@@ -31,22 +31,15 @@
         "gs1:masterDataAvailableFor": [
           {
             "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
-            "harvestDateStart": "2024-11-20",
-            "harvestDateEnd": "2024-11-22"
+            "expirationDate": "2024-11-20"
           },
           {
             "id": "https://id.example.com/01/04012345123456/10/LOT1",
-            "harvestDate": "2024-11-21"
+            "expirationDate": "2024-11-21"
           },
           {
             "id": "https://id.gs1.org/414/4262431780029",
-            "additionalLocationID": {
-              "locationID": "AB XYZ",
-              "locationID_Type": "UN_LOCODE"
-            },
-            "relatedOrganization": {
-              "id": "https://id.example.com/417/4262431780005"
-            }
+            "locationRoleType": "BACKROOM"
           }
         ]
       }
