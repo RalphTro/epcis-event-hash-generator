@@ -1,0 +1,83 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/eudr/context.jsonld",
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2005-07-30T11:30:47.0Z",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2025-06-23T12:25:56Z",
+        "eventTimeZoneOffset": "+02:00",
+        "action": "OBSERVE",
+        "bizStep": "notifying",
+        "persistentDisposition": {
+          "set": [
+            "subject_to_regulation"
+          ]
+        },
+        "quantityList": [
+          {
+            "epcClass": "https://id.gs1.org/01/09506000134369/10/ABC12345",
+            "quantity": 200,
+            "uom": "KGM"
+          },
+          {
+            "epcClass": "https://id.gs1.org/01/09506000134369/10/XYZ98765",
+            "quantity": 300,
+            "uom": "KGM"
+          }
+        ],
+        "bizTransactionList": [
+          {
+            "type": "inv",
+            "bizTransaction": "https://transactions.sender.example/inv/XYZ123"
+          }
+        ],
+        "gs1:masterDataAvailableFor": [
+          {
+            "id": "https://id.gs1.org/01/09506000134369/10/ABC12345",
+            "regulatoryInformation": [
+              {
+                "regulatoryAct": "EU 2023/1115",
+                "regulationType": "DEFORESTATION_REGULATION",
+                "regulatoryIdentifier": [
+                  {
+                    "regulatoryReferenceNumber": "r1236",
+                    "regulatoryVerificationNumber": "v9847",
+                    "regulatoryInformationProvider": "https://id.gs1.org/417/9521141123454",
+                    "regulatoryReferenceApplicabilityStartDate": "2025-06-01",
+                    "regulatoryReferenceApplicabilityEndDate": "2026-05-31",
+                    "regulatoryIdentifierType": "DUE_DILIGENCE_STATEMENT"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "https://id.gs1.org/01/09506000134369/10/XYZ98765",
+            "regulatoryInformation": [
+              {
+                "regulatoryAct": "EU 2023/1115",
+                "regulationType": "DEFORESTATION_REGULATION",
+                "regulatoryIdentifier": [
+                  {
+                    "regulatoryReferenceNumber": "r987",
+                    "regulatoryVerificationNumber": "v210",
+                    "regulatoryInformationProvider": "https://infoProviderCo.example/417/9521141123454",
+                    "regulatoryReferenceApplicabilityStartDate": "2025-01-01",
+                    "regulatoryReferenceApplicabilityEndDate": "2025-12-31",
+                    "regulatoryIdentifierType": "DUE_DILIGENCE_STATEMENT"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
