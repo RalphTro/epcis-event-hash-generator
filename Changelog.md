@@ -2,6 +2,7 @@
 
 ## WIP
 
+- EPCIS 2.1 change: always add implicit JSONLD context (namespace) `{"gs1": "https://ref.gs1.org/voc/"}`
 - Added MDAF (Master Data and Analytics Framework) support with experimental logic
 - Added 3 MDAF example files for different vocabulary scenarios
 - Added context files and notes for document loader

@@ -31,7 +31,9 @@ def file_document_loader(secure=False, **kwargs):
         "https://eecc.de/global_2025-09-26.jsonld":
         "d7b7387ef0ea28c725046d7c491218f0d765e84b58199cb4c1896516157f4fbb.jsonld",
         "https://ref.gs1.org/standards/epcis/epcis-context.jsonld":
-        "5056c65f991425b1d3a35e35edf4f7d0c7ff56cf688c2912b930f93494713737.jsonld"
+        "5056c65f991425b1d3a35e35edf4f7d0c7ff56cf688c2912b930f93494713737.jsonld",
+        "https://ref.gs1.org/standards/epcis/2.1.0/epcis-context.jsonld":
+        "e8da7b13521f6ea2f469f7634086538575da899873055dda151997c72803fe1e.jsonld"
     }
 
     def loader(url, options={}):
