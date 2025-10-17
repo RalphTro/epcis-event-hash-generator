@@ -1,12 +1,20 @@
 # EPCIS Event Hash Generator Changelog
 
+## WIP
 
-WIP (changes since last release)
----
+- Added MDAF (Master Data and Analytics Framework) support with experimental logic
+- Added 3 MDAF example files for different vocabulary scenarios
+- Added context files and notes for document loader
+- Added support for ignoring industry/repository specific fields in both XML and JSON-LD documents
+- Adjusted test files to ensure unique hashes across all test cases
+- Removed experimental webservice support (Dockerfile, web API)
+- Added container documentation
+- Updated README with timestamp rounding rule documentation
+- Added `requests` dependency
+- Added support to generate hash from `EpcisQueryDocument`
+- Fixed context expansion errors by removing empty dictionaries
 
-
-1.9.3 (2023-05-16)
----
+## 1.9.3 (2023-05-16)
 
 - Added Changelog
 - Migrating from `setup.py` to `build` for the package build
