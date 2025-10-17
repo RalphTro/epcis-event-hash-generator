@@ -1,4 +1,8 @@
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0" creationDate="2020-04-01T15:00:00.000+01:00" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd" xmlns:gs1="https://gs1.org/voc/">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" schemaVersion="2.0"
+    creationDate="2020-04-01T15:00:00.000+01:00"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd"
+    xmlns:gs1="https://ref.gs1.org/voc/">
     <EPCISBody>
         <EventList>
             <ObjectEvent>

@@ -5,7 +5,7 @@
     "epcis": "https://ref.gs1.org/epcis/",
     "cbv": "https://ref.gs1.org/cbv/",
     "cbvmda": "urn:epcglobal:cbv:mda:",
-    "gs1": "https://gs1.org/voc/",
+    "gs1": "https://ref.gs1.org/voc/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "owl": "http://www.w3.org/2002/07/owl#",
     "xsd": "http://www.w3.org/2001/XMLSchema#",

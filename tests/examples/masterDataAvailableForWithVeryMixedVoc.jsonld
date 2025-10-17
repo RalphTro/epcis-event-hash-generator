@@ -1,0 +1,67 @@
+{
+  "@context": [
+    "https://mgh128.github.io/JSON-LDcontext_experiments/GS1WebVoc-minimal-draft-context.jsonld",
+    "https://mgh128.github.io/JSON-LDcontext_experiments/EPCIS_2_0_1-draft-context.jsonld",
+    {
+      "schema": "https://schema.org/",
+      "eecc": "https://eecc.de/voc/"
+    }
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2024-11-22T11:30:00+01:00",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2024-11-22T11:30:00+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "action": "ADD",
+        "quantityList": [
+          {
+            "epcClass": "https://id.gs1.de/01/04012345999969/10/Batch1",
+            "quantity": 20
+          },
+          {
+            "epcClass": "https://id.example.com/01/04012345123456/10/LOT1",
+            "quantity": 25
+          }
+        ],
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "readPoint": {
+          "id": "https://id.gs1.org/414/4262431780029"
+        },
+        "eecc:masterDataAvailableFor": [
+          {
+            "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
+            "gs1:expirationDate": "2024-11-20",
+            "eecc:expirationDate": "2024-11-20",
+            "schema:countryOfOrigin": "EC"
+          }
+        ],
+        "gs1:masterDataAvailableFor": [
+          {
+            "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
+            "expirationDate": "2024-11-20",
+            "schema:countryOfOrigin": "EC"
+          },
+          {
+            "id": "https://id.example.com/01/04012345123456/10/LOT1",
+            "expirationDate": "2024-11-21",
+            "schema:countryOfOrigin": "PE"
+          },
+          {
+            "id": "https://id.gs1.org/414/4262431780029",
+            "locationRoleType": "BACKROOM",
+            "schema:faxNumber": "+49(0)-12-345-678",
+            "schema:isAccessibleForFree": false,
+            "schema:about": {
+              "schema:name": "Example Inc."
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

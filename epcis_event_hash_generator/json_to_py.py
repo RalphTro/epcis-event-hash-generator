@@ -91,6 +91,8 @@ def _collect_namespaces_from_jsonld_context(context):
                 else:
                     for key in c.keys():
                         _namespaces[key] = "{" + c[key] + "}"
+    # epcis 2.1 change: always add implicit namespace "gs1": "https://ref.gs1.org/voc/"
+    _namespaces["gs1"] = "{https://ref.gs1.org/voc/}"
 
 
 def _json_to_py(json_obj, fields_to_ignore=None):
@@ -211,7 +213,7 @@ def _bare_string_pre_preocessing(json_obj):
     _find_expanded_values(expanded, expanded_values)
     logging.debug("all expanded_values: %s", expanded_values)
     expanded_values = set([x for x in expanded_values if x.startswith(
-        "https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc")])
+        "https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc") or x.startswith("https://ref.gs1.org/voc")])
     logging.debug("expanded_values for replacement: %s", expanded_values)
     json_obj = _replace_bare_string_values(json_obj, expanded_values)
 
@@ -268,6 +270,7 @@ def event_list_from_epcis_document_json(json_obj):
 
     # Correct JSON/XML data model mismatch
     for event in event_list:
-        events.append(json_xml_model_mismatch_correction.deep_structure_correction(_json_to_py(event, fields_to_ignore)))
+        events.append(json_xml_model_mismatch_correction.deep_structure_correction(
+            _json_to_py(event, fields_to_ignore)))
 
     return ("EventList", "", events)

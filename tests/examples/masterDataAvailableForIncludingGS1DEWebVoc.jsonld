@@ -1,0 +1,39 @@
+{
+  "@context": [
+    "https://mgh128.github.io/JSON-LDcontext_experiments/GS1WebVoc-minimal-draft-context.jsonld",
+    "https://mgh128.github.io/JSON-LDcontext_experiments/EPCIS_2_0_1-draft-context.jsonld",
+    "https://ralphtro.github.io/TEMP_contextExperiments/contextFiles/gs1de-webvoc-context-file-0dot3.jsonld"
+  ],
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2025-06-22T11:30:00+01:00",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2025-06-22T11:30:00+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "action": "ADD",
+        "quantityList": [
+          {
+            "epcClass": "https://id.gs1.de/01/04012345999969/10/Batch3",
+            "quantity": 20
+          }
+        ],
+        "bizStep": "commissioning",
+        "disposition": "active",
+        "readPoint": {
+          "id": "https://id.gs1.org/414/4262431780029"
+        },
+        "gs1:masterDataAvailableFor": [
+          {
+            "id": "https://id.gs1.de/01/04012345999969/10/Batch3",
+            "gs1de:productionDateStart": "2025-06-21",
+            "gs1de:productionDateEnd": "2025-06-22",
+            "expirationDate": "2024-11-20"
+          }
+        ]
+      }
+    ]
+  }
+}
