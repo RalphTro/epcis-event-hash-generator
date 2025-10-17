@@ -33,12 +33,14 @@
                 },
                 "gs1:masterDataAvailableFor": [
                     {
-                        "id": "https://id.gs1.de/01/04012345999969/10/Batch1",
+                        "@id": "https://id.gs1.de/01/04012345999969/10/Batch1",
+                        "@type": "gs1:Product",
                         "expirationDate": "2024-11-20",
                         "schema:countryOfOrigin": "EC"
                     },
                     {
                         "id": "https://id.example.com/01/04012345123456/10/LOT1",
+                        "type": "gs1:Product",
                         "expirationDate": "2024-11-21",
                         "schema:countryOfOrigin": "PE"
                     },
