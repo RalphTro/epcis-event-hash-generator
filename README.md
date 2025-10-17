@@ -1,8 +1,6 @@
-# EPCIS Event Hash Generator
+[![Unit Tests](https://github.com/RalphTro/epcis-event-hash-generator/actions/workflows/pytest.yml/badge.svg)](https://github.com/RalphTro/epcis-event-hash-generator/actions/workflows/pytest.yml)
 
-[![Build Status](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Unit%20Tests/badge.svg?v=42)](https://github.com/RalphTro/epcis-event-hash-generator/actions?query=workflow%3A%22Unit+Tests%22)
-[![Linter Status](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Code%20Style/badge.svg)](https://github.com/RalphTro/epcis-event-hash-generator/actions?query=workflow%3A%22Code+Style%22)
-![Docker Release Build](https://github.com/RalphTro/epcis-event-hash-generator/workflows/Docker%20Release%20Build/badge.svg)
+# EPCIS Event Hash Generator
 
 This is a reference implementation for a method to uniquely identify an EPCIS event as specified in the Core Business Vocabulary (CBV) Standard 2.0.
 The _EPCIS Event Hash ID_ works syntax-/representation-agnostic and is based on hashing.
