@@ -42,7 +42,9 @@ def test_equal():
                 # Use CBV2.1 for timestamp precision normalization to ensure
                 # different timestamp precisions of the same logical time produce the same hash
                 cbv_version = "CBV2.1" if "timestampPrecision" in filename else "CBV2.0"
-                assert len(set(epcis_hash_from_file(TEST_FILE_PATH_SAME_EVENT + filename, "sha256", cbv_version=cbv_version)[
+                assert len(set(epcis_hash_from_file(TEST_FILE_PATH_SAME_EVENT + filename,
+                                                    "sha256",
+                                                    cbv_version=cbv_version)[
                     0])) == 1, "The events in {} have different hashes!".format(
                     TEST_FILE_PATH_SAME_EVENT + filename)
         break
