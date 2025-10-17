@@ -40,10 +40,13 @@ JOIN_BY = DEFAULT_JOIN_BY
 DEFAULT_CBV_VERSION = "CBV2.0"
 
 
-def _fix_time_stamp_format(timestamp):
+def _fix_time_stamp_format(timestamp, cbv_version=DEFAULT_CBV_VERSION):
     """Make sure that the timestamp is given at millisecond precision
-    and in UTC."""
-    logging.debug("correcting timestamp format for '{}'".format(timestamp))
+    and in UTC. Applies version-specific precision handling:
+    - CBV2.0: No rounding - pad to 3 digits if less, keep all digits if more
+    - CBV2.1: Round to 3 digit precision
+    """
+    logging.debug("correcting timestamp format for '{}' with CBV version {}".format(timestamp, cbv_version))
 
     try:
         abstract_date_time = dateutil.parser.parse(timestamp)
@@ -56,26 +59,59 @@ def _fix_time_stamp_format(timestamp):
 
     microsecond = abstract_date_time.microsecond
 
-    # round off microsecond upto 3 digits
-    abstract_date_time = abstract_date_time.replace(microsecond=round(microsecond, -3))
+    if cbv_version == "CBV2.1":
+        # CBV2.1: round off microsecond to 3 digits
+        abstract_date_time = abstract_date_time.replace(microsecond=round(microsecond, -3))
+        # normalise precision to ms and convert to ISO string using "Z" instead of +00:00
+        fixed = abstract_date_time.isoformat(timespec='milliseconds')[:-6] + "Z"
+    else:  # CBV2.0
+        # CBV2.0: no rounding, but ensure at least 3 digit precision
+        # If input has <= 3 digits, pad to exactly 3 digits
+        # If input has > 3 digits, preserve all digits
 
-    # normalise precision to ms and convert to ISO string using "Z" instead of +00:00
-    fixed = abstract_date_time.isoformat(timespec='milliseconds')[:-6] + "Z"
+        # Get the original fractional seconds from the input timestamp
+        original_fractional = None
+        if '.' in timestamp:
+            # Extract fractional part from original timestamp
+            timestamp_parts = timestamp.split('.')
+            if len(timestamp_parts) > 1:
+                # Get fractional part (before timezone)
+                fractional_and_tz = timestamp_parts[1]
+                # Remove timezone markers
+                for tz_marker in ['Z', '+', '-']:
+                    if tz_marker in fractional_and_tz:
+                        original_fractional = fractional_and_tz.split(tz_marker)[0]
+                        break
+                else:
+                    original_fractional = fractional_and_tz
 
-    logging.debug("corrected timestamp '{}'".format(fixed))
+        if original_fractional is None:
+            # No fractional seconds in input, add .000
+            fixed = abstract_date_time.isoformat()[:-6] + '.000Z'
+        elif len(original_fractional) <= 3:
+            # Input has 3 or fewer digits, pad to exactly 3 digits
+            padded_fractional = original_fractional.ljust(3, '0')
+            fixed = abstract_date_time.replace(microsecond=int(
+                padded_fractional.ljust(6, '0'))).isoformat(timespec='milliseconds')[:-6] + 'Z'
+        else:
+            # Input has more than 3 digits, preserve all digits
+            # Use full microsecond precision
+            fixed = abstract_date_time.isoformat()[:-6] + 'Z'
+
+    logging.debug("corrected timestamp '{}' -> '{}'".format(timestamp, fixed))
     return fixed
 
 
-def _child_to_pre_hash_string(child, sub_child_order):
+def _child_to_pre_hash_string(child, sub_child_order, cbv_version=DEFAULT_CBV_VERSION):
     logging.debug("Processing '%s'", child)
     text = ""
     grand_child_text = ""
     if sub_child_order:
-        grand_child_text = _recurse_through_children_in_order(child[2], sub_child_order)
+        grand_child_text = _recurse_through_children_in_order(child[2], sub_child_order, cbv_version)
     if child[1]:
         text = child[1].strip()
         if child[0].lower().find("time") >= 0 and child[0].lower().find("offset") < 0:
-            text = _fix_time_stamp_format(text)
+            text = _fix_time_stamp_format(text, cbv_version)
         else:
             text = _canonize_value(text)
 
@@ -90,7 +126,7 @@ def _child_to_pre_hash_string(child, sub_child_order):
     return ""
 
 
-def _recurse_through_children_in_order(child_list, child_order):
+def _recurse_through_children_in_order(child_list, child_order, cbv_version=DEFAULT_CBV_VERSION):
     """
     Loop over child order, look for a child of root with matching key and build the pre-hash string (mostly key=value)
     Recurse through the grand children applying the sub order.
@@ -100,6 +136,7 @@ def _recurse_through_children_in_order(child_list, child_order):
     `child_list`    is to be a list of simple python object, i.e. triples of two strings (key/value) and a list of
                     simple python objects (grand children).
     `child_order`   is expected to be a property order, see PROP_ORDER.
+    `cbv_version`   is the CBV version to use for timestamp processing.
 
     """
     pre_hash = ""
@@ -112,7 +149,7 @@ def _recurse_through_children_in_order(child_list, child_order):
         list_of_values = []
 
         for child in children:
-            child_pre_hash = _child_to_pre_hash_string(child, sub_child_order)
+            child_pre_hash = _child_to_pre_hash_string(child, sub_child_order, cbv_version)
             if child_pre_hash:
                 list_of_values.append(child_pre_hash)
             else:
@@ -251,10 +288,15 @@ def _gather_elements_not_in_order(children, child_order):
     return ""
 
 
-def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
+def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY, cbv_version=DEFAULT_CBV_VERSION):
     """
     Compute a normalized form (pre-hash string) for each event.
     This is the main functionality of the hash generator.
+
+    Args:
+        events: List of EPCIS events
+        join_by: String to join pre-hash components
+        cbv_version: CBV version for timestamp processing (CBV2.0 or CBV2.1)
     """
 
     events = copy.deepcopy(events)  # do not change parameter!
@@ -273,7 +315,7 @@ def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
         logging.debug("prehashing event:\n%s", event)
         try:
             prehash_string_list.append("eventType=" + event[0] + JOIN_BY
-                                       + _recurse_through_children_in_order(event[2], PROP_ORDER) + JOIN_BY
+                                       + _recurse_through_children_in_order(event[2], PROP_ORDER, cbv_version) + JOIN_BY
                                        + _gather_elements_not_in_order(event[2], PROP_ORDER)
                                        )
         except Exception as ex:
@@ -288,7 +330,7 @@ def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
 
 def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256", cbv_version=DEFAULT_CBV_VERSION):
     """Hash all strings in the list with the given algorithm. Returned in the appropriate NI format.
-    
+
     Args:
         prehash_string_list: List of pre-hash strings to hash
         hashalg: Hash algorithm to use (sha256, sha3-256, sha384, sha512)
@@ -319,11 +361,11 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256", cbv_
 def epcis_hashes_from_events(events, hashalg="sha256", cbv_version=DEFAULT_CBV_VERSION):
     """Calculate the list of hashes from the given events list
     + hashing algorithm through the pre hash string using default parameters.
-    
+
     Args:
         events: List of EPCIS events
         hashalg: Hash algorithm to use (sha256, sha3-256, sha384, sha512)
         cbv_version: CBV version to include in the hash URL (CBV2.0 or CBV2.1)
     """
-    prehash_string_list = derive_prehashes_from_events(events)
+    prehash_string_list = derive_prehashes_from_events(events, cbv_version=cbv_version)
     return calculate_hashes_from_pre_hashes(prehash_string_list, hashalg, cbv_version)

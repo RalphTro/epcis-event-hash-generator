@@ -42,7 +42,7 @@ def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by="", cbv_ver
 
     events = events_from_file_reader.event_list_from_file(path, enforce)
 
-    prehashes = hash_generator.derive_prehashes_from_events(events, join_by)
+    prehashes = hash_generator.derive_prehashes_from_events(events, join_by, cbv_version)
     hashes = hash_generator.calculate_hashes_from_pre_hashes(prehashes, hashalg, cbv_version)
 
     return hashes, prehashes

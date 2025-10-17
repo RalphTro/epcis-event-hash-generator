@@ -3,6 +3,7 @@
 ## WIP
 
 - Added configurable CBV version support: new `-v/--version` CLI flag allows choosing between CBV2.0 (default) and CBV2.1 for hash generation
+- Implemented version-specific timestamp precision handling: CBV2.0 preserves high precision timestamps without rounding, CBV2.1 rounds to 3-digit millisecond precision
 - EPCIS 2.1 change: always add implicit JSONLD context (namespace) `{"gs1": "https://ref.gs1.org/voc/"}`
 - Added MDAF (Master Data and Analytics Framework) support with experimental logic
 - Added 3 MDAF example files for different vocabulary scenarios
