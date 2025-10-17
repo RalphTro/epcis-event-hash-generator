@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" xmlns:epcglobal="urn:epcglobal:xsd:1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gs1="https://gs1.org/voc/" schemaVersion="2.0" creationDate="2019-05-27T10:01:00.000+02:00" xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd">
+<epcis:EPCISDocument xmlns:epcis="urn:epcglobal:epcis:xsd:2" xmlns:epcglobal="urn:epcglobal:xsd:1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gs1="https://ref.gs1.org/voc/"
+	schemaVersion="2.0" creationDate="2019-05-27T10:01:00.000+02:00"
+	xsi:schemaLocation="urn:epcglobal:epcis:xsd:2 EPCglobal-epcis-2_0.xsd">
 	<EPCISBody>
 		<EventList>
-				<TransformationEvent>
-					<eventTime>2019-09-10T08:40:21.3142715Z</eventTime>
-					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-					<inputEPCList>
-						<epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
-						<epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
-					</inputEPCList>
-					<outputEPCList>
-						<epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
-					</outputEPCList>
-					<bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
-					<disposition>urn:epcglobal:cbv:disp:damaged</disposition>
-				</TransformationEvent>
-				<TransformationEvent>
-					<eventTime>2019-09-10T08:40:21.3142715Z</eventTime>
-					<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
-					<inputEPCList>
-						<epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
-					</inputEPCList>
-					<outputEPCList>
-						<epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
-						<epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
-					</outputEPCList>
-					<bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
-					<disposition>urn:epcglobal:cbv:disp:damaged</disposition>
-				</TransformationEvent>
+			<TransformationEvent>
+				<eventTime>2019-09-10T08:40:21.3142715Z</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
+					<epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
+				</inputEPCList>
+				<outputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
+				</outputEPCList>
+				<bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
+				<disposition>urn:epcglobal:cbv:disp:damaged</disposition>
+			</TransformationEvent>
+			<TransformationEvent>
+				<eventTime>2019-09-10T08:40:21.3142715Z</eventTime>
+				<eventTimeZoneOffset>+02:00</eventTimeZoneOffset>
+				<inputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.1111</epc>
+				</inputEPCList>
+				<outputEPCList>
+					<epc>urn:epc:id:sgtin:4047111.012345.2222</epc>
+					<epc>urn:epc:id:sgtin:4047111.012345.3333</epc>
+				</outputEPCList>
+				<bizStep>urn:epcglobal:cbv:bizstep:repairing</bizStep>
+				<disposition>urn:epcglobal:cbv:disp:damaged</disposition>
+			</TransformationEvent>
 		</EventList>
 	</EPCISBody>
 </epcis:EPCISDocument>

@@ -3,9 +3,6 @@
     "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
     {
       "cbv": "https://ref.gs1.org/cbv/"
-    },
-    {
-      "gs1": "https://gs1.org/voc/"
     }
   ],
   "type": "EPCISDocument",

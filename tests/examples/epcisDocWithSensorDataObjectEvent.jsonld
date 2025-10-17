@@ -1,9 +1,6 @@
 {
   "@context": [
-    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
-    {
-      "gs1": "https://gs1.org/voc/"
-    }
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
   ],
   "id": "https://id.example.org/document1",
   "type": "EPCISDocument",

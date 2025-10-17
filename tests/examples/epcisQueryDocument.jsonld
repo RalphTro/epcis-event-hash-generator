@@ -25,7 +25,7 @@
               "urn:epc:id:sgtin:0614141.107346.2017",
               "urn:epc:id:sgtin:0614141.107346.2018"
             ],
-            "eventTime": "2005-04-03T20:33:31.116000-06:00",
+            "eventTime": "2005-04-03T20:33:31.116-06:00",
             "eventTimeZoneOffset": "-06:00",
             "readPoint": {
               "id": "urn:epc:id:sgln:0614141.07346.1234"
