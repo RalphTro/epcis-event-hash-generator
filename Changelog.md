@@ -2,6 +2,7 @@
 
 ## WIP
 
+- Added configurable CBV version support: new `-v/--version` CLI flag allows choosing between CBV2.0 (default) and CBV2.1 for hash generation
 - EPCIS 2.1 change: always add implicit JSONLD context (namespace) `{"gs1": "https://ref.gs1.org/voc/"}`
 - Added MDAF (Master Data and Analytics Framework) support with experimental logic
 - Added 3 MDAF example files for different vocabulary scenarios

@@ -36,6 +36,9 @@ from epcis_event_hash_generator import JOIN_BY as DEFAULT_JOIN_BY
 
 JOIN_BY = DEFAULT_JOIN_BY
 
+# Default CBV version for hash generation
+DEFAULT_CBV_VERSION = "CBV2.0"
+
 
 def _fix_time_stamp_format(timestamp):
     """Make sure that the timestamp is given at millisecond precision
@@ -283,23 +286,28 @@ def derive_prehashes_from_events(events, join_by=DEFAULT_JOIN_BY):
     return prehash_string_list
 
 
-def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
+def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256", cbv_version=DEFAULT_CBV_VERSION):
     """Hash all strings in the list with the given algorithm. Returned in the appropriate NI format.
+    
+    Args:
+        prehash_string_list: List of pre-hash strings to hash
+        hashalg: Hash algorithm to use (sha256, sha3-256, sha384, sha512)
+        cbv_version: CBV version to include in the hash URL (CBV2.0 or CBV2.1)
     """
     hashValueList = []
     for pre_hash_string in prehash_string_list:
         if hashalg == 'sha256':
             hash_string = 'ni:///sha-256;' + \
-                          hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
+                          hashlib.sha256(pre_hash_string.encode('utf-8')).hexdigest() + f'?ver={cbv_version}'
         elif hashalg == 'sha3-256':
             hash_string = 'ni:///sha3-256;' + \
-                          hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
+                          hashlib.sha3_256(pre_hash_string.encode('utf-8')).hexdigest() + f'?ver={cbv_version}'
         elif hashalg == 'sha384':
             hash_string = 'ni:///sha-384;' + \
-                          hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
+                          hashlib.sha384(pre_hash_string.encode('utf-8')).hexdigest() + f'?ver={cbv_version}'
         elif hashalg == 'sha512':
             hash_string = 'ni:///sha-512;' + \
-                          hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest() + '?ver=CBV2.0'
+                          hashlib.sha512(pre_hash_string.encode('utf-8')).hexdigest() + f'?ver={cbv_version}'
         else:
             raise ValueError("Unsupported Hashing Algorithm: " + hashalg)
 
@@ -308,9 +316,14 @@ def calculate_hashes_from_pre_hashes(prehash_string_list, hashalg="sha256"):
     return hashValueList
 
 
-def epcis_hashes_from_events(events, hashalg="sha256"):
+def epcis_hashes_from_events(events, hashalg="sha256", cbv_version=DEFAULT_CBV_VERSION):
     """Calculate the list of hashes from the given events list
     + hashing algorithm through the pre hash string using default parameters.
+    
+    Args:
+        events: List of EPCIS events
+        hashalg: Hash algorithm to use (sha256, sha3-256, sha384, sha512)
+        cbv_version: CBV version to include in the hash URL (CBV2.0 or CBV2.1)
     """
     prehash_string_list = derive_prehashes_from_events(events)
-    return calculate_hashes_from_pre_hashes(prehash_string_list, hashalg)
+    return calculate_hashes_from_pre_hashes(prehash_string_list, hashalg, cbv_version)

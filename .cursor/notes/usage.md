@@ -16,6 +16,7 @@ python3 -m epcis_event_hash_generator <file> [options]
 - **`-p, --prehash`**: Also output pre-hash strings (to `.prehashes` with `-b`)
 - **`-j, --join`**: String to join pre-hash components (default: empty, useful for debugging with `\n`)
 - **`-e, --enforce_format`**: Force format parsing (`XML`, `JSON`)
+- **`-v, --version`**: CBV version for hash generation (`CBV2.0`, `CBV2.1`, default: `CBV2.0`)
 
 ### Example Commands
 
@@ -34,6 +35,9 @@ python3 -m epcis_event_hash_generator example.jsonld -a sha3-256
 
 # Force JSON parsing regardless of file extension
 python3 -m epcis_event_hash_generator data.txt -e JSON
+
+# Use CBV2.1 version for hash generation
+python3 -m epcis_event_hash_generator example.xml -v CBV2.1
 ```
 
 ## Programming API
@@ -48,7 +52,8 @@ hashes, prehashes = epcis_hash_from_file(
     path="example.xml",
     hashalg="sha256",
     enforce="",
-    join_by=""
+    join_by="",
+    cbv_version="CBV2.0"  # Optional, defaults to CBV2.0
 )
 ```
 
@@ -64,7 +69,11 @@ events = events_from_file_reader.event_list_from_file("example.xml")
 prehashes = hash_generator.derive_prehashes_from_events(events)
 
 # Calculate final hashes
-hashes = hash_generator.calculate_hashes_from_pre_hashes(prehashes, "sha256")
+hashes = hash_generator.calculate_hashes_from_pre_hashes(
+    prehashes, 
+    "sha256", 
+    "CBV2.0"  # Optional CBV version parameter
+)
 ```
 
 ## Supported Formats
