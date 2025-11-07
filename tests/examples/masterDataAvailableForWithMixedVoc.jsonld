@@ -46,7 +46,7 @@
                     },
                     {
                         "id": "https://id.gs1.org/414/4262431780029",
-                        "locationRoleType": "BACKROOM",
+                        "locationRole": "BACKROOM",
                         "schema:faxNumber": "+49(0)-12-345-678",
                         "schema:isAccessibleForFree": false
                     }
