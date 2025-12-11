@@ -116,7 +116,7 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
     •	Code values SHALL be expanded to their full URI form.
     Each `gs1:masterDataAvailableFor` block includes an `@id` or `id` field that unambiguously identifies the RDF Subject. During pre-hash string construction, this field SHALL be normalised to "id".
     Similarly, if a `gs1:masterDataAvailableFor` block includes an `@type` or `type` field, it SHALL be normalised to "type" during pre-hash string construction.
-    > **Note (v2.1):** Step added as of version 2.1.
+    > **Note (v2.1):** Step added.
 
 
 ### Canonical property order
@@ -156,13 +156,13 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 
 ### Differences between version 2.0 and 2.1
 
-| Aspect                     | v2.0                                                 | v2.1                                                                                                                                               |
-|----------------------------|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Timestamp rounding         |                                                      | Clarification: **truncate beyond 3 digits**, see step (9)                                                                                          |
-| Field names denoting a list |                                                     | Clarification: **must only appear once**, see step (11)                                                                                            |
-| Handling of user extensions in EPCIS standard fields |                            | Improved wording, see step (21)                                                                                                                    |
-| Master Data Available For  |                                                      | Added support for `gs1:masterDataAvailableFor`, **note that the GS1 Web Vocabulary is handled differently compared to all other Web Vocabularies** |
-| Hash URI format            | `ni:///{digest algorithm};{digest value}?ver=CBV2.0` | `ni:///{digest algorithm};{digest value}?ver=CBV2.1`                                                                                               |
+| Aspect                     | v2.0                                                 | v2.1                                                          |
+|----------------------------|------------------------------------------------------|---------------------------------------------------------------|
+| Timestamp rounding         |                                                      | Clarification: **truncate beyond 3 digits**, see step (9)     |
+| Field names denoting a list |                                                     | Clarification: **must only appear once**, see step (11)       |
+| Handling of user extensions in EPCIS standard fields |                            | Improved wording, see step (21)                               |
+| Master Data Available For  |                                                      | Added support for `gs1:masterDataAvailableFor`, **note that the GS1 Web Vocabulary is handled differently compared to all other Web Vocabularies**, see step (25) |
+| Hash URI format            | `ni:///{digest algorithm};{digest value}?ver=CBV2.0` | `ni:///{digest algorithm};{digest value}?ver=CBV2.1`          |
 
 
 ### Illustrative examples
@@ -238,7 +238,7 @@ All of this was and is both very valuable as well as very much appreciated and w
 
 <img alt="Open Source Initiative" style="border-width:0" src="docs/OSI.jpeg" width="150px;"/><br />
 
-Copyright 2020-2023 | Ralph Tröger <ralph.troeger@gs1.de> and Sebastian Schmittner <schmittner@eecc.info>
+Copyright 2020-2025 | Ralph Tröger <ralph.troeger@gs1.de> and Sebastian Schmittner <schmittner@eecc.info>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
