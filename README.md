@@ -63,6 +63,18 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 ## Algorithm
 
+### Version history
+
+| Version | Summary                                                                |
+|---------|------------------------------------------------------------------------|
+| 2.0     | Initial algorithm for EPCIS Event Hash ID as per CBV 2.0               |
+| 2.1     | Minor adjustments to canonicalization rules and timestamp rounding     |
+
+[For further details, go to Differences between version 2.0 and 2.1](#differences-between-version-20-and-21)
+
+
+### Calculation procedure
+
 For hashing strings, well-established algorithms such as SHA-256 are available. The focus of this specification is the canonicalization of a _pre-hash string_ representation of an EPCIS event, which can be passed to any standard hashing algorithm.
 
 To calculate this pre-hash string, the algorithm requires to extract and concatenate EPCIS event key-value pairs to one string exactly according to the following set of rules:
@@ -75,7 +87,8 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 6. Quantitative values SHALL NOT have trailing zeros. (For example, a quantity of one SHALL be expressed as '1', and SHALL NOT be expressed as '1.0'; 0.3434 SHALL be expressed as 0.3434, with any trailing zeros truncated.)
 7. Numeric values SHALL be expressed without single quotes.
 8. All timestamps SHALL be expressed in UTC; the zero UTC offset SHALL be expressed with the capital letter 'Z'.
-9. All timestamps SHALL be expressed with millisecond precision. If an EPCIS event lacks the latter, the millisecond field SHALL be zero-filled with '000' (e.g., YYYY-MM-DDTHH:MM:SS.000Z). `xsd:dateTimeStamp` permits an unlimited number of decimal places to be expressed. If more than 3 decimal places are expressed, the 3rd decimal place SHALL be rounded up if the 4th decimal place is a digit in the range 5-9. For example, an `xsd:dateTimeStamp` value of 2023-01-18T11:04:03.1415Z would appear in the pre-hash string as 2023-01-18T11:04:03.142Z .
+9. All timestamps SHALL be expressed with millisecond precision. If an EPCIS event lacks the latter, the millisecond field SHALL be zero-filled with '000' (e.g., YYYY-MM-DDTHH:MM:SS.000Z). 
+> **Note (v2.1):** `xsd:dateTimeStamp` permits an unlimited number of decimal places to be expressed. If more than 3 decimal places are expressed, the 3rd decimal place SHALL be rounded up if the 4th decimal place is a digit in the range 5-9. For example, an `xsd:dateTimeStamp` value of 2023-01-18T11:04:03.1415Z would appear in the pre-hash string as 2023-01-18T11:04:03.142Z .
 10. Strings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 11. All child elements as part of a list (e.g. `epc` in `epcList`, `bizTransaction` in `bizTransactionList`, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character. A field name denoting a list (e.g. `epcList`, `bizTransactionList`, `sensorElementList`) SHALL only appear once in the pre-hash string.
 12. If a child element of a list itself comprises one or more key-value pairs itself (e.g. `quantityElement` in `quantityList`, `sensorReport` in `sensorElement`), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character..
@@ -90,6 +103,7 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 20. If an EPCIS event comprises user extension elements at event level – irrespective whether they appear at top level or are nested – the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('=').
     The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
 21. If an EPCIS event comprises user extension elements as part of an EPCIS standard field with an extension point (namely `readPoint`, `bizLocation`, `sensorElement`, `sensorMetadata`, and `sensorReport`), they SHALL be added at the end of its enclosing parent’s regular fields. Apart from that, they SHALL be added to the pre-hash string similarly as specified in the previous step.
+> **Note (v2.1):** Improved wording for better understandabilty.
 22. The resulting pre-hash string SHALL be embedded in a 'ni' URI scheme as specified in RFC 6920, as follows:
     ni:///{digest algorithm};{digest value}?ver={CBV version}
     i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), the digest value, one question mark ('?'), the characters 'v', 'e', 'r', one equal sign ('='), and the version of the EPCIS Event Hash ID algorithm that was used to generate the pre-hash string, indicated by the CBV version.
@@ -130,6 +144,18 @@ Applicable for all EPCIS Event Types, i.e. `ObjectEvent`, `AggregationEvent`, `T
 |          | )                                                                                                                                                                                                                                                                                                                                                |
 | 24       | `ilmd` – `{ILMD elements}`                                                                                                                                                                                                                                                                                                                       |
 | 25       | `{User extension elements}`                                                                                                                                                                                                                                                                                                                      |
+
+### Differences between version 2.0 and 2.1
+
+| Aspect                     | v2.0                                                 | v2.1                                                                                                                                               |
+|----------------------------|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Timestamp rounding         |                                                      | Clarification: **truncate beyond 3 digits**, see step (9)                                                                                          |
+| Handling of user extensions in EPCIS standard fields |                            | Improved wording, see step (21)                                                                                                                    |
+| Master Data Available For  |                                                      | Added support for `gs1:masterDataAvailableFor`, **note that the GS1 Web Vocabulary is handled differently compared to all other Web Vocabularies** |
+| Hash URI format            | `ni:///{digest algorithm};{digest value}?ver=CBV2.0` | `ni:///{digest algorithm};{digest value}?ver=CBV2.1`                                                                                               |
+
+
+### Illustrative examples
 
 For better understanding, the following illustrations include the data content of EPCIS events (including a couple of user extensions - all defined under 'https://ns.example.com/epcis'), show the corresponding pre-hash string as well as the canonical hash value of that event.
 
