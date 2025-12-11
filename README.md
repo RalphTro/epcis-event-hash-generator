@@ -88,10 +88,10 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 7. Numeric values SHALL be expressed without single quotes.
 8. All timestamps SHALL be expressed in UTC; the zero UTC offset SHALL be expressed with the capital letter 'Z'.
 9. All timestamps SHALL be expressed with millisecond precision. If an EPCIS event lacks the latter, the millisecond field SHALL be zero-filled with '000' (e.g., YYYY-MM-DDTHH:MM:SS.000Z). 
-> **Note (v2.1):** `xsd:dateTimeStamp` permits an unlimited number of decimal places to be expressed. If more than 3 decimal places are expressed, the 3rd decimal place SHALL be rounded up if the 4th decimal place is a digit in the range 5-9. For example, an `xsd:dateTimeStamp` value of 2023-01-18T11:04:03.1415Z would appear in the pre-hash string as 2023-01-18T11:04:03.142Z .
+    > **Note (v2.1):** `xsd:dateTimeStamp` permits an unlimited number of decimal places to be expressed. If more than 3 decimal places are expressed, the 3rd decimal place SHALL be rounded up if the 4th decimal place is a digit in the range 5-9. For example, an `xsd:dateTimeStamp` value of 2023-01-18T11:04:03.1415Z would appear in the pre-hash string as 2023-01-18T11:04:03.142Z .
 10. Strings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 11. All child elements as part of a list (e.g. `epc` in `epcList`, `bizTransaction` in `bizTransactionList`, etc.) SHALL be sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character. 
-> **Note (v2.1):** A field name denoting a list (e.g. `epcList`, `bizTransactionList`, `sensorElementList`) SHALL only appear once in the pre-hash string.
+    > **Note (v2.1):** A field name denoting a list (e.g. `epcList`, `bizTransactionList`, `sensorElementList`) SHALL only appear once in the pre-hash string.
 12. If a child element of a list itself comprises one or more key-value pairs itself (e.g. `quantityElement` in `quantityList`, `sensorReport` in `sensorElement`), the latter SHALL be concatenated to a string (similar to the procedure specified above) and, if they belong to the same level, sequenced according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character.
 13. If an EPCIS field comprises a type attribute (e.g. Business Transaction Type in bizTransaction or Source/Destination Type in source), the value SHALL be prefixed with the type before the alphabetical ordering takes place.
 14. If present, any URN-based standard vocabulary value (starting with ‘urn:epcglobal:cbv’) SHALL be expressed in its corresponding CBV Web URI term (starting with ‘https://ref.gs1.org’).
@@ -104,12 +104,20 @@ To calculate this pre-hash string, the algorithm requires to extract and concate
 20. If an EPCIS event comprises user extension elements at event level – irrespective whether they appear at top level or are nested – the latter SHALL comprise their key names (full namespace embraced by curly brackets ('{' and '}') and the respective local name), as well as, if present, the contained value, prefixed by an equal sign ('=').
     The resulting substrings SHALL be sorted according to their case-sensitive lexical ordering, considering UTF-8/ASCII code values of each successive character when they are appended to the pre-hash string.
 21. If an EPCIS event comprises user extension elements as part of an EPCIS standard field with an extension point (namely `readPoint`, `bizLocation`, `sensorElement`, `sensorMetadata`, and `sensorReport`), they SHALL be added at the end of its enclosing parent’s regular fields. Apart from that, they SHALL be added to the pre-hash string similarly as specified in the previous step.
-> **Note (v2.1):** Improved wording for better understandabilty.
+    > **Note (v2.1):** Improved wording for better understandabilty.
 22. The resulting pre-hash string SHALL be embedded in a 'ni' URI scheme as specified in RFC 6920, as follows:
     ni:///{digest algorithm};{digest value}?ver={CBV version}
     i.e. characters 'n', 'i', followed by one colon (':'), three slash characters ('/'), the digest algorithm, one semicolon (';'), the digest value, one question mark ('?'), the characters 'v', 'e', 'r', one equal sign ('='), and the version of the EPCIS Event Hash ID algorithm that was used to generate the pre-hash string, indicated by the CBV version.
 23. The digest algorithm SHALL contain one of the hash name string values as listed in the Named Information Hash Algorithm Registry (see https://www.iana.org/assignments/named-information/named-information.xhtml)
 24. The CBV version SHALL be indicated as follows: the three characters 'C', 'B', 'V', followed by one or several digits indicating the major release version, one dot character ('.') and one or more digits indicating the minor release version. In addition, it MAY be appended with one dot character ('.') and one or more digits indicating a revision of a given CBV standard release, if applicable (i.e. if a revision of the CBV standard specifies an updated version of the EPCIS Event Hash ID algorithm).
+25. If an EPCIS Event includes the `gs1:masterDataAvailableFor` property, it SHALL be processed analogously to a user extension during pre-hash string construction.
+    The GS1 Web Vocabulary is unique in that its properties and code values are expressed in bare string notation, i.e., without a URI prefix. For hashing purposes, they are treated like standard EPCIS fields:
+    •	Key names SHALL be used in their original form.
+    •	Code values SHALL be expanded to their full URI form.
+    Each `gs1:masterDataAvailableFor` block includes an `@id` or `id` field that unambiguously identifies the RDF Subject. During pre-hash string construction, this field SHALL be normalised to "id".
+    Similarly, if a `gs1:masterDataAvailableFor` block includes an `@type` or `type` field, it SHALL be normalised to "type" during pre-hash string construction.
+    > **Note (v2.1):** Step added as of version 2.1.
+
 
 ### Canonical property order
 
