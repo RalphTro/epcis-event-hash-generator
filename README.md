@@ -65,10 +65,11 @@ For any algorithm that is to be considered a faithful hash of an EPCIS event, we
 
 ### Version history
 
-| Version | Summary                                                                |
-|---------|------------------------------------------------------------------------|
-| 2.0     | Initial algorithm for EPCIS Event Hash ID as per CBV 2.0               |
-| 2.1     | Minor adjustments to canonicalization rules and timestamp rounding     |
+| Version | Summary |
+|--------|----------|
+| 2.0    | Initial algorithm for EPCIS Event Hash ID as per CBV 2.0 |
+| 2.1    | Added rules how to process data contained in `gs1:masterDataAvailableFor` |
+|        | Minor adjustments to canonicalization rules and timestamp rounding |
 
 [For further details, go to Differences between version 2.0 and 2.1](#differences-between-version-20-and-21)
 
