@@ -1,0 +1,116 @@
+{
+    "@context": [
+	"https://ref.gs1.org/standards/epcis/epcis-context.jsonld",
+	{
+	    "example": "http://ns.example.com/epcis/"
+	},
+	{
+	    "example2": "http://ns.example.com/epcis-2/"
+	},
+	{
+	    "example3": "http://ns.example.com/epcis-3/"
+	},
+	{
+	    "example4": "http://ns.example.com/epcis-4/"
+	}
+    ],
+    "type": "EPCISDocument",
+    "schemaVersion": "2.0",
+    "creationDate": "2005-07-11T11:30:47.0Z",
+    "epcisBody": {
+	"eventList": [
+	    {
+		"type": "TransformationEvent",
+		"eventTime": "2020-09-29T14:00:00+02:00",
+		"eventTimeZoneOffset": "+02:00",
+		"errorDeclaration": {
+		    "declarationTime": "2020-09-29T15:00:00+02:00",
+		    "example:issuer": "Employee 123",
+		    "example3:errorCodes": {
+			"example3:value1": "34",
+			"example3:value44": "66"
+		    },
+		    "example:field": {
+			"example:furtherData": "abcd1234"
+		    }
+		},
+		"inputQuantityList": [
+		    {
+			"epcClass": "urn:epc:class:lgtin:4023333.055555.ABC123",
+			"quantity": 25.0,
+			"uom": "KGM"
+		    }
+		],
+		"outputEPCList": [
+		    "urn:epc:id:sgtin:4012345.012345.987",
+		    "urn:epc:id:sgtin:4012345.012345.988"
+		],
+		"bizStep": "commissioning",
+		"readPoint": {
+		    "id": "urn:epc:id:sgln:4023333.00000.0",
+		    "example:gs1ES": "(414)4023333000000"
+		},
+		"bizLocation": {
+		    "id": "urn:epc:id:sgln:4023333.00001.12",
+		    "example:gs1ES": "(414)4023333000017 (254)12"
+		},
+		"ilmd": {
+		    "cbvmda:lotNumber": "LOTABC",
+		    "example:grading": "A",
+		    "example2:userMasterData": {
+			"example2:sizeCode": "B-2"
+		    }
+		},
+		"sensorElementList": [
+		    {
+			"sensorMetadata": {
+			    "startTime": "2019-04-01T15:00:00+01:00",
+			    "endTime": "2019-04-02T14:59:59.999+01:00",
+			    "example:someFurtherMetaData": "someText"
+			},
+			"sensorReport": [
+			    {
+				"type": "Temperature",
+				"minValue": 12.4,
+				"maxValue": 13.8,
+				"meanValue": 13.2,
+				"percRank": 50.0,
+				"percValue": 12.7,
+				"uom": "CEL",
+				"sDev": 0.41,
+				"example:cv": "123"
+			    },
+			    {
+				"type": "example:someSensorProperty",
+				"stringValue": "someSensorOutput"
+			    }
+			],
+			"example:furtherSensorData": {
+			    "example:measure1": "123.5",
+			    "example:measure2": "0.987"
+			},
+			"example:someUserField": "abc123"
+		    }
+		],
+		"example:extension": {
+		    "moreExtensions": {
+			"futureExtension": {
+			    "tag1": "1",
+			    "tag2": "2",
+			    "tag3": "3"
+			}
+		    }
+		},
+		"example:internalData": {
+		    "example:machine": "urn:epc:id:giai:4012345.ABC",
+		    "example:procedure": "A-1"
+		},
+		"example2:furtherData": {
+		    "example2:assemblyLine": "2",
+		    "example2:workingShift": "1"
+		},
+		"example4:otherThings": "some text"
+	    }
+	]
+    }
+}

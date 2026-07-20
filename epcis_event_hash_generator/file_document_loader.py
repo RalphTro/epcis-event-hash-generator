@@ -45,7 +45,7 @@ def file_document_loader(secure=False, **kwargs):
 
         try:
             if url in context_file_hashes:
-                with importlib.resources.open_text("epcis_event_hash_generator", context_file_hashes[url]) as file:
+                with importlib.resources.files("epcis_event_hash_generator").joinpath(context_file_hashes[url]).open("r", encoding="utf-8") as file:
                     data = json.load(file)
 
                 doc = {

@@ -42,8 +42,13 @@ def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by="", cbv_ver
 
     events = events_from_file_reader.event_list_from_file(path, enforce)
 
-    prehashes = hash_generator.derive_prehashes_from_events(events, join_by, cbv_version)
-    hashes = hash_generator.calculate_hashes_from_pre_hashes(prehashes, hashalg, cbv_version)
+    # The hash MUST come from the canonical pre-hash: fields concatenated with NO separator
+    canonical_prehashes = hash_generator.derive_prehashes_from_events(events, "", cbv_version)
+    hashes = hash_generator.calculate_hashes_from_pre_hashes(canonical_prehashes, hashalg, cbv_version)
+
+    # Rebuild with the requested separator only for the human-readable pre-hash output.
+    prehashes = (hash_generator.derive_prehashes_from_events(events, join_by, cbv_version)
+                 if join_by else canonical_prehashes)
 
     return hashes, prehashes
 
@@ -83,8 +88,8 @@ def command_line_parsing():
     parser.add_argument(
         "-j",
         "--join",
-        help="String used to join the pre hash string." +
-        " Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
+        help="Separator inserted between fields in the DISPLAYED pre-hash only (readability);" +
+        " it does NOT affect the generated hash. Defaults to empty string. E.g. '\\n' for debugging.",
         default="")
     parser.add_argument(
         "-e",

@@ -7,7 +7,7 @@ from os import walk
 
 from epcis_event_hash_generator.__main__ import epcis_hash_from_file
 
-TEST_FILE_PATH = "examples/"
+TEST_FILE_PATH = "examples/documents/"
 TEST_FILE_PATH_SAME_EVENT = "expected_equal/"
 
 

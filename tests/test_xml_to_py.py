@@ -31,7 +31,7 @@ def test_docstring_example():
 
 
 def test_epcsi_reference_example():
-    actual_obj = event_list_from_file("examples/ReferenceEventHashAlgorithm.xml")
+    actual_obj = event_list_from_file("examples/documents/ReferenceEventHashAlgorithm.xml")
 
     print(actual_obj)
 

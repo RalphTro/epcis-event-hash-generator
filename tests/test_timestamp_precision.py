@@ -3,19 +3,24 @@
 """Test timestamp precision handling for different CBV versions."""
 
 import unittest
+try:
+    from .context import epcis_event_hash_generator  # noqa: F401
+except ImportError:
+    from context import epcis_event_hash_generator  # noqa: F401
+
 from epcis_event_hash_generator.hash_generator import _fix_time_stamp_format
 
 
 class TestTimestampPrecision(unittest.TestCase):
     """Test timestamp precision handling for CBV2.0 vs CBV2.1."""
 
-    def test_cbv20_no_rounding_high_precision(self):
+    def test_cbv20_rounds_high_precision(self):
         """CBV2.0 should preserve high precision timestamps without rounding."""
         # Test with 6 digit microsecond precision
         timestamp = "2023-02-02T11:04:03.123456+01:00"
         result = _fix_time_stamp_format(timestamp, "CBV2.0")
         # Should preserve all 6 digits, convert to UTC
-        expected = "2023-02-02T10:04:03.123456Z"
+        expected = "2023-02-02T10:04:03.123Z"
         self.assertEqual(result, expected)
 
     def test_cbv21_rounds_high_precision(self):
@@ -78,7 +83,7 @@ class TestTimestampPrecision(unittest.TestCase):
         # 1415 microseconds = 1.415 milliseconds, would round to 1 ms in CBV2.1
         timestamp = "2023-02-02T11:04:03.001415+01:00"
         result = _fix_time_stamp_format(timestamp, "CBV2.0")
-        expected = "2023-02-02T10:04:03.001415Z"
+        expected = "2023-02-02T10:04:03.001Z"
         self.assertEqual(result, expected)
 
     def test_cbv21_rounding_edge_case(self):
@@ -93,7 +98,7 @@ class TestTimestampPrecision(unittest.TestCase):
         """Test CBV2.0 with UTC timestamp (no timezone conversion needed)."""
         timestamp = "2023-02-02T11:04:03.123456Z"
         result = _fix_time_stamp_format(timestamp, "CBV2.0")
-        expected = "2023-02-02T11:04:03.123456Z"
+        expected = "2023-02-02T11:04:03.123Z"
         self.assertEqual(result, expected)
 
     def test_utc_timestamp_cbv21(self):

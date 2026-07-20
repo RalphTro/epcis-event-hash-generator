@@ -21,9 +21,9 @@ When using the command line utility, this can be changed via the -j flag.
 PROP_ORDER = [
     ('eventTime', None),
     ('eventTimeZoneOffset', None),
-    ('certificationInfo', None),
-    ('parentID', None),
+    # certificationInfo removed: not in CBV property order, excluded from hash. parentId should be after epcList
     ('epcList', [('epc', None)]),
+    ('parentID', None),
     ('inputEPCList', [('epc', None)]),
     ('childEPCs', [('epc', None)]),
     ('quantityList', [('quantityElement',

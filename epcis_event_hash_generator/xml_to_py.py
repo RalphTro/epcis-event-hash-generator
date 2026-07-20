@@ -65,10 +65,9 @@ file for details.
 
 import logging
 import xml.etree.ElementTree as ElementTree
-from lxml import etree
 from typing import Tuple
 
-_expansions = {"gs1:": "https://ref.gs1.org/voc/", "cbv:": "https://ref.gs1.org/cbv/"}
+_expansions = {"gs1:": "https://ref.gs1.org/voc/", "cbv:": "https://ref.gs1.org/cbv/", "epcis:": "https://ref.gs1.org/epcis/"}
 
 
 def _remove_extension_tags(data):
@@ -109,25 +108,28 @@ def check_for_nested_tuples_with_type_attribute(obj):
     Checks if type attribute value to be expanded in various nested tuple elements
     like source, destination, bizTranslation, etc.
     """
-    skip = False
-    restructured_obj = None
-    altered = False
+    if not (isinstance(obj, tuple) and len(obj) == 2):
+        return obj, False
 
-    for key, value in _expansions.items():
-        if isinstance(obj, tuple) and len(obj) == 2:
-            obj_as_list = list(obj)
-            for index, child in enumerate(obj_as_list):
-                if isinstance(child, tuple) and child[0] == 'type':
-                    child_as_list = list(child)
-                    skip = True
-                    if str(child_as_list[1]).startswith(key):
-                        altered = True
-                        child_as_list[1] = str(child_as_list[1]).replace(key, value)
-                        obj_as_list[index] = tuple(child_as_list)
-            restructured_obj = tuple(obj_as_list)
+    skip = False
+    altered = False
+    obj_as_list = list(obj)
+
+    for index, child in enumerate(obj_as_list):
+        if isinstance(child, tuple) and child[0] == 'type':
+            skip = True
+            child_as_list = list(child)
+
+            # Try each CURIE prefix; first match wins.
+            for key, value in _expansions.items():
+                if str(child_as_list[1]).startswith(key):
+                    child_as_list[1] = str(child_as_list[1]).replace(key, value)
+                    altered = True
+                    break
+            obj_as_list[index] = tuple(child_as_list)
 
     if altered:
-        return restructured_obj, skip
+        return tuple(obj_as_list), skip
 
     return obj, skip
 
@@ -137,8 +139,10 @@ def _xml_to_py(root, sort=True):
     """
     children = []
 
-    # add all XML Attributes
-    children += [(x, y, []) for (x, y) in root.items()]
+    # add all XML Attributes, except xsi:type (an XML-only type hint absent from JSON) so XML/JSON match
+    children += [(x, y, []) for (x, y) in root.items()
+                 if x != "{http://www.w3.org/2001/XMLSchema-instance}type"]
+
 
     # Recurs through children
     for child in root:
@@ -169,34 +173,6 @@ def _xml_to_py(root, sort=True):
     return obj
 
 
-def remove_xml_declaration(xml_string):
-    """
-    Removes the <?xml> tag from the beginning of an XML string if present.
-    """
-    if xml_string.startswith("<?xml"):
-        # Find the end of the processing instruction
-        end_pos = xml_string.find("?>") + 2  # Include the ?> characters
-        return xml_string[end_pos:]
-    else:
-        return xml_string
-
-
-def get_ignore_field_prefix_ns(xmlStr: str):
-    """
-    if presents, gets all fields to be ignored from events of EPCIS document.
-    """
-    xml_str_without_decl = remove_xml_declaration(xmlStr)
-
-    all_namespaces = etree.fromstring(xml_str_without_decl).nsmap
-
-    ignore_field_ns_prefix = None
-    for key, value in all_namespaces.items():
-        if value == 'https://repository-x.example.com/':
-            return key
-
-    return ignore_field_ns_prefix
-
-
 def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
     """
     Read EPCIS XML document and generate the event List in the form of a simple python object
@@ -204,27 +180,15 @@ def event_list_from_epcis_document_str(xmlStr: str) -> Tuple[str, str, list]:
     try:
         data = _remove_extension_tags(xmlStr)
 
-        ignore_field_ns_prefix = get_ignore_field_prefix_ns(xmlStr)
-
-        if ignore_field_ns_prefix is not None:
-            data = data.replace(ignore_field_ns_prefix + ':', '')
-
         root = ElementTree.fromstring(data)
 
         eventList = root.find("*EventList")
 
-        if not eventList:
+        if eventList is None or len(eventList) == 0:
             eventList = root.find('.//*EventList')
 
-        if not eventList:
+        if eventList is None or len(eventList) == 0:
             raise ValueError("No EventList found")
-
-        # remove all fields to be ignored
-        for field_to_remove in root.findall("ignoreFields/*"):
-            for event in eventList:
-                el = event.find(field_to_remove.tag)
-                if el is not None:
-                    event.remove(el)
 
     except (ValueError, OSError) as ex:
         logging.error(ex)
