@@ -155,7 +155,7 @@
                 }
               }
             ],
-            "ext1:boolean": "true",
+            "ext1:boolean": true,
             "ext1:object": {
               "ext2:array": [
                 "11",
@@ -227,7 +227,7 @@
           "ext1:int": "10",
           "cbvmda:netWeight": "3.5",
           "ext1:time": "2013-06-08T14:58:56.591Z",
-          "ext1:boolean": "true",
+          "ext1:boolean": true,
           "ext1:default": "stringAsDefaultValue",
           "ext1:string": "string",
           "cbvmda:countryOfOrigin": "GB",
@@ -261,7 +261,7 @@
             }
           }
         ],
-        "ext1:boolean": "true",
+        "ext1:boolean": true,
         "ext1:object": {
           "ext2:array": [
             "11",
