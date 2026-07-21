@@ -93,8 +93,6 @@ def _namespace_replace(text, is_value=False):
 
 
 def _collect_namespaces_from_jsonld_context(context):
-    global _namespaces
-
     # If namespace uri is from standard epcis context then map it else use custom
     for _prefix, _uri in _WELL_KNOWN_NAMESPACES.items():
         _namespaces[_prefix] = "{" + _uri + "}"
@@ -115,7 +113,6 @@ def _json_to_py(json_obj):
     """
     Recursively convert a string/list/dict to a simple python object
     """
-    global _namespaces
 
     py_obj = ("", "", [])
 
