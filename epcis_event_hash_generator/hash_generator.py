@@ -141,7 +141,8 @@ def _recurse_through_children_in_order(child_list, child_order, cbv_version=DEFA
                 child_list.remove(child)
 
         # sort list of values to fix #10
-        list_of_values.sort()
+        # sort by the canonical (without using any join by character) so the displayed order pre-hash string
+        list_of_values.sort(key=lambda v: v.replace(JOIN_BY, "") if JOIN_BY else v)
 
         if "".join(list_of_values):  # fixes #16
             if pre_hash:
@@ -251,7 +252,7 @@ def _generic_child_list_to_prehash_string(children):
             list_of_values.append(entry)
 
     if len(children) > 1 and should_sort(children):
-        list_of_values.sort()
+        list_of_values.sort(key=lambda v: v.replace(JOIN_BY, "") if JOIN_BY else v)
     return JOIN_BY.join(list_of_values)
 
 

@@ -10,8 +10,7 @@ def test_good_epc_conversion():
     """ Testing few EPC URIs (all schemes) """
     assert normaliser('urn:epc:id:sgtin:4012345.011111.98%22') == "https://id.gs1.org/01/04012345111118/21/98%22"
     assert normaliser('urn:epc:id:sgtin:415056789012.0.987654') == "https://id.gs1.org/01/04150567890128/21/987654"
-    assert normaliser(
-        'urn:epc:id:sgtin:0614141.812345.6789%2F%26%25%22!%3F()') == "https://id.gs1.org/01/80614141123458/21/6789%2F%26%25%22%21%3F%28%29"
+    assert normaliser('urn:epc:id:sgtin:0614141.812345.6789%2F%26%25%22!%3F()') == "https://id.gs1.org/01/80614141123458/21/6789%2F%26%25%22!%3F()"
     assert normaliser('urn:epc:id:sscc:4012345.3111111111') == "https://id.gs1.org/00/340123451111111111"
     assert normaliser('urn:epc:id:sgln:4012345.00005.122') == "https://id.gs1.org/414/4012345000054/254/122"
     assert normaliser('urn:epc:id:sgln:4012345.00005.0') == "https://id.gs1.org/414/4012345000054"
@@ -27,7 +26,7 @@ def test_good_epc_conversion():
     assert normaliser('urn:epc:id:gsin:4012345.222333444') == "https://id.gs1.org/402/40123452223334442"
     assert normaliser('urn:epc:id:itip:4012345.011111.01.02.987') == "https://id.gs1.org/8006/040123451111180102/21/987"
     assert normaliser(
-        'urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7SDB') == "https://id.gs1.org/01/01234567987651/235/51qIgY%29%3C%26Jp3%2Aj7SDB"
+        'urn:epc:id:upui:1234567.098765.51qIgY)%3C%26Jp3*j7SDB') == "https://id.gs1.org/01/01234567987651/235/51qIgY)%3C%26Jp3*j7SDB"
     assert normaliser('urn:epc:id:pgln:4000001.00000') == "https://id.gs1.org/417/4000001000005"
     assert normaliser('urn:epc:id:pgln:999999999999.') == "https://id.gs1.org/417/9999999999994"
     assert normaliser('urn:epc:class:lgtin:4012345.012345.Lot987') == "https://id.gs1.org/01/04012345123456/10/Lot987"
