@@ -7,7 +7,7 @@ from os import walk
 
 from epcis_event_hash_generator.__main__ import epcis_hash_from_file
 
-TEST_FILE_PATH = "examples/"
+TEST_FILE_PATH = "examples/documents/"
 TEST_FILE_PATH_SAME_EVENT = "expected_equal/"
 
 
@@ -39,7 +39,12 @@ def test_equal():
     for (_, _, filenames) in walk(TEST_FILE_PATH_SAME_EVENT):
         for filename in filenames:
             if filename.endswith("xml") or filename.endswith("json") or filename.endswith("jsonld"):
-                assert len(set(epcis_hash_from_file(TEST_FILE_PATH_SAME_EVENT + filename, "sha256")[
+                # Use CBV2.1 for timestamp precision normalization to ensure
+                # different timestamp precisions of the same logical time produce the same hash
+                cbv_version = "CBV2.1" if "timestampPrecision" in filename else "CBV2.0"
+                assert len(set(epcis_hash_from_file(TEST_FILE_PATH_SAME_EVENT + filename,
+                                                    "sha256",
+                                                    cbv_version=cbv_version)[
                     0])) == 1, "The events in {} have different hashes!".format(
                     TEST_FILE_PATH_SAME_EVENT + filename)
         break

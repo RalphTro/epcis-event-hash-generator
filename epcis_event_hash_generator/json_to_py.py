@@ -60,6 +60,13 @@ from epcis_event_hash_generator import json_xml_model_mismatch_correction
 
 _namespaces = {}  # global dictionary gathered during parsing
 
+# Well-known EPCIS/CBV namespaces defined by the standard EPCIS JSON-LD context.
+_WELL_KNOWN_NAMESPACES = {
+    "gs1": "https://ref.gs1.org/voc/",
+    "cbv": "https://ref.gs1.org/cbv/",
+    "epcis": "https://ref.gs1.org/epcis/",
+    "cbvmda": "urn:epcglobal:cbv:mda",
+}
 
 def _namespace_replace(text, is_value=False):
     """If the key contains a namespace (followed by ":"), replace it with
@@ -72,8 +79,13 @@ def _namespace_replace(text, is_value=False):
     splitted = text.split(":", 1)
 
     if len(splitted) > 1 and splitted[0] in _namespaces:
+        ns = _namespaces[splitted[0]].replace('{', '').replace('}', '')
         if is_value:
-            return _namespaces[splitted[0]].replace('{', '').replace('}', '') + splitted[1]
+            # Only STANDARD GS1 vocabulary CURIEs are expanded in values (rule 15/16); user-namespace
+            # CURIEs (e.g. example:foo) are left unchanged, matching the XML parser
+            if ns.startswith("https://ref.gs1.org") or ns.startswith("https://gs1.org"):
+                return ns + splitted[1]
+            return text
 
         return _namespaces[splitted[0]] + splitted[1]
 
@@ -81,7 +93,9 @@ def _namespace_replace(text, is_value=False):
 
 
 def _collect_namespaces_from_jsonld_context(context):
-    global _namespaces
+    # If namespace uri is from standard epcis context then map it else use custom
+    for _prefix, _uri in _WELL_KNOWN_NAMESPACES.items():
+        _namespaces[_prefix] = "{" + _uri + "}"
 
     if not isinstance(context, str):
         if isinstance(context, list):
@@ -91,15 +105,14 @@ def _collect_namespaces_from_jsonld_context(context):
                 else:
                     for key in c.keys():
                         _namespaces[key] = "{" + c[key] + "}"
+    # epcis 2.1 change: always add implicit namespace "gs1": "https://ref.gs1.org/voc/"
+    _namespaces["gs1"] = "{https://ref.gs1.org/voc/}"
 
 
-def _json_to_py(json_obj, fields_to_ignore=None):
+def _json_to_py(json_obj):
     """
     Recursively convert a string/list/dict to a simple python object
     """
-    if fields_to_ignore is None:
-        fields_to_ignore = []
-    global _namespaces
 
     py_obj = ("", "", [])
 
@@ -113,7 +126,7 @@ def _json_to_py(json_obj, fields_to_ignore=None):
         if "#text" in json_obj:
             py_obj = (py_obj[0], json_obj["#text"], py_obj[2])
 
-        to_be_ignored = ["#text", "rdfs:comment", "comment"] + fields_to_ignore
+        to_be_ignored = ["#text", "rdfs:comment", "comment"]
         for (key, val) in [x for x in json_obj.items() if x[0] not in to_be_ignored]:
             if key.startswith("@xmlns"):
                 _namespaces[key[7:]] = "{" + val + "}"
@@ -135,6 +148,9 @@ def _json_to_py(json_obj, fields_to_ignore=None):
 
     else:
         logging.debug("converting '%s' to str", json_obj)
+        if isinstance(json_obj, bool):
+            # JSON booleans parse to Python True/False; emit lowercase 'true'/'false' to match XML/XSD
+            return "", "true" if json_obj else "false", []
         return "", str(_namespace_replace(json_obj, True)), []
 
     # do not sort elements with bizTransaction, source and destination
@@ -211,7 +227,7 @@ def _bare_string_pre_preocessing(json_obj):
     _find_expanded_values(expanded, expanded_values)
     logging.debug("all expanded_values: %s", expanded_values)
     expanded_values = set([x for x in expanded_values if x.startswith(
-        "https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc")])
+        "https://ref.gs1.org/cbv") or x.startswith("https://gs1.org/voc") or x.startswith("https://ref.gs1.org/voc")])
     logging.debug("expanded_values for replacement: %s", expanded_values)
     json_obj = _replace_bare_string_values(json_obj, expanded_values)
 
@@ -246,28 +262,19 @@ def event_list_from_epcis_document_json(json_obj):
     if not json_obj.get("@context") is None:
         _collect_namespaces_from_jsonld_context(json_obj["@context"])
 
-    internal_domain = '{https://repository-x.example.com/}'
-    ignore_field_key = ':ignoreFields'
-    for key, value in _namespaces.items():
-        if value == internal_domain:
-            ignore_field_key = key+ignore_field_key
-            break
-
     if "eventList" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["eventList"]
-        fields_to_ignore = json_obj.get(ignore_field_key)
     elif "queryResults" in json_obj["epcisBody"]:
         event_list = json_obj["epcisBody"]["queryResults"]["resultsBody"]["eventList"]
-        fields_to_ignore = json_obj["epcisBody"]["queryResults"].get(ignore_field_key)
     else:
         # epcisBody may contain single event
         event_list = [json_obj["epcisBody"]["event"]]
-        fields_to_ignore = json_obj.get(ignore_field_key)
 
     events = []
 
     # Correct JSON/XML data model mismatch
     for event in event_list:
-        events.append(json_xml_model_mismatch_correction.deep_structure_correction(_json_to_py(event, fields_to_ignore)))
+        events.append(json_xml_model_mismatch_correction.deep_structure_correction(
+            _json_to_py(event)))
 
     return ("EventList", "", events)

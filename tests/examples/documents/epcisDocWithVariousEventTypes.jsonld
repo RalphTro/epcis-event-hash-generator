@@ -1,0 +1,348 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld",
+    {
+      "example": "https://ns.example.com/epcis/"
+    },
+    {
+      "cbvmda": "urn:epcglobal:cbv:mda:"
+    }
+  ],
+  "id": "https://id.example.org/document1",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2022-02-17T11:30:47.0Z",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2019-10-21T11:00:30.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sscc:5200001.0111111146"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "departing",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:5200001.99901.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "desadv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:5200001000008:4711"
+          },
+          {
+            "type": "inv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:5200001000008:RE1099"
+          }
+        ],
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:5200001.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4000001.98765"
+          },
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4012345.00012.0"
+          }
+        ]
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2019-10-21T12:00:30.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sscc:5200001.0111111146"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "receiving",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00012.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "desadv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:5200001000008:4711"
+          },
+          {
+            "type": "inv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:5200001000008:RE1099"
+          }
+        ],
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4000001.00012"
+          },
+          {
+            "type": "owning_party",
+            "source": "urn:epc:id:pgln:4000001.00012"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4012345.00000"
+          },
+          {
+            "type": "owning_party",
+            "destination": "urn:epc:id:pgln:4012345.00000"
+          },
+          {
+            "type": "location",
+            "destination": "urn:epc:id:sgln:4012345.00012.0"
+          }
+        ]
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2019-10-21T15:45:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sscc:4012345.0111111111"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "inspecting",
+        "disposition": "in_progress",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00024.0"
+        }
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2019-10-21T14:58:56.000+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "quantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4054739.099914.20160711",
+            "quantity": 600,
+            "uom": "KGM"
+          }
+        ],
+        "action": "ADD",
+        "bizStep": "commissioning",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4054739.00001.0"
+        },
+        "ilmd": {
+          "cbvmda:bestBeforeDate": "2019-10-21"
+        }
+      },
+      {
+        "type": "AggregationEvent",
+        "eventTime": "2019-10-21T11:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "parentID": "urn:epc:id:sscc:4047023.0111111122",
+        "childEPCs": [
+          "urn:epc:id:sgtin:4047023.077551.98",
+          "urn:epc:id:sgtin:4047023.077551.97",
+          "urn:epc:id:sgtin:4047023.077551.107",
+          "urn:epc:id:sgtin:4047023.077551.109"
+        ],
+        "action": "ADD",
+        "bizStep": "packing",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4047023.00012.0"
+        }
+      },
+      {
+        "type": "AggregationEvent",
+        "eventTime": "2019-10-21T17:30:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "parentID": "urn:epc:id:sscc:4012344.0111111133",
+        "childQuantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4054739.099902.P2",
+            "quantity": 12,
+            "uom": "KGM"
+          },
+          {
+            "epcClass": "urn:epc:class:lgtin:4054739.012345.lot2",
+            "quantity": 17
+          }
+        ],
+        "action": "ADD",
+        "bizStep": "packing",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00025.0"
+        }
+      },
+      {
+        "type": "AggregationEvent",
+        "eventTime": "2019-10-21T11:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "parentID": "urn:epc:id:sscc:4012344.0111111144",
+        "action": "DELETE",
+        "bizStep": "unpacking",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00025.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "inv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345123456:RE1099"
+          }
+        ]
+      },
+      {
+        "type": "AggregationEvent",
+        "eventTime": "2019-10-21T14:02:56.000+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "parentID": "urn:epc:id:sscc:4012344.0998811122",
+        "childEPCs": [
+          "urn:epc:id:sscc:4012344.0998811123",
+          "urn:epc:id:sscc:4012344.0998811124",
+          "urn:epc:id:sscc:4012344.0998811125"
+        ],
+        "action": "DELETE",
+        "bizStep": "unpacking",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00077.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "inv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345123456:4711"
+          }
+        ]
+      },
+      {
+        "type": "TransactionEvent",
+        "eventTime": "2019-10-21T00:05:00-06:00",
+        "eventTimeZoneOffset": "-06:00",
+        "epcList": [
+          "urn:epc:id:sgtin:0614141.107340.1",
+          "urn:epc:id:sgtin:0614141.107340.2"
+        ],
+        "action": "ADD",
+        "bizStep": "shipping",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00000.5"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4012345.00000.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "po",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345123456:RE100099"
+          }
+        ]
+      },
+      {
+        "type": "TransactionEvent",
+        "eventTime": "2019-10-21T14:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "quantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4012345.099988.2014-02-10",
+            "quantity": 2030,
+            "uom": "KGM"
+          }
+        ],
+        "action": "ADD",
+        "bizStep": "holding",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00025.0"
+        },
+        "bizLocation": {
+          "id": "urn:epc:id:sgln:4012345.00002.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "inv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345123456:RE1099"
+          }
+        ]
+      },
+      {
+        "type": "TransformationEvent",
+        "eventTime": "2019-10-21T14:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "inputEPCList": [
+          "urn:epc:id:sgtin:4012345.011122.25",
+          "urn:epc:id:sgtin:4000001.065432.99886655"
+        ],
+        "outputEPCList": [
+          "urn:epc:id:sgtin:4012345.077889.25",
+          "urn:epc:id:sgtin:4012345.077889.26",
+          "urn:epc:id:sgtin:4012345.077889.27",
+          "urn:epc:id:sgtin:4012345.077889.28"
+        ],
+        "transformationID": "urn:epc:id:gdti:4012345.55555.1234",
+        "bizStep": "commissioning",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00001.0"
+        },
+        "ilmd": {
+          "example:bestBeforeDate": "2020-11-10",
+          "example:batch": "4711"
+        }
+      },
+      {
+        "type": "TransformationEvent",
+        "eventTime": "2019-10-21T14:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "inputEPCList": [
+          "urn:epc:id:sgtin:4012345.011122.25",
+          "urn:epc:id:sgtin:4000001.065432.99886655"
+        ],
+        "outputEPCList": [
+          "urn:epc:id:sgtin:4012345.077889.25",
+          "urn:epc:id:sgtin:4012345.077889.26",
+          "urn:epc:id:sgtin:4012345.077889.27",
+          "urn:epc:id:sgtin:4012345.077889.28"
+        ],
+        "inputQuantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4012345.011111.4444",
+            "quantity": 10,
+            "uom": "KGM"
+          },
+          {
+            "epcClass": "urn:epc:class:lgtin:0614141.077777.987",
+            "quantity": 30
+          },
+          {
+            "epcClass": "urn:epc:idpat:sgtin:4012345.066666.*",
+            "quantity": 220
+          }
+        ],
+        "bizStep": "commissioning",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00001.0"
+        },
+        "ilmd": {
+          "example:bestBeforeDate": "2015-11-10",
+          "example:batch": "XYZ"
+        }
+      },
+      {
+        "type": "TransformationEvent",
+        "eventTime": "2019-10-21T14:58:56.591+02:00",
+        "eventTimeZoneOffset": "+02:00",
+        "inputEPCList": [
+          "urn:epc:id:sgtin:4012345.011122.25",
+          "urn:epc:id:sgtin:4000001.065432.99886655"
+        ],
+        "outputQuantityList": [
+          {
+            "epcClass": "urn:epc:class:lgtin:4054739.099902.P20131121",
+            "quantity": 9520
+          }
+        ],
+        "transformationID": "urn:epc:id:gdti:4012345.55555.1234",
+        "bizStep": "http://epcis.example.com/user/vocab/bizstep/exampling",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00001.0"
+        }
+      }
+    ]
+  }
+}

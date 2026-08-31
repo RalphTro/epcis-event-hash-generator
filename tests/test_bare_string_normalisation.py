@@ -7,7 +7,7 @@ from epcis_event_hash_generator.events_from_file_reader import event_list_from_f
 
 
 def test_epcsi_reference_example():
-    actual_obj = event_list_from_file("examples/epcisDocWithSingleEvent.jsonld")
+    actual_obj = event_list_from_file("examples/documents/epcisDocWithSingleEvent.jsonld")
 
     print(actual_obj)
 

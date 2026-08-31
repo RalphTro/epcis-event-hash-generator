@@ -33,7 +33,7 @@ import sys
 from epcis_event_hash_generator import hash_generator, events_from_file_reader
 
 
-def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by=""):
+def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by="", cbv_version="CBV2.0"):
     """
     This method exemplifies how to read all EPCIS Events from the EPCIS document in the file at path.
     The file is parsed extracting the events data. The pre hash string is computed for each event.
@@ -42,8 +42,13 @@ def epcis_hash_from_file(path, hashalg="sha256", enforce="", join_by=""):
 
     events = events_from_file_reader.event_list_from_file(path, enforce)
 
-    prehashes = hash_generator.derive_prehashes_from_events(events, join_by)
-    hashes = hash_generator.calculate_hashes_from_pre_hashes(prehashes, hashalg)
+    # The hash MUST come from the canonical pre-hash: fields concatenated with NO separator
+    canonical_prehashes = hash_generator.derive_prehashes_from_events(events, "", cbv_version)
+    hashes = hash_generator.calculate_hashes_from_pre_hashes(canonical_prehashes, hashalg, cbv_version)
+
+    # Rebuild with the requested separator only for the human-readable pre-hash output.
+    prehashes = (hash_generator.derive_prehashes_from_events(events, join_by, cbv_version)
+                 if join_by else canonical_prehashes)
 
     return hashes, prehashes
 
@@ -83,8 +88,8 @@ def command_line_parsing():
     parser.add_argument(
         "-j",
         "--join",
-        help="String used to join the pre hash string." +
-        " Defaults to empty string as specified. Values like '\\n' might be useful for debugging.",
+        help="Separator inserted between fields in the DISPLAYED pre-hash only (readability);" +
+        " it does NOT affect the generated hash. Defaults to empty string. E.g. '\\n' for debugging.",
         default="")
     parser.add_argument(
         "-e",
@@ -93,6 +98,12 @@ def command_line_parsing():
         + " Defaults to guessing the format from the file ending.",
         choices=["XML", "JSON", ""],
         default="")
+    parser.add_argument(
+        "-v",
+        "--version",
+        help="CBV version to use in hash generation. Defaults to CBV2.0.",
+        choices=["CBV2.0", "CBV2.1"],
+        default="CBV2.0")
 
     args = parser.parse_args()
 
@@ -124,7 +135,11 @@ def main():
     for filename in args.file:
         # ACTUAL ALGORITHM CALL:
         (hashes, prehashes) = epcis_hash_from_file(
-            path=filename, hashalg=args.algorithm, join_by=args.join, enforce=args.enforce_format)
+            path=filename,
+            hashalg=args.algorithm,
+            join_by=args.join,
+            enforce=args.enforce_format,
+            cbv_version=args.version)
 
         # Output:
         if args.batch:

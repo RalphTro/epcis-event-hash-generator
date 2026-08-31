@@ -51,13 +51,8 @@ def __web_uri_percent_encoder(input):
         Percent-encoded equivalent of character.
     """
 
-    return (input.replace('!', '%21')
-            .replace('(', '%28')
-            .replace(')', '%29')
-            .replace('*', '%2A')
-            .replace('+', '%2B')
-            .replace(',', '%2C')
-            .replace(':', '%3A'))
+    # TDS Table I.3.1-1: '! ( ) * + , :' are permitted LITERALLY in a URI-form serial and must NOT be percent-encoded.
+    return input
 
 
 def check_digit(key_wo_checkdigit):

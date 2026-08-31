@@ -1,0 +1,57 @@
+{
+  "@context": [
+    "https://ref.gs1.org/standards/epcis/2.0.0/epcis-context.jsonld"
+  ],
+  "id": "https://id.example.org/document1",
+  "type": "EPCISDocument",
+  "schemaVersion": "2.0",
+  "creationDate": "2022-02-17T11:30:47.0Z",
+  "epcisBody": {
+    "eventList": [
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2022-02-16T12:50:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sscc:4012345.1112223334"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "departing",
+        "readPoint": {
+          "id": "urn:epc:id:sgln:4012345.00022.0"
+        },
+        "bizTransactionList": [
+          {
+            "type": "desadv",
+            "bizTransaction": "urn:epcglobal:cbv:bt:4012345000009:ASN1099"
+          }
+        ],
+        "sourceList": [
+          {
+            "type": "possessing_party",
+            "source": "urn:epc:id:pgln:4012345.00000"
+          }
+        ],
+        "destinationList": [
+          {
+            "type": "possessing_party",
+            "destination": "urn:epc:id:pgln:4023333.00000"
+          }
+        ]
+      },
+      {
+        "type": "ObjectEvent",
+        "eventTime": "2022-02-16T16:50:00.000+01:00",
+        "eventTimeZoneOffset": "+01:00",
+        "epcList": [
+          "urn:epc:id:sscc:4012345.1112223334"
+        ],
+        "action": "OBSERVE",
+        "bizStep": "transporting",
+        "readPoint": {
+          "id": "geo:47.506694,11.104301"
+        }
+      }
+    ]
+  }
+}

@@ -1,11 +1,9 @@
 [flake8]
-exclude =
-    .git,
-    __pycache__,
-    context.py
+max-line-length = 127
 max-complexity = 10
-max-line-length = 120
-per-file-ignores =
-    tests/dl_normaliser_test.py:E501
-    epcis_event_hash_generator/dl_normaliser.py:E501,C901
-    epcis_event_hash_generator/json_to_py.py:E501,C901
+
+# Ignore line length errors (E501) specifically for dl_normaliser.py
+# Ignore F824 false positives for global _namespaces in json_to_py.py
+per-file-ignores = 
+    ./dl_normaliser.py:E501
+    ./json_to_py.py:F824
